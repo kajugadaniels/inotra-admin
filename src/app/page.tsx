@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, Mail, Moon, ShieldCheck, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import {
@@ -15,9 +14,13 @@ import {
     type GoogleCredentialResponse,
 } from "@/api/auth";
 import type { GoogleLoginResponse, LoginResponse } from "@/api/types";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+    AdminCredentialsForm,
+    AdminGoogleSignIn,
+    AdminHeroPanel,
+    AdminLoginHeader,
+    AdminMobileHero,
+} from "@/components/shared/auth";
 
 const DEFAULT_API_BASE_URL =
     process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/superadmin";
@@ -334,107 +337,17 @@ const AdminLoginPage = () => {
 
             <div className="mx-auto flex min-h-screen max-w-6xl items-stretch px-4 py-10 sm:px-6 lg:px-8">
                 <div className="grid w-full overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.65)] backdrop-blur-xl lg:grid-cols-2">
-                    {/* LEFT: premium visual */}
-                    <section className="relative hidden min-h-[520px] lg:block">
-                        {/* gradient base */}
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_55%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.10),transparent_50%),linear-gradient(135deg,rgba(0,0,0,0.65),rgba(0,0,0,0.20))]" />
+                    <AdminHeroPanel />
 
-                        {/* image */}
-                        <div
-                            className="absolute inset-0 bg-cover bg-center"
-                            style={{ backgroundImage: "url(/login.jpg)" }}
-                        />
-
-                        {/* overlays */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/20" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
-
-                        {/* glass border sheen */}
-                        <div className="pointer-events-none absolute inset-0">
-                            <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-white/25 to-transparent" />
-                            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                        </div>
-
-                        {/* content */}
-                        <div className="relative flex h-full flex-col justify-between p-10">
-                            <div className="flex items-center gap-3">
-                                <div className="grid h-11 w-11 place-items-center rounded-2xl bg-white/10 ring-1 ring-white/15 backdrop-blur">
-                                    <ShieldCheck className="h-5 w-5 text-white/90" />
-                                </div>
-                                <div className="leading-tight">
-                                    <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
-                                        INOTRA
-                                    </p>
-                                    <p className="text-sm font-semibold text-white/90">
-                                        Admin Portal
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="max-w-md space-y-4">
-
-                                <h1 className="text-balance text-4xl font-semibold tracking-tight text-white">
-                                    Control, insight, and secure access.
-                                </h1>
-                                <p className="text-sm leading-relaxed text-white/70">
-                                    Manage operations with confidence. Only approved administrator
-                                    accounts can access this workspace.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Mobile hero (shows on small screens) */}
-                    <section className="relative lg:hidden">
-                        <div
-                            className="relative h-48 w-full bg-cover bg-center"
-                            style={{ backgroundImage: "url(/login.jpg)" }}
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/20" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/15 to-transparent" />
-                            <div className="relative flex h-full items-end p-6">
-                                <div>
-                                    <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/75">
-                                        INOTRA • Admin
-                                    </p>
-                                    <p className="mt-1 text-xl font-semibold text-white">
-                                        Welcome back
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <AdminMobileHero />
 
                     {/* RIGHT: login content */}
                     <section className="relative flex flex-col justify-center p-7 sm:p-10">
-                        {/* top tag */}
-                        <div className="mb-8 flex items-center justify-between gap-4">
-                            <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs font-semibold text-muted-foreground backdrop-blur">
-                                <ShieldCheck className="h-4 w-4 text-primary" />
-                                Admin login
-                            </div>
-
-                            <div className="flex items-center gap-3">
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-9 w-9 rounded-full border-border/60 bg-background/70"
-                                    onClick={() => setTheme(isDark ? "light" : "dark")}
-                                    aria-label={
-                                        isMounted
-                                            ? `Switch to ${isDark ? "light" : "dark"} mode`
-                                            : "Toggle color theme"
-                                    }
-                                >
-                                    {isMounted && isDark ? (
-                                        <Sun className="h-4 w-4" />
-                                    ) : (
-                                        <Moon className="h-4 w-4" />
-                                    )}
-                                </Button>
-                            </div>
-                        </div>
+                        <AdminLoginHeader
+                            isDark={isDark}
+                            isMounted={isMounted}
+                            onToggleTheme={() => setTheme(isDark ? "light" : "dark")}
+                        />
 
                         <div className="space-y-3">
                             <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
@@ -446,55 +359,16 @@ const AdminLoginPage = () => {
                             </p>
                         </div>
 
-                        <form
+                        <AdminCredentialsForm
+                            identifier={identifier}
+                            password={password}
+                            isBusy={isBusy}
+                            statusLabel={statusLabel}
+                            authStatus={authStatus}
+                            onIdentifierChange={setIdentifier}
+                            onPasswordChange={setPassword}
                             onSubmit={handlePasswordLogin}
-                            className="mt-7 space-y-4 rounded-2xl border border-border/60 bg-background/60 p-5 backdrop-blur"
-                        >
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                                    Email / Phone / Username
-                                </label>
-                                <div className="relative">
-                                    <Mail className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                    <Input
-                                        value={identifier}
-                                        onChange={(event) => setIdentifier(event.target.value)}
-                                        placeholder="admin@example.com"
-                                        className="pl-10"
-                                        autoComplete="username"
-                                        disabled={isBusy}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                                    Password
-                                </label>
-                                <div className="relative">
-                                    <Lock className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                    <Input
-                                        type="password"
-                                        value={password}
-                                        onChange={(event) => setPassword(event.target.value)}
-                                        placeholder="••••••••"
-                                        className="pl-10"
-                                        autoComplete="current-password"
-                                        disabled={isBusy}
-                                    />
-                                </div>
-                            </div>
-
-                            <Button type="submit" className="h-11 w-full rounded-full" disabled={isBusy}>
-                                {authStatus === "signing-in" ? "Signing in..." : "Sign in"}
-                            </Button>
-
-                            {statusLabel ? (
-                                <p className="text-center text-xs text-muted-foreground">
-                                    {statusLabel}
-                                </p>
-                            ) : null}
-                        </form>
+                        />
 
                         <div className="mt-7 flex items-center gap-3">
                             <div className="h-px flex-1 bg-border/60" />
@@ -504,24 +378,7 @@ const AdminLoginPage = () => {
                             <div className="h-px flex-1 bg-border/60" />
                         </div>
 
-                        <div className="mt-6 space-y-3">
-                            <div
-                                className={cn(
-                                    "rounded-2xl bg-background/55 p-4 backdrop-blur",
-                                    isBusy ? "pointer-events-none opacity-70" : ""
-                                )}
-                            >
-                                <div className="flex justify-start">
-                                    <div
-                                        ref={signInRef}
-                                        className={cn(
-                                            "min-h-[48px]",
-                                            isBusy ? "pointer-events-none opacity-70" : ""
-                                        )}
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <AdminGoogleSignIn isBusy={isBusy} signInRef={signInRef} />
                     </section>
                 </div>
             </div>
