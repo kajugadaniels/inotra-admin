@@ -30,7 +30,7 @@ export function createAdCreative({ apiBaseUrl, accessToken, data }: Args) {
 
     return requestJson<{ message: string; creative: AdCreative }>({
         apiBaseUrl,
-        path: "/ads/creatives/add/",
+        path: "/ads/creative/add/",
         method: "POST",
         accessToken,
         body: payload,
