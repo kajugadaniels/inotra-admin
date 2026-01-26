@@ -6,13 +6,11 @@ import { toast } from "sonner";
 
 import { authStorage, changeAdminPassword, updateAdminProfile } from "@/api/auth";
 import type { AdminUser } from "@/api/types";
+import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-const DEFAULT_API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/superadmin";
 
 const AdminProfilePage = () => {
     const [isProfileBusy, setIsProfileBusy] = useState(false);
@@ -28,10 +26,7 @@ const AdminProfilePage = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const apiBaseUrl = useMemo(() => {
-        const trimmed = DEFAULT_API_BASE_URL.trim();
-        return trimmed.replace(/\/+$/, "");
-    }, []);
+    const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
     useEffect(() => {
         const storedUser = authStorage.getUser();
