@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import {
     authStorage,
@@ -29,13 +28,11 @@ const SESSION_EXPIRED_KEY = "inotra.admin.session.expired";
 const AdminLoginPage = () => {
     const router = useRouter();
     const [isBusy, setIsBusy] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
     const [authStatus, setAuthStatus] = useState<
         "checking" | "signed-out" | "signing-in" | "signed-in"
     >("checking");
     const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
-    const { resolvedTheme, setTheme } = useTheme();
 
     const signInRef = useRef<HTMLDivElement | null>(null);
 
@@ -72,7 +69,6 @@ const AdminLoginPage = () => {
 
         const storedTokens = authStorage.getTokens();
         const storedUser = authStorage.getUser();
-        setIsMounted(true);
 
         if (!storedTokens || !storedUser) {
             setAuthStatus("signed-out");
@@ -318,14 +314,9 @@ const AdminLoginPage = () => {
                 ? "Checking session..."
                 : "";
 
-    const isDark = resolvedTheme === "dark";
-
     return (
         <AdminAuthShell>
             <AdminLoginHeader
-                isDark={isDark}
-                isMounted={isMounted}
-                onToggleTheme={() => setTheme(isDark ? "light" : "dark")}
             />
 
             <div className="space-y-3">

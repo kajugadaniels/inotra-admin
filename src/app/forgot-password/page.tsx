@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Mail } from "lucide-react";
-import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
 import { requestAdminPasswordReset } from "@/api/auth";
@@ -16,8 +15,6 @@ const RESET_EMAIL_KEY = "inotra.admin.reset.email";
 
 const ForgotPasswordPage = () => {
     const router = useRouter();
-    const { resolvedTheme, setTheme } = useTheme();
-    const [isMounted, setIsMounted] = useState(false);
     const [isBusy, setIsBusy] = useState(false);
     const [email, setEmail] = useState("");
 
@@ -29,7 +26,6 @@ const ForgotPasswordPage = () => {
         if (cached) {
             setEmail(cached);
         }
-        setIsMounted(true);
     }, []);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -78,14 +74,9 @@ const ForgotPasswordPage = () => {
         }
     };
 
-    const isDark = resolvedTheme === "dark";
-
     return (
         <AdminAuthShell>
             <AdminLoginHeader
-                isDark={isDark}
-                isMounted={isMounted}
-                onToggleTheme={() => setTheme(isDark ? "light" : "dark")}
                 badgeText="Password reset"
             />
 
