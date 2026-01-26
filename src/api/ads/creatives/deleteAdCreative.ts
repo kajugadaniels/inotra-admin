@@ -10,7 +10,7 @@ type Args = {
 export function deleteAdCreative({ apiBaseUrl, accessToken, creativeId }: Args) {
     return requestJson<BasicMessageResponse>({
         apiBaseUrl,
-        path: `/ads/creatives/${creativeId}/delete/`,
+        path: `/ads/creative/${creativeId}/delete/`,
         method: "DELETE",
         accessToken,
     });
