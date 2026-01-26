@@ -77,6 +77,8 @@ const AdCreativesTable = ({
                                                     <Image
                                                         src={creative.image_url}
                                                         alt={title}
+                                                        width={48}
+                                                        height={48}
                                                         className="h-full w-full object-cover"
                                                         loading="lazy"
                                                     />
