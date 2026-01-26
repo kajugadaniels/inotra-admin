@@ -56,3 +56,15 @@ export type AdPlacement = {
     created_at?: string | null;
     updated_at?: string | null;
 };
+
+export type AdCreative = {
+    id?: string;
+    title?: string | null;
+    image_url?: string | null;
+    target_url?: string | null;
+    starts_at?: string | null;
+    ends_at?: string | null;
+    is_active?: boolean | null;
+    placement_id?: string | null;
+    placement_key?: string | null;
+};
