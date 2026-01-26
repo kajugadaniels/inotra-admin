@@ -45,7 +45,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
                         <div className="leading-tight">
                             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
-                                Peak Africa
+                                INOTRA
                             </p>
                             <p className="text-sm font-semibold text-foreground">Admin Portal</p>
                         </div>
