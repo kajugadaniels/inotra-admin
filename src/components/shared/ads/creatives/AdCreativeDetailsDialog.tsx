@@ -16,6 +16,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import Image from "next/image";
 
 type AdCreativeDetailsDialogProps = {
     creativeId: string | null;
@@ -103,7 +104,7 @@ const AdCreativeDetailsDialog = ({
                 <div className="space-y-4">
                     <div className="overflow-hidden rounded-2xl border border-border/60 bg-muted/40">
                         {creative?.image_url ? (
-                            <img
+                            <Image
                                 src={creative.image_url}
                                 alt={creative.title ?? "Ad creative"}
                                 className="h-56 w-full object-cover"
