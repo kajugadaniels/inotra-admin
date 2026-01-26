@@ -4,3 +4,7 @@ export { requestAdminPasswordReset } from "./passwordResetRequest";
 export { resendAdminPasswordResetOtp } from "./passwordResetResend";
 export { confirmAdminPasswordReset } from "./passwordResetConfirm";
 export { updateAdminProfile } from "./meUpdate";
+export { authStorage } from "./storage";
+export { extractErrorDetail } from "./utils";
+export { loadGoogleIdentityScript, getGoogleIdentityClient } from "./google";
+export type { GoogleCredentialResponse } from "./google";
