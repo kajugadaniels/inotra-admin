@@ -16,14 +16,14 @@ const AdminProfileTabs = ({ className }: AdminProfileTabsProps) => {
                 <TabsList variant="line" className="mt-4 w-full flex-col gap-2 bg-transparent">
                     <TabsTrigger
                         value="profile"
-                        className="w-full justify-start gap-2 rounded-2xl border border-transparent px-3 py-2 text-sm data-[state=active]:border-primary/20 data-[state=active]:bg-primary/10"
+                        className="w-full justify-start gap-2 rounded-2xl px-3 py-2 text-sm data-[state=active]:bg-primary/10"
                     >
                         <User className="h-4 w-4" />
                         Profile details
                     </TabsTrigger>
                     <TabsTrigger
                         value="password"
-                        className="w-full justify-start gap-2 rounded-2xl border border-transparent px-3 py-2 text-sm data-[state=active]:border-primary/20 data-[state=active]:bg-primary/10"
+                        className="w-full justify-start gap-2 rounded-2xl px-3 py-2 text-sm data-[state=active]:bg-primary/10"
                     >
                         <Lock className="h-4 w-4" />
                         Change password
