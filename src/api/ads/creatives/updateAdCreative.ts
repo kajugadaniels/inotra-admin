@@ -35,7 +35,7 @@ export function updateAdCreative({ apiBaseUrl, accessToken, creativeId, data }: 
 
     return requestJson<{ message: string; creative: AdCreative }>({
         apiBaseUrl,
-        path: `/ads/creatives/${creativeId}/update/`,
+        path: `/ads/creative/${creativeId}/update/`,
         method: "PATCH",
         accessToken,
         body: payload,
