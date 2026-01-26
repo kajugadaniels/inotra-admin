@@ -7,12 +7,11 @@ import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
 import { requestAdminPasswordReset } from "@/api/auth";
+import { getApiBaseUrl } from "@/config/api";
 import { AdminAuthShell, AdminLoginHeader } from "@/components/shared/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const DEFAULT_API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/superadmin";
 const RESET_EMAIL_KEY = "inotra.admin.reset.email";
 
 const ForgotPasswordPage = () => {
@@ -22,10 +21,7 @@ const ForgotPasswordPage = () => {
     const [isBusy, setIsBusy] = useState(false);
     const [email, setEmail] = useState("");
 
-    const apiBaseUrl = useMemo(() => {
-        const trimmed = DEFAULT_API_BASE_URL.trim();
-        return trimmed.replace(/\/+$/, "");
-    }, []);
+    const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
