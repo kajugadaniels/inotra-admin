@@ -12,6 +12,7 @@ type GoogleAccountsId = {
     }) => void;
     renderButton: (element: HTMLElement, options?: Record<string, unknown>) => void;
     prompt: (callback?: (notification: unknown) => void) => void;
+    disableAutoSelect?: () => void;
 };
 
 type GoogleIdentity = {
