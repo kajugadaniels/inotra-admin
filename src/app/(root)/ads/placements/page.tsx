@@ -1,3 +1,3 @@
-import AdPlacementsPage from "@/components/shared/ads/placements/AdPlacementsPage";
+import AdPlacementsPageLayout from "@/components/shared/ads/placements/AdPlacementsPageLayout";
 
-export default AdPlacementsPage;
+export default AdPlacementsPageLayout;
