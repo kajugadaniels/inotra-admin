@@ -1,20 +1,23 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
+import { authStorage } from "@/api/auth";
+import { listAdPlacements } from "@/api/ads";
 import type { AdPlacement } from "@/api/types";
+import { getApiBaseUrl } from "@/config/api";
 import {
+    AdPlacementCreateDialog,
+    AdPlacementDeleteDialog,
+    AdPlacementDetailsDialog,
+    AdPlacementEditDialog,
     AdPlacementsFilters,
     type AdPlacementsFiltersState,
     AdPlacementsHeader,
     AdPlacementsPagination,
     AdPlacementsTable,
 } from "@/components/shared/ads/placements";
-import { useAdPlacementsData } from "@/components/shared/ads/placements/AdPlacementsData";
-import AdPlacementCreateDialog from "@/components/shared/ads/placements/AdPlacementCreateDialog";
-import AdPlacementEditDialog from "@/components/shared/ads/placements/AdPlacementEditDialog";
-import AdPlacementDeleteDialog from "@/components/shared/ads/placements/AdPlacementDeleteDialog";
-import AdPlacementDetailsDialog from "@/components/shared/ads/placements/AdPlacementDetailsDialog";
 
 const PAGE_SIZE = 10;
 
@@ -25,10 +28,10 @@ const DEFAULT_FILTERS: AdPlacementsFiltersState = {
 };
 
 const AdPlacementsPage = () => {
-    const { placements, setPlacements, isLoading } = useAdPlacementsData();
-
+    const [placements, setPlacements] = useState<AdPlacement[]>([]);
     const [filters, setFilters] = useState<AdPlacementsFiltersState>(DEFAULT_FILTERS);
     const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
     const [searchInput, setSearchInput] = useState("");
 
     const [createOpen, setCreateOpen] = useState(false);
@@ -36,6 +39,8 @@ const AdPlacementsPage = () => {
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [detailsOpen, setDetailsOpen] = useState(false);
     const [selectedPlacement, setSelectedPlacement] = useState<AdPlacement | null>(null);
+
+    const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -45,6 +50,36 @@ const AdPlacementsPage = () => {
 
         return () => clearTimeout(timer);
     }, [searchInput]);
+
+    useEffect(() => {
+        const tokens = authStorage.getTokens();
+        if (!tokens?.access) {
+            toast.error("Session missing", {
+                description: "Sign in again to access placements.",
+            });
+            return;
+        }
+
+        setIsLoading(true);
+        listAdPlacements({ apiBaseUrl, accessToken: tokens.access })
+            .then((result) => {
+                if (!result.ok || !result.body) {
+                    toast.error("Unable to load placements", {
+                        description: "Please try again.",
+                    });
+                    return;
+                }
+                setPlacements(result.body);
+            })
+            .catch((error: Error) => {
+                toast.error("Unable to load placements", {
+                    description: error.message ?? "Check API connectivity and try again.",
+                });
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [apiBaseUrl]);
 
     const filteredPlacements = useMemo(() => {
         const search = filters.search.trim().toLowerCase();
