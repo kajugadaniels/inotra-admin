@@ -16,14 +16,9 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+import AdPlacementForm, {
+    type AdPlacementFormState,
+} from "@/components/shared/ads/placements/AdPlacementForm";
 
 type AdPlacementEditDialogProps = {
     placement: AdPlacement | null;
@@ -38,7 +33,11 @@ const AdPlacementEditDialog = ({
     onOpenChange,
     onUpdated,
 }: AdPlacementEditDialogProps) => {
-    const [form, setForm] = useState({ key: "", title: "", is_active: true });
+    const [form, setForm] = useState<AdPlacementFormState>({
+        key: "",
+        title: "",
+        is_active: true,
+    });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
@@ -118,53 +117,7 @@ const AdPlacementEditDialog = ({
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-4">
-                    <div>
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Placement key
-                        </label>
-                        <Input
-                            value={form.key}
-                            onChange={(event) =>
-                                setForm((prev) => ({ ...prev, key: event.target.value }))
-                            }
-                            placeholder="HOME_FEED_TOP"
-                            className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Title
-                        </label>
-                        <Input
-                            value={form.title}
-                            onChange={(event) =>
-                                setForm((prev) => ({ ...prev, title: event.target.value }))
-                            }
-                            placeholder="Homepage hero banner"
-                            className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Status
-                        </label>
-                        <Select
-                            value={form.is_active ? "true" : "false"}
-                            onValueChange={(value) =>
-                                setForm((prev) => ({ ...prev, is_active: value === "true" }))
-                            }
-                        >
-                            <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
-                                <SelectValue placeholder="Status" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="true">Active</SelectItem>
-                                <SelectItem value="false">Inactive</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
+                <AdPlacementForm form={form} onChange={setForm} disabled={isSubmitting} />
 
                 <DialogFooter>
                     <Button
