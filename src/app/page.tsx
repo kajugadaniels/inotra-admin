@@ -15,11 +15,10 @@ import {
 } from "@/api/auth";
 import type { GoogleLoginResponse, LoginResponse } from "@/api/types";
 import {
+    AdminAuthShell,
     AdminCredentialsForm,
     AdminGoogleSignIn,
-    AdminHeroPanel,
     AdminLoginHeader,
-    AdminMobileHero,
 } from "@/components/shared/auth";
 
 const DEFAULT_API_BASE_URL =
@@ -326,63 +325,45 @@ const AdminLoginPage = () => {
     const isDark = resolvedTheme === "dark";
 
     return (
-        <div className="relative min-h-[calc(100vh-0px)] overflow-hidden">
-            {/* Background (subtle) */}
-            <div className="pointer-events-none absolute inset-0 -z-10">
-                <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-background" />
-                <div className="absolute -left-40 -top-40 h-[520px] w-[520px] rounded-full bg-primary/15 blur-3xl" />
-                <div className="absolute -right-40 -bottom-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl" />
-                <div className="absolute inset-0 opacity-[0.05] [background-image:radial-gradient(rgba(255,255,255,0.6)_1px,transparent_1px)] [background-size:18px_18px]" />
+        <AdminAuthShell>
+            <AdminLoginHeader
+                isDark={isDark}
+                isMounted={isMounted}
+                onToggleTheme={() => setTheme(isDark ? "light" : "dark")}
+            />
+
+            <div className="space-y-3">
+                <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
+                    Welcome, Admin.
+                </h2>
+                <p className="max-w-md text-sm text-muted-foreground md:text-base">
+                    Sign in with your authorized email, phone, or username. You can also use
+                    Google to continue.
+                </p>
             </div>
 
-            <div className="mx-auto flex min-h-screen max-w-6xl items-stretch px-4 py-10 sm:px-6 lg:px-8">
-                <div className="grid w-full overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.65)] backdrop-blur-xl lg:grid-cols-2">
-                    <AdminHeroPanel />
+            <AdminCredentialsForm
+                identifier={identifier}
+                password={password}
+                isBusy={isBusy}
+                statusLabel={statusLabel}
+                authStatus={authStatus}
+                onIdentifierChange={setIdentifier}
+                onPasswordChange={setPassword}
+                onSubmit={handlePasswordLogin}
+                forgotPasswordHref="/forgot-password"
+            />
 
-                    <AdminMobileHero />
-
-                    {/* RIGHT: login content */}
-                    <section className="relative flex flex-col justify-center p-7 sm:p-10">
-                        <AdminLoginHeader
-                            isDark={isDark}
-                            isMounted={isMounted}
-                            onToggleTheme={() => setTheme(isDark ? "light" : "dark")}
-                        />
-
-                        <div className="space-y-3">
-                            <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
-                                Welcome, Admin.
-                            </h2>
-                            <p className="max-w-md text-sm text-muted-foreground md:text-base">
-                                Sign in with your authorized email, phone, or username. You can also
-                                use Google to continue.
-                            </p>
-                        </div>
-
-                        <AdminCredentialsForm
-                            identifier={identifier}
-                            password={password}
-                            isBusy={isBusy}
-                            statusLabel={statusLabel}
-                            authStatus={authStatus}
-                            onIdentifierChange={setIdentifier}
-                            onPasswordChange={setPassword}
-                            onSubmit={handlePasswordLogin}
-                        />
-
-                        <div className="mt-7 flex items-center gap-3">
-                            <div className="h-px flex-1 bg-border/60" />
-                            <span className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                                or
-                            </span>
-                            <div className="h-px flex-1 bg-border/60" />
-                        </div>
-
-                        <AdminGoogleSignIn isBusy={isBusy} signInRef={signInRef} />
-                    </section>
-                </div>
+            <div className="mt-7 flex items-center gap-3">
+                <div className="h-px flex-1 bg-border/60" />
+                <span className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                    or
+                </span>
+                <div className="h-px flex-1 bg-border/60" />
             </div>
-        </div>
+
+            <AdminGoogleSignIn isBusy={isBusy} signInRef={signInRef} />
+        </AdminAuthShell>
     );
 };
 
