@@ -363,7 +363,7 @@ const AdminLoginPage = () => {
                                 </div>
                                 <div className="leading-tight">
                                     <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
-                                        Peak Africa
+                                        INOTRA
                                     </p>
                                     <p className="text-sm font-semibold text-white/90">
                                         Admin Portal
@@ -395,7 +395,7 @@ const AdminLoginPage = () => {
                             <div className="relative flex h-full items-end p-6">
                                 <div>
                                     <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/75">
-                                        Peak Africa • Admin
+                                        INOTRA • Admin
                                     </p>
                                     <p className="mt-1 text-xl font-semibold text-white">
                                         Welcome back

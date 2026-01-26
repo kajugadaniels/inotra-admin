@@ -13,7 +13,7 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
             attribute="class"
             defaultTheme="dark"
             enableSystem={false}
-            storageKey="peak-admin-theme"
+            storageKey="inotra-theme"
             disableTransitionOnChange
         >
             {children}
