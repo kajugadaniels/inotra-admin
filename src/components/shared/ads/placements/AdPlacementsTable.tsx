@@ -1,4 +1,4 @@
-import { CheckCircle2, Pencil, Trash2, XCircle } from "lucide-react";
+import { CheckCircle2, Eye, Pencil, Trash2, XCircle } from "lucide-react";
 
 import type { AdPlacement } from "@/api/types";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,7 @@ const formatDate = (value?: string | null) => {
 type AdPlacementsTableProps = {
     placements: AdPlacement[];
     isLoading: boolean;
+    onView: (placement: AdPlacement) => void;
     onEdit: (placement: AdPlacement) => void;
     onDelete: (placement: AdPlacement) => void;
 };
@@ -32,6 +33,7 @@ type AdPlacementsTableProps = {
 const AdPlacementsTable = ({
     placements,
     isLoading,
+    onView,
     onEdit,
     onDelete,
 }: AdPlacementsTableProps) => {
@@ -96,6 +98,15 @@ const AdPlacementsTable = ({
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <div className="inline-flex items-center gap-2">
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="icon-sm"
+                                                onClick={() => onView(placement)}
+                                                aria-label="View placement"
+                                            >
+                                                <Eye className="h-4 w-4" />
+                                            </Button>
                                             <Button
                                                 type="button"
                                                 variant="ghost"
