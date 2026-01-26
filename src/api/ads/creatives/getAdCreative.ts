@@ -10,7 +10,7 @@ type Args = {
 export function getAdCreative({ apiBaseUrl, accessToken, creativeId }: Args) {
     return requestJson<AdCreative>({
         apiBaseUrl,
-        path: `/ads/creatives/${creativeId}/`,
+        path: `/ads/creative/${creativeId}/`,
         method: "GET",
         accessToken,
     });
