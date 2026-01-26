@@ -30,8 +30,22 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
     const { resolvedTheme, setTheme } = useTheme();
 
     useEffect(() => {
-        setUser(authStorage.getUser());
+        const syncUser = () => {
+            setUser(authStorage.getUser());
+        };
+
+        syncUser();
         setIsMounted(true);
+
+        if (typeof window === "undefined") return;
+
+        window.addEventListener("storage", syncUser);
+        window.addEventListener("admin-profile-updated", syncUser);
+
+        return () => {
+            window.removeEventListener("storage", syncUser);
+            window.removeEventListener("admin-profile-updated", syncUser);
+        };
     }, []);
 
     const handleSignOut = () => {
