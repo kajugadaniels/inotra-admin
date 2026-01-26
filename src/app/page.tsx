@@ -14,6 +14,7 @@ import {
     type GoogleCredentialResponse,
 } from "@/api/auth";
 import type { GoogleLoginResponse, LoginResponse } from "@/api/types";
+import { getApiBaseUrl } from "@/config/api";
 import {
     AdminAuthShell,
     AdminCredentialsForm,
@@ -21,8 +22,6 @@ import {
     AdminLoginHeader,
 } from "@/components/shared/auth";
 
-const DEFAULT_API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/superadmin";
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "";
 const ADMIN_ROLE = "ADMIN";
 const SESSION_EXPIRED_KEY = "inotra.admin.session.expired";
@@ -40,10 +39,7 @@ const AdminLoginPage = () => {
 
     const signInRef = useRef<HTMLDivElement | null>(null);
 
-    const apiBaseUrl = useMemo(() => {
-        const trimmed = DEFAULT_API_BASE_URL.trim();
-        return trimmed.replace(/\/+$/, "");
-    }, []);
+    const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
     const clearGoogleButton = () => {
         signInRef.current?.replaceChildren();
