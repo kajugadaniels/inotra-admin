@@ -3,3 +3,8 @@ export { createAdPlacement } from "./placements/createAdPlacement";
 export { updateAdPlacement } from "./placements/updateAdPlacement";
 export { deleteAdPlacement } from "./placements/deleteAdPlacement";
 export { getAdPlacement } from "./placements/getAdPlacement";
+export { listAdCreatives } from "./creatives/listAdCreatives";
+export { getAdCreative } from "./creatives/getAdCreative";
+export { createAdCreative } from "./creatives/createAdCreative";
+export { updateAdCreative } from "./creatives/updateAdCreative";
+export { deleteAdCreative } from "./creatives/deleteAdCreative";
