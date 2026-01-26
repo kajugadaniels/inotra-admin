@@ -155,12 +155,18 @@ const AdCreativeEditDialog = ({
                     <Button
                         type="button"
                         variant="outline"
+                        className="h-11 rounded-full"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
                         Cancel
                     </Button>
-                    <Button type="button" onClick={handleSubmit} disabled={isSubmitting}>
+                    <Button
+                        type="button"
+                        className="h-11 rounded-full"
+                        onClick={handleSubmit}
+                        disabled={isSubmitting}
+                    >
                         Save changes
                     </Button>
                 </DialogFooter>
