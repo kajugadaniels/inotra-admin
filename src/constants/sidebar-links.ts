@@ -3,8 +3,11 @@ import {
     CreditCard,
     FileText,
     LayoutGrid,
+    Layers,
     LineChart,
     MapPin,
+    Megaphone,
+    Image,
     PartyPopper,
     Ticket,
     TicketCheck,
@@ -15,8 +18,9 @@ import {
 
 export type SidebarLink = {
     label: string;
-    href: string;
     icon: LucideIcon;
+    href?: string;
+    children?: SidebarLink[];
 };
 
 export const adminSidebarLinks: SidebarLink[] = [
@@ -69,5 +73,21 @@ export const adminSidebarLinks: SidebarLink[] = [
         label: "Reports",
         href: "/reports",
         icon: FileText,
+    },
+    {
+        label: "Ads",
+        icon: Megaphone,
+        children: [
+            {
+                label: "Ad Placements",
+                href: "/ads/placements",
+                icon: Layers,
+            },
+            {
+                label: "Ad Creatives",
+                href: "/ads/creatives",
+                icon: Image,
+            },
+        ],
     },
 ];
