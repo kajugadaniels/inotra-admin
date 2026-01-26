@@ -87,6 +87,9 @@ const AdminProfilePage = () => {
             authStorage.setSession(tokens, updatedUser);
             setUser(updatedUser);
             setImageFile(null);
+            if (typeof window !== "undefined") {
+                window.dispatchEvent(new Event("admin-profile-updated"));
+            }
 
             toast.success("Profile updated", {
                 id: loadingId,
