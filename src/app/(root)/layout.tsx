@@ -1,23 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Navbar from "@/components/shared/Navbar";
 import Sidebar from "@/components/shared/Sidebar";
-import {
-    authStorage,
-    fetchProfile,
-    type Tokens,
-    type UserProfile,
-} from "@/api/auth/auth";
+import { authStorage } from "@/api/auth";
+import type { AdminUser, Tokens } from "@/api/types";
 
 type RootLayoutProps = {
     children: React.ReactNode;
 };
 
-const DEFAULT_API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 const ADMIN_ROLE = "ADMIN";
 
 export default function RootLayout({ children }: RootLayoutProps) {
@@ -27,11 +21,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "checking"
     );
     const redirectGuard = useRef(false);
-
-    const apiBaseUrl = useMemo(() => {
-        const trimmed = DEFAULT_API_BASE_URL.trim();
-        return trimmed.replace(/\/+$/, "");
-    }, []);
 
     useEffect(() => {
         const denyAccess = (message: string) => {
@@ -52,38 +41,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
             return;
         }
 
-        if (user) {
-            if (user.role !== ADMIN_ROLE) {
-                denyAccess("Your account does not have admin privileges.");
-                return;
-            }
-            setAuthStatus("authorized");
+        if (!user) {
+            denyAccess("Please sign in with an ADMIN account to continue.");
             return;
         }
 
-        fetchProfile({ apiBaseUrl, accessToken: tokens.access })
-            .then((result) => {
-                if (!result.ok) {
-                    if (result.status === 401) {
-                        return;
-                    }
-                    denyAccess("Your session expired. Please sign in again.");
-                    return;
-                }
+        const adminUser = user as AdminUser;
+        if (adminUser.role !== ADMIN_ROLE) {
+            denyAccess("Your account does not have admin privileges.");
+            return;
+        }
 
-                const profile = result.body as UserProfile;
-                if (profile.role !== ADMIN_ROLE) {
-                    denyAccess("Your account does not have admin privileges.");
-                    return;
-                }
-
-                authStorage.setSession(tokens as Tokens, profile);
-                setAuthStatus("authorized");
-            })
-            .catch(() => {
-                denyAccess("Unable to verify your session. Please sign in again.");
-            });
-    }, [apiBaseUrl, router]);
+        authStorage.setSession(tokens as Tokens, adminUser);
+        setAuthStatus("authorized");
+    }, [router]);
 
     if (authStatus !== "authorized") {
         return (
