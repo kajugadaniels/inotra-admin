@@ -35,14 +35,20 @@ export const adminSidebarLinks: SidebarLink[] = [
         icon: LineChart,
     },
     {
-        label: "Admins",
-        href: "/admins",
+        label: "Accounts",
         icon: Users,
-    },
-    {
-        label: "Users",
-        href: "/users",
-        icon: UserCog,
+        children: [
+            {
+                label: "Admins",
+                href: "/admins",
+                icon: Users,
+            },
+            {
+                label: "Users",
+                href: "/users",
+                icon: UserCog,
+            },
+        ],
     },
     {
         label: "Places",
