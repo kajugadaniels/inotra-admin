@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Camera, Mail, MapPin, Phone, ShieldCheck, User, UserCircle } from "lucide-react";
+import { Camera, Mail, Phone, User, UserCircle, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 
 import { authStorage, updateAdminProfile } from "@/api/auth";
@@ -22,8 +22,6 @@ const AdminProfilePage = () => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const [country, setCountry] = useState("");
-    const [city, setCity] = useState("");
 
     const apiBaseUrl = useMemo(() => {
         const trimmed = DEFAULT_API_BASE_URL.trim();
@@ -36,8 +34,6 @@ const AdminProfilePage = () => {
         setName(storedUser?.name ?? "");
         setUsername(storedUser?.username ?? "");
         setPhoneNumber(storedUser?.phone_number ?? "");
-        setCountry(storedUser?.country ?? "");
-        setCity(storedUser?.city ?? "");
     }, []);
 
     useEffect(() => {
@@ -65,8 +61,6 @@ const AdminProfilePage = () => {
         if (name.trim()) formData.append("name", name.trim());
         if (username.trim()) formData.append("username", username.trim());
         if (phoneNumber.trim()) formData.append("phone_number", phoneNumber.trim());
-        if (country.trim()) formData.append("country", country.trim());
-        if (city.trim()) formData.append("city", city.trim());
         if (imageFile) formData.append("avatar_url", imageFile);
 
         const loadingId = toast.loading("Updating profile", {
@@ -186,17 +180,6 @@ const AdminProfilePage = () => {
                             Edit your profile information. Email is read-only.
                         </p>
                     </div>
-
-                    <div className="hidden items-center gap-2 rounded-2xl border border-border/60 bg-background/60 px-3 py-2 text-xs text-muted-foreground backdrop-blur sm:inline-flex">
-                        <MapPin className="h-4 w-4" />
-                        {city || country ? (
-                            <span className="max-w-[220px] truncate">
-                                {[city, country].filter(Boolean).join(", ")}
-                            </span>
-                        ) : (
-                            <span className="opacity-80">Location not set</span>
-                        )}
-                    </div>
                 </div>
 
                 <div className="mt-6 grid gap-6 lg:grid-cols-2">
@@ -268,34 +251,6 @@ const AdminProfilePage = () => {
                             />
                             <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
                         </div>
-                    </div>
-
-                    {/* Country */}
-                    <div className="space-y-2">
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Country
-                        </label>
-                        <Input
-                            value={country}
-                            onChange={(event) => setCountry(event.target.value)}
-                            placeholder="Country"
-                            disabled={isBusy}
-                            className="h-12 rounded-2xl border-border/60 bg-background/60 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
-                        />
-                    </div>
-
-                    {/* City */}
-                    <div className="space-y-2">
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            City
-                        </label>
-                        <Input
-                            value={city}
-                            onChange={(event) => setCity(event.target.value)}
-                            placeholder="City"
-                            disabled={isBusy}
-                            className="h-12 rounded-2xl border-border/60 bg-background/60 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
-                        />
                     </div>
                 </div>
 
