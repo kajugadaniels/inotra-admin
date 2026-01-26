@@ -10,6 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import Image from "next/image";
 
 const formatDate = (value?: string | null) => {
     if (!value) return "--";
@@ -73,7 +74,7 @@ const AdCreativesTable = ({
                                         <div className="flex items-center gap-3">
                                             <div className="h-12 w-12 overflow-hidden rounded-2xl border border-border/60 bg-muted/40">
                                                 {creative.image_url ? (
-                                                    <img
+                                                    <Image
                                                         src={creative.image_url}
                                                         alt={title}
                                                         className="h-full w-full object-cover"
@@ -84,9 +85,6 @@ const AdCreativesTable = ({
                                             <div className="min-w-0">
                                                 <p className="truncate text-sm font-semibold text-foreground">
                                                     {title}
-                                                </p>
-                                                <p className="text-xs text-muted-foreground">
-                                                    {creative.target_url ?? "--"}
                                                 </p>
                                             </div>
                                         </div>
