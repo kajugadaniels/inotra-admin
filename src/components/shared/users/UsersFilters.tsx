@@ -96,7 +96,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             setDraftFilters({ ...draftFilters, ordering: value })
                                         }
                                     >
-                                        <SelectTrigger className="mt-2 h-12 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
                                             <SelectValue placeholder="Select" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -122,7 +122,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             })
                                         }
                                     >
-                                        <SelectTrigger className="mt-2 h-12 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
                                             <SelectValue placeholder="Sort" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -148,7 +148,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             })
                                         }
                                     >
-                                        <SelectTrigger className="mt-2 h-12 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
                                             <SelectValue placeholder="Status" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -203,7 +203,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                             onFiltersChange({ ...filters, search: event.target.value })
                         }
                         placeholder="Search name, email, username, phone"
-                        className="h-11 rounded-2xl border-border/60 bg-background/60 pl-10"
+                        className="admin-field rounded-2xl border-border/60 bg-background/60 pl-10"
                         disabled={isLoading}
                     />
                 </div>
