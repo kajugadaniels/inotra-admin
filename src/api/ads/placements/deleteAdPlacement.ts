@@ -10,7 +10,7 @@ type Args = {
 export function deleteAdPlacement({ apiBaseUrl, accessToken, placementId }: Args) {
     return requestJson<BasicMessageResponse>({
         apiBaseUrl,
-        path: `/ads/placements/${placementId}/delete/`,
+        path: `/ads/placement/${placementId}/delete/`,
         method: "DELETE",
         accessToken,
     });

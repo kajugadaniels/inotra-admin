@@ -15,7 +15,7 @@ type Args = {
 export function updateAdPlacement({ apiBaseUrl, accessToken, placementId, data }: Args) {
     return requestJson<{ message: string; placement: AdPlacement }>({
         apiBaseUrl,
-        path: `/ads/placements/${placementId}/update/`,
+        path: `/ads/placement/${placementId}/update/`,
         method: "PATCH",
         accessToken,
         body: data,

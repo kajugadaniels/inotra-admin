@@ -14,7 +14,7 @@ type Args = {
 export function createAdPlacement({ apiBaseUrl, accessToken, data }: Args) {
     return requestJson<{ message: string; placement: AdPlacement }>({
         apiBaseUrl,
-        path: "/ads/placements/add/",
+        path: "/ads/placement/add/",
         method: "POST",
         accessToken,
         body: data,

@@ -10,7 +10,7 @@ type Args = {
 export function getAdPlacement({ apiBaseUrl, accessToken, placementId }: Args) {
     return requestJson<AdPlacement>({
         apiBaseUrl,
-        path: `/ads/placements/${placementId}/`,
+        path: `/ads/placement/${placementId}/`,
         method: "GET",
         accessToken,
     });
