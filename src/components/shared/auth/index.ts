@@ -5,3 +5,5 @@ export { default as AdminCredentialsForm } from "./AdminCredentialsForm";
 export type { AdminCredentialsFormProps } from "./AdminCredentialsForm";
 export { default as AdminGoogleSignIn } from "./AdminGoogleSignIn";
 export type { AdminGoogleSignInProps } from "./AdminGoogleSignIn";
+export { default as AdminAuthShell } from "./AdminAuthShell";
+export type { AdminAuthShellProps } from "./AdminAuthShell";
