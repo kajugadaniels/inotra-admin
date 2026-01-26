@@ -111,7 +111,7 @@ const AdminCredentialsForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-12 w-full rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
+                    className="h-12 w-full rounded-full fw-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
                 >
                     <span className="inline-flex items-center gap-2">
                         {authStatus === "signing-in" ? (

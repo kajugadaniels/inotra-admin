@@ -123,12 +123,18 @@ const AdPlacementEditDialog = ({
                     <Button
                         type="button"
                         variant="outline"
+                        className="h-12 rounded-full"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
                         Cancel
                     </Button>
-                    <Button type="button" onClick={handleSubmit} disabled={isSubmitting}>
+                    <Button
+                        type="button"
+                        className="h-12 rounded-full"
+                        onClick={handleSubmit}
+                        disabled={isSubmitting}
+                    >
                         Save changes
                     </Button>
                 </DialogFooter>

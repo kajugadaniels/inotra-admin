@@ -75,9 +75,6 @@ const AdPlacementsTable = ({
                                             <p className="truncate text-sm font-semibold text-foreground">
                                                 {title}
                                             </p>
-                                            <p className="text-xs text-muted-foreground">
-                                                {placement.id ?? "--"}
-                                            </p>
                                         </div>
                                     </TableCell>
                                     <TableCell className="text-sm text-muted-foreground">

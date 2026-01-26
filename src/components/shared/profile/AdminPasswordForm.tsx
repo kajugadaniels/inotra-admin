@@ -102,7 +102,7 @@ const AdminPasswordForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-12 rounded-2xl bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto"
+                    className="h-12 rounded-full bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto"
                 >
                     <span className="inline-flex items-center gap-2">
                         {isBusy ? (
