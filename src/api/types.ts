@@ -13,6 +13,7 @@ export type AdminUser = {
     image?: string | null;
     preferred_language?: string | null;
     preferred_languages?: string[];
+    is_active?: boolean | null;
     is_premium?: boolean | null;
     country?: string | null;
     city?: string | null;
