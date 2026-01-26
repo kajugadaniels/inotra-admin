@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 import { adminSidebarLinks } from "@/constants/sidebar-links";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +14,11 @@ type SidebarProps = {
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     const pathname = usePathname();
+    const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+
+    const toggleSection = (label: string) => {
+        setOpenSections((prev) => ({ ...prev, [label]: !prev[label] }));
+    };
 
     return (
         <>
@@ -64,13 +71,137 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                     {/* Nav */}
                     <nav className="mt-4 flex flex-col gap-1.5">
                         {adminSidebarLinks.map((link) => {
-                            const isActive = pathname === link.href || pathname.startsWith(link.href);
                             const Icon = link.icon;
+
+                            if (link.children?.length) {
+                                const isChildActive = link.children.some(
+                                    (child) =>
+                                        child.href &&
+                                        (pathname === child.href || pathname.startsWith(child.href))
+                                );
+                                const isExpanded = isChildActive || openSections[link.label];
+
+                                return (
+                                    <div key={link.label} className="space-y-1">
+                                        <button
+                                            type="button"
+                                            onClick={() => toggleSection(link.label)}
+                                            className={cn(
+                                                "group relative flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition",
+                                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                                                isChildActive
+                                                    ? "bg-primary/10 text-foreground ring-1 ring-primary/20"
+                                                    : "text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+                                            )}
+                                            aria-expanded={isExpanded}
+                                            aria-controls={`sidebar-${link.label}`}
+                                        >
+                                            <span
+                                                className={cn(
+                                                    "absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full transition",
+                                                    isChildActive
+                                                        ? "bg-primary"
+                                                        : "bg-transparent group-hover:bg-border/60"
+                                                )}
+                                                aria-hidden="true"
+                                            />
+
+                                            <span
+                                                className={cn(
+                                                    "grid h-9 w-9 place-items-center rounded-full transition",
+                                                    isChildActive
+                                                        ? "bg-primary/15 ring-1 ring-primary/20"
+                                                        : "bg-muted/20 group-hover:bg-muted/40"
+                                                )}
+                                            >
+                                                <Icon className="h-[18px] w-[18px]" />
+                                            </span>
+
+                                            <span className="flex-1 truncate text-left">{link.label}</span>
+                                            <ChevronDown
+                                                className={cn(
+                                                    "h-4 w-4 transition-transform",
+                                                    isExpanded ? "rotate-180 text-foreground" : "text-muted-foreground"
+                                                )}
+                                                aria-hidden="true"
+                                            />
+
+                                            <span
+                                                className={cn(
+                                                    "pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition",
+                                                    "bg-gradient-to-r from-transparent via-white/5 to-transparent",
+                                                    "group-hover:opacity-100"
+                                                )}
+                                                aria-hidden="true"
+                                            />
+                                        </button>
+
+                                        <div
+                                            id={`sidebar-${link.label}`}
+                                            className={cn(
+                                                "overflow-hidden pl-2 transition-[max-height,opacity] duration-300",
+                                                isExpanded ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                                            )}
+                                        >
+                                            <div className="mt-1 flex flex-col gap-1">
+                                                {link.children.map((child) => {
+                                                    const childActive =
+                                                        child.href &&
+                                                        (pathname === child.href ||
+                                                            pathname.startsWith(child.href));
+                                                    const ChildIcon = child.icon;
+
+                                                    return (
+                                                        <Link
+                                                            key={child.href}
+                                                            href={child.href ?? "#"}
+                                                            onClick={onClose}
+                                                            className={cn(
+                                                                "group relative flex items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium transition",
+                                                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                                                                childActive
+                                                                    ? "bg-primary/10 text-foreground ring-1 ring-primary/20"
+                                                                    : "text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+                                                            )}
+                                                        >
+                                                            <span
+                                                                className={cn(
+                                                                    "absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full transition",
+                                                                    childActive
+                                                                        ? "bg-primary"
+                                                                        : "bg-transparent group-hover:bg-border/60"
+                                                                )}
+                                                                aria-hidden="true"
+                                                            />
+
+                                                            <span
+                                                                className={cn(
+                                                                    "grid h-8 w-8 place-items-center rounded-full transition",
+                                                                    childActive
+                                                                        ? "bg-primary/15 ring-1 ring-primary/20"
+                                                                        : "bg-muted/20 group-hover:bg-muted/40"
+                                                                )}
+                                                            >
+                                                                <ChildIcon className="h-4 w-4" />
+                                                            </span>
+
+                                                            <span className="truncate">{child.label}</span>
+                                                        </Link>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            }
+
+                            const isActive =
+                                link.href && (pathname === link.href || pathname.startsWith(link.href));
 
                             return (
                                 <Link
                                     key={link.href}
-                                    href={link.href}
+                                    href={link.href ?? "#"}
                                     onClick={onClose}
                                     className={cn(
                                         "group relative flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition",
