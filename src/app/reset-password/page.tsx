@@ -129,13 +129,13 @@ const ResetPasswordPage = () => {
                         Email address
                     </label>
                     <div className="relative">
-                        <Mail className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
                             type="email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
                             placeholder="admin@example.com"
-                            className="pl-10"
+                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-12 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                             autoComplete="email"
                             disabled={isBusy}
                         />
@@ -147,12 +147,12 @@ const ResetPasswordPage = () => {
                         OTP code
                     </label>
                     <div className="relative">
-                        <KeyRound className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <KeyRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
                             value={otp}
                             onChange={(event) => setOtp(event.target.value)}
                             placeholder="Enter the code"
-                            className="pl-10"
+                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-12 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                             disabled={isBusy}
                         />
                     </div>
@@ -163,13 +163,13 @@ const ResetPasswordPage = () => {
                         New password
                     </label>
                     <div className="relative">
-                        <Lock className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
                             type="password"
                             value={newPassword}
                             onChange={(event) => setNewPassword(event.target.value)}
                             placeholder="••••••••"
-                            className="pl-10"
+                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-12 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                             autoComplete="new-password"
                             disabled={isBusy}
                         />
@@ -181,20 +181,24 @@ const ResetPasswordPage = () => {
                         Confirm password
                     </label>
                     <div className="relative">
-                        <Lock className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
                             type="password"
                             value={confirmPassword}
                             onChange={(event) => setConfirmPassword(event.target.value)}
                             placeholder="••••••••"
-                            className="pl-10"
+                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-12 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                             autoComplete="new-password"
                             disabled={isBusy}
                         />
                     </div>
                 </div>
 
-                <Button type="submit" className="h-11 w-full rounded-full" disabled={isBusy}>
+                <Button
+                    type="submit"
+                    className="h-12 w-full rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
+                    disabled={isBusy}
+                >
                     {isBusy ? "Updating..." : "Update password"}
                 </Button>
 
