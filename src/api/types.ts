@@ -47,3 +47,12 @@ export type PaginatedResponse<T> = {
     previous: string | null;
     results: T[];
 };
+
+export type AdPlacement = {
+    id?: string;
+    key?: string | null;
+    title?: string | null;
+    is_active?: boolean | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+};
