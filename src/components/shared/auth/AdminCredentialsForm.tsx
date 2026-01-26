@@ -1,5 +1,6 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
+import Link from "next/link";
 import { Eye, EyeOff, Lock, Mail, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ export type AdminCredentialsFormProps = {
     onIdentifierChange: (value: string) => void;
     onPasswordChange: (value: string) => void;
     onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+    forgotPasswordHref?: string;
 };
 
 const AdminCredentialsForm = ({
@@ -25,6 +27,7 @@ const AdminCredentialsForm = ({
     onIdentifierChange,
     onPasswordChange,
     onSubmit,
+    forgotPasswordHref,
 }: AdminCredentialsFormProps) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -121,6 +124,17 @@ const AdminCredentialsForm = ({
                         )}
                     </span>
                 </Button>
+
+                {forgotPasswordHref ? (
+                    <div className="text-center text-xs text-muted-foreground">
+                        <Link
+                            href={forgotPasswordHref}
+                            className="font-semibold text-primary hover:underline"
+                        >
+                            Forgot password?
+                        </Link>
+                    </div>
+                ) : null}
 
                 {statusLabel ? (
                     <p className="text-center text-xs text-muted-foreground">{statusLabel}</p>
