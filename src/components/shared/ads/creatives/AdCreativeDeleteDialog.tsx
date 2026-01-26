@@ -85,8 +85,16 @@ const AdCreativeDeleteDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isSubmitting}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} disabled={isSubmitting}>
+                    <AlertDialogCancel
+                        disabled={isSubmitting}
+                    >
+                        Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                        className="h-11 rounded-full"
+                        onClick={handleDelete}
+                        disabled={isSubmitting}
+                    >
                         Delete creative
                     </AlertDialogAction>
                 </AlertDialogFooter>
