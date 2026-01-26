@@ -8,6 +8,7 @@ export type {
     PasswordResetResponse,
     PaginatedResponse,
     AdPlacement,
+    AdCreative,
 } from "./types";
 export {
     loginAdminWithPassword,
@@ -24,4 +25,9 @@ export {
     updateAdPlacement,
     deleteAdPlacement,
     getAdPlacement,
+    listAdCreatives,
+    getAdCreative,
+    createAdCreative,
+    updateAdCreative,
+    deleteAdCreative,
 } from "./ads";
