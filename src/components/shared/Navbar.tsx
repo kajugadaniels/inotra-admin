@@ -5,11 +5,8 @@ import { useRouter } from "next/navigation";
 import { LogOut, Menu, Moon, ShieldCheck, Sun, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
-import {
-    authStorage,
-    getGoogleIdentityClient,
-    type UserProfile,
-} from "@/api/auth/auth";
+import { authStorage, getGoogleIdentityClient } from "@/api/auth";
+import type { AdminUser } from "@/api/types";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -28,7 +25,7 @@ type NavbarProps = {
 
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
     const router = useRouter();
-    const [user, setUser] = useState<UserProfile | null>(null);
+    const [user, setUser] = useState<AdminUser | null>(null);
     const [isMounted, setIsMounted] = useState(false);
     const { resolvedTheme, setTheme } = useTheme();
 
@@ -86,7 +83,11 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                     size="icon"
                     className="rounded-full border-border/60 bg-background/70"
                     onClick={() => setTheme(isDark ? "light" : "dark")}
-                    aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+                    aria-label={
+                        isMounted
+                            ? `Switch to ${isDark ? "light" : "dark"} mode`
+                            : "Toggle color theme"
+                    }
                 >
                     {isMounted && isDark ? (
                         <Sun className="h-4 w-4" />
