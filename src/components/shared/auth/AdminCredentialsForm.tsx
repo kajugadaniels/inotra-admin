@@ -31,7 +31,7 @@ const AdminCredentialsForm = ({
     return (
         <form
             onSubmit={onSubmit}
-            className="mt-7 space-y-5 rounded-3xl border border-border/60 bg-card/60 p-6 shadow-xl shadow-black/5 backdrop-blur-xl"
+            className="mt-7 space-y-5 rounded-3xl"
         >
             {/* Header */}
             <div className="flex items-start justify-between gap-3">
