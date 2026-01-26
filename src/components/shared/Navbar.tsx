@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogOut, Menu, Moon, ShieldCheck, Sun, User } from "lucide-react";
-import { useTheme } from "next-themes";
+import { LogOut, Menu, ShieldCheck, User } from "lucide-react";
 import { toast } from "sonner";
 import { authStorage, getGoogleIdentityClient } from "@/api/auth";
 import type { AdminUser } from "@/api/types";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,8 +26,6 @@ type NavbarProps = {
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
     const router = useRouter();
     const [user, setUser] = useState<AdminUser | null>(null);
-    const [isMounted, setIsMounted] = useState(false);
-    const { resolvedTheme, setTheme } = useTheme();
 
     useEffect(() => {
         const syncUser = () => {
@@ -35,7 +33,6 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
         };
 
         syncUser();
-        setIsMounted(true);
 
         if (typeof window === "undefined") return;
 
@@ -60,7 +57,6 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
     const userLabel = user?.name || user?.email || "Admin";
     const userInitial = userLabel.slice(0, 1).toUpperCase();
     const userEmail = user?.email ?? "";
-    const isDark = resolvedTheme === "dark";
 
     return (
         <header className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card/80 px-4 py-4 shadow-lg backdrop-blur sm:px-6">
@@ -91,24 +87,10 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-                <Button
+                <AnimatedThemeToggler
                     type="button"
-                    variant="outline"
-                    size="icon"
-                    className="rounded-full border-border/60 bg-background/70"
-                    onClick={() => setTheme(isDark ? "light" : "dark")}
-                    aria-label={
-                        isMounted
-                            ? `Switch to ${isDark ? "light" : "dark"} mode`
-                            : "Toggle color theme"
-                    }
-                >
-                    {isMounted && isDark ? (
-                        <Sun className="h-4 w-4" />
-                    ) : (
-                        <Moon className="h-4 w-4" />
-                    )}
-                </Button>
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background/70 text-foreground shadow-sm"
+                />
 
                 {/* User dropdown */}
                 <DropdownMenu>
