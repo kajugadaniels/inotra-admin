@@ -1,18 +1,12 @@
-import { Moon, ShieldCheck, Sun } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 type AdminLoginHeaderProps = {
-    isDark: boolean;
-    isMounted: boolean;
-    onToggleTheme: () => void;
     badgeText?: string;
 };
 
 const AdminLoginHeader = ({
-    isDark,
-    isMounted,
-    onToggleTheme,
     badgeText = "Admin login",
 }: AdminLoginHeaderProps) => {
     return (
@@ -23,24 +17,10 @@ const AdminLoginHeader = ({
             </div>
 
             <div className="flex items-center gap-3">
-                <Button
+                <AnimatedThemeToggler
                     type="button"
-                    variant="outline"
-                    size="icon"
-                    className="h-9 w-9 rounded-full border-border/60 bg-background/70"
-                    onClick={onToggleTheme}
-                    aria-label={
-                        isMounted
-                            ? `Switch to ${isDark ? "light" : "dark"} mode`
-                            : "Toggle color theme"
-                    }
-                >
-                    {isMounted && isDark ? (
-                        <Sun className="h-4 w-4" />
-                    ) : (
-                        <Moon className="h-4 w-4" />
-                    )}
-                </Button>
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background/70 text-foreground shadow-sm"
+                />
             </div>
         </div>
     );
