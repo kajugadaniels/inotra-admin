@@ -191,6 +191,13 @@ body {
   }
 }
 
+@layer components {
+  .admin-field {
+    height: 3rem !important;
+    min-height: 3rem !important;
+  }
+}
+
 @keyframes sound-wave {
   0% {
     height: 10%;
