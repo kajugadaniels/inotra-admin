@@ -1,5 +1,6 @@
 import type { FormEvent } from "react";
-import { Lock, Mail } from "lucide-react";
+import { useState } from "react";
+import { Eye, EyeOff, Lock, Mail, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,53 +26,106 @@ const AdminCredentialsForm = ({
     onPasswordChange,
     onSubmit,
 }: AdminCredentialsFormProps) => {
+    const [showPassword, setShowPassword] = useState(false);
+
     return (
         <form
             onSubmit={onSubmit}
-            className="mt-7 space-y-4 rounded-2xl border border-border/60 bg-background/60 p-5 backdrop-blur"
+            className="mt-7 space-y-5 rounded-3xl border border-border/60 bg-card/60 p-6 shadow-xl shadow-black/5 backdrop-blur-xl"
         >
+            {/* Header */}
+            <div className="flex items-start justify-between gap-3">
+                <div>
+                    <p className="text-sm font-semibold text-foreground">Admin sign in</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                        Use your admin credentials to continue.
+                    </p>
+                </div>
+
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-border/60 bg-background/60">
+                    <ShieldCheck className="h-5 w-5 text-muted-foreground" />
+                </div>
+            </div>
+
+            {/* Identifier */}
             <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Email / Phone / Username
                 </label>
+
                 <div className="relative">
-                    <Mail className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                         value={identifier}
                         onChange={(event) => onIdentifierChange(event.target.value)}
                         placeholder="admin@example.com"
-                        className="pl-10"
                         autoComplete="username"
                         disabled={isBusy}
+                        className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                     />
+                    <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
                 </div>
             </div>
 
+            {/* Password */}
             <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Password
                 </label>
+
                 <div className="relative">
-                    <Lock className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(event) => onPasswordChange(event.target.value)}
                         placeholder="••••••••"
-                        className="pl-10"
                         autoComplete="current-password"
                         disabled={isBusy}
+                        className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-12 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                     />
+
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword((v) => !v)}
+                        disabled={isBusy}
+                        className="absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl border border-border/60 bg-background/60 text-muted-foreground transition hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60"
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                        {showPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                        ) : (
+                            <Eye className="h-4 w-4" />
+                        )}
+                    </button>
+
+                    <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
                 </div>
             </div>
 
-            <Button type="submit" className="h-11 w-full rounded-full" disabled={isBusy}>
-                {authStatus === "signing-in" ? "Signing in..." : "Sign in"}
-            </Button>
+            {/* Submit */}
+            <div className="space-y-3">
+                <Button
+                    type="submit"
+                    disabled={isBusy}
+                    className="h-12 w-full rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
+                >
+                    <span className="inline-flex items-center gap-2">
+                        {authStatus === "signing-in" ? (
+                            <>
+                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
+                                Signing in...
+                            </>
+                        ) : (
+                            <>Sign in</>
+                        )}
+                    </span>
+                </Button>
 
-            {statusLabel ? (
-                <p className="text-center text-xs text-muted-foreground">{statusLabel}</p>
-            ) : null}
+                {statusLabel ? (
+                    <p className="text-center text-xs text-muted-foreground">{statusLabel}</p>
+                ) : null}
+            </div>
         </form>
     );
 };
