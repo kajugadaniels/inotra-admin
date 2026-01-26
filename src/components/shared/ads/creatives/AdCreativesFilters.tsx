@@ -166,12 +166,14 @@ const AdCreativesFilters = ({
                                 <Button
                                     type="button"
                                     variant="outline"
+                                    className="h-11 rounded-full"
                                     onClick={() => setDialogOpen(false)}
                                 >
                                     Cancel
                                 </Button>
                                 <Button
                                     type="button"
+                                    className="h-11 rounded-full"
                                     onClick={() => {
                                         onFiltersChange(draftFilters);
                                         setDialogOpen(false);
