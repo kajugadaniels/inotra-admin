@@ -1,20 +1,22 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Camera, Mail, Phone, User, UserCircle, ShieldCheck } from "lucide-react";
+import { Camera, KeyRound, Lock, Mail, Phone, User, UserCircle, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 
-import { authStorage, updateAdminProfile } from "@/api/auth";
+import { authStorage, changeAdminPassword, updateAdminProfile } from "@/api/auth";
 import type { AdminUser } from "@/api/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const DEFAULT_API_BASE_URL =
     process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/superadmin";
 
 const AdminProfilePage = () => {
-    const [isBusy, setIsBusy] = useState(false);
+    const [isProfileBusy, setIsProfileBusy] = useState(false);
+    const [isPasswordBusy, setIsPasswordBusy] = useState(false);
     const [user, setUser] = useState<AdminUser | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -22,6 +24,9 @@ const AdminProfilePage = () => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const apiBaseUrl = useMemo(() => {
         const trimmed = DEFAULT_API_BASE_URL.trim();
@@ -67,7 +72,7 @@ const AdminProfilePage = () => {
             description: "Saving your changes...",
         });
 
-        setIsBusy(true);
+        setIsProfileBusy(true);
         try {
             const result = await updateAdminProfile({
                 apiBaseUrl,
@@ -102,12 +107,78 @@ const AdminProfilePage = () => {
                     error instanceof Error ? error.message : "Check API connectivity and try again.",
             });
         } finally {
-            setIsBusy(false);
+            setIsProfileBusy(false);
         }
     };
 
     const userLabel = user?.name || user?.email || "Admin";
     const userInitial = userLabel.slice(0, 1).toUpperCase();
+
+    const handlePasswordChange = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const tokens = authStorage.getTokens();
+        if (!tokens?.access) {
+            toast.error("Session missing", {
+                description: "Sign in again to update your password.",
+            });
+            return;
+        }
+
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            toast.error("Missing details", {
+                description: "Enter your current and new password to continue.",
+            });
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            toast.error("Passwords do not match", {
+                description: "Please confirm the new password again.",
+            });
+            return;
+        }
+
+        const loadingId = toast.loading("Updating password", {
+            description: "Verifying credentials...",
+        });
+
+        setIsPasswordBusy(true);
+        try {
+            const result = await changeAdminPassword({
+                apiBaseUrl,
+                accessToken: tokens.access,
+                current_password: currentPassword,
+                new_password: newPassword,
+                confirm_new_password: confirmPassword,
+            });
+
+            if (!result.ok) {
+                toast.error("Update failed", {
+                    id: loadingId,
+                    description: result.body?.message ?? "Unable to update password.",
+                });
+                return;
+            }
+
+            setCurrentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+
+            toast.success("Password updated", {
+                id: loadingId,
+                description: "Use your new password next time you sign in.",
+            });
+        } catch (error) {
+            toast.error("Update failed", {
+                id: loadingId,
+                description:
+                    error instanceof Error ? error.message : "Check API connectivity and try again.",
+            });
+        } finally {
+            setIsPasswordBusy(false);
+        }
+    };
 
     return (
         <div className="relative space-y-8">
@@ -156,7 +227,7 @@ const AdminProfilePage = () => {
                                 onChange={(event) =>
                                     setImageFile(event.target.files ? event.target.files[0] : null)
                                 }
-                                disabled={isBusy}
+                                disabled={isProfileBusy}
                             />
                         </div>
 
@@ -171,116 +242,238 @@ const AdminProfilePage = () => {
                 </div>
             </div>
 
-            {/* Form Card */}
-            <form
-                onSubmit={handleSubmit}
-                className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl sm:p-8"
-            >
-                <div className="flex items-start justify-between gap-4">
-                    <div>
-                        <p className="text-sm font-semibold text-foreground">Account details</p>
-                        <p className="mt-1 text-xs text-muted-foreground">
-                            Edit your profile information. Email is read-only.
+            <Tabs defaultValue="profile" orientation="vertical" className="gap-6 lg:flex">
+                <aside className="w-full lg:w-64">
+                    <div className="rounded-3xl border border-border/60 bg-card/70 p-4 shadow-2xl shadow-black/5 backdrop-blur-xl">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                            Settings
                         </p>
+                        <TabsList
+                            variant="line"
+                            className="mt-4 w-full flex-col gap-2 bg-transparent"
+                        >
+                            <TabsTrigger
+                                value="profile"
+                                className="w-full justify-start gap-2 rounded-2xl border border-transparent px-3 py-2 text-sm data-[state=active]:border-primary/20 data-[state=active]:bg-primary/10"
+                            >
+                                <User className="h-4 w-4" />
+                                Profile details
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="password"
+                                className="w-full justify-start gap-2 rounded-2xl border border-transparent px-3 py-2 text-sm data-[state=active]:border-primary/20 data-[state=active]:bg-primary/10"
+                            >
+                                <Lock className="h-4 w-4" />
+                                Change password
+                            </TabsTrigger>
+                        </TabsList>
                     </div>
+                </aside>
+
+                <div className="flex-1 space-y-6">
+                    <TabsContent value="profile">
+                        <form
+                            onSubmit={handleSubmit}
+                            className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl sm:p-8"
+                        >
+                            <div className="flex items-start justify-between gap-4">
+                                <div>
+                                    <p className="text-sm font-semibold text-foreground">Account details</p>
+                                    <p className="mt-1 text-xs text-muted-foreground">
+                                        Edit your profile information. Email is read-only.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                        Full name
+                                    </label>
+                                    <div className="relative">
+                                        <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                        <Input
+                                            value={name}
+                                            onChange={(event) => setName(event.target.value)}
+                                            placeholder="Admin name"
+                                            disabled={isProfileBusy}
+                                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                                        />
+                                        <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                        Username
+                                    </label>
+                                    <div className="relative">
+                                        <UserCircle className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                        <Input
+                                            value={username}
+                                            onChange={(event) => setUsername(event.target.value)}
+                                            placeholder="admin.username"
+                                            disabled={isProfileBusy}
+                                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                                        />
+                                        <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                        Email (read only)
+                                    </label>
+                                    <div className="relative">
+                                        <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                        <Input
+                                            value={user?.email ?? ""}
+                                            readOnly
+                                            className="h-12 rounded-2xl border-border/60 bg-background/40 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                                        />
+                                        <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                        Phone number
+                                    </label>
+                                    <div className="relative">
+                                        <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                        <Input
+                                            value={phoneNumber}
+                                            onChange={(event) => setPhoneNumber(event.target.value)}
+                                            placeholder="+250..."
+                                            disabled={isProfileBusy}
+                                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                                        />
+                                        <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-8 flex flex-col gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                                <p className="text-xs text-muted-foreground">
+                                    Changes will be applied to your admin profile immediately.
+                                </p>
+
+                                <Button
+                                    type="submit"
+                                    disabled={isProfileBusy}
+                                    className="h-12 rounded-2xl bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto"
+                                >
+                                    <span className="inline-flex items-center gap-2">
+                                        {isProfileBusy ? (
+                                            <>
+                                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
+                                                Saving...
+                                            </>
+                                        ) : (
+                                            <>Save changes</>
+                                        )}
+                                    </span>
+                                </Button>
+                            </div>
+                        </form>
+                    </TabsContent>
+
+                    <TabsContent value="password">
+                        <form
+                            onSubmit={handlePasswordChange}
+                            className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl sm:p-8"
+                        >
+                            <div className="flex items-start justify-between gap-4">
+                                <div>
+                                    <p className="text-sm font-semibold text-foreground">Update password</p>
+                                    <p className="mt-1 text-xs text-muted-foreground">
+                                        Use a strong password with uppercase letters, numbers, and symbols.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                                <div className="space-y-2 lg:col-span-2">
+                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                        Current password
+                                    </label>
+                                    <div className="relative">
+                                        <KeyRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                        <Input
+                                            type="password"
+                                            value={currentPassword}
+                                            onChange={(event) => setCurrentPassword(event.target.value)}
+                                            placeholder="••••••••"
+                                            disabled={isPasswordBusy}
+                                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                                        />
+                                        <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                        New password
+                                    </label>
+                                    <div className="relative">
+                                        <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                        <Input
+                                            type="password"
+                                            value={newPassword}
+                                            onChange={(event) => setNewPassword(event.target.value)}
+                                            placeholder="••••••••"
+                                            disabled={isPasswordBusy}
+                                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                                        />
+                                        <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                        Confirm new password
+                                    </label>
+                                    <div className="relative">
+                                        <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                        <Input
+                                            type="password"
+                                            value={confirmPassword}
+                                            onChange={(event) => setConfirmPassword(event.target.value)}
+                                            placeholder="••••••••"
+                                            disabled={isPasswordBusy}
+                                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                                        />
+                                        <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-8 flex flex-col gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                                <p className="text-xs text-muted-foreground">
+                                    After changing your password, use the new credentials to sign in.
+                                </p>
+
+                                <Button
+                                    type="submit"
+                                    disabled={isPasswordBusy}
+                                    className="h-12 rounded-2xl bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto"
+                                >
+                                    <span className="inline-flex items-center gap-2">
+                                        {isPasswordBusy ? (
+                                            <>
+                                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
+                                                Updating...
+                                            </>
+                                        ) : (
+                                            <>Update password</>
+                                        )}
+                                    </span>
+                                </Button>
+                            </div>
+                        </form>
+                    </TabsContent>
                 </div>
-
-                <div className="mt-6 grid gap-6 lg:grid-cols-2">
-                    {/* Full name */}
-                    <div className="space-y-2">
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Full name
-                        </label>
-                        <div className="relative">
-                            <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                            <Input
-                                value={name}
-                                onChange={(event) => setName(event.target.value)}
-                                placeholder="Admin name"
-                                disabled={isBusy}
-                                className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
-                            />
-                            <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
-                        </div>
-                    </div>
-
-                    {/* Username */}
-                    <div className="space-y-2">
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Username
-                        </label>
-                        <div className="relative">
-                            <UserCircle className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                            <Input
-                                value={username}
-                                onChange={(event) => setUsername(event.target.value)}
-                                placeholder="admin.username"
-                                disabled={isBusy}
-                                className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
-                            />
-                            <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
-                        </div>
-                    </div>
-
-                    {/* Email (read only) */}
-                    <div className="space-y-2">
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Email (read only)
-                        </label>
-                        <div className="relative">
-                            <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                            <Input
-                                value={user?.email ?? ""}
-                                readOnly
-                                className="h-12 rounded-2xl border-border/60 bg-background/40 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
-                            />
-                            <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
-                        </div>
-                    </div>
-
-                    {/* Phone */}
-                    <div className="space-y-2">
-                        <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Phone number
-                        </label>
-                        <div className="relative">
-                            <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                            <Input
-                                value={phoneNumber}
-                                onChange={(event) => setPhoneNumber(event.target.value)}
-                                placeholder="+250..."
-                                disabled={isBusy}
-                                className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
-                            />
-                            <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
-                        </div>
-                    </div>
-                </div>
-
-                {/* Footer actions */}
-                <div className="mt-8 flex flex-col gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="text-xs text-muted-foreground">
-                        Changes will be applied to your admin profile immediately.
-                    </p>
-
-                    <Button
-                        type="submit"
-                        disabled={isBusy}
-                        className="h-12 rounded-2xl bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto"
-                    >
-                        <span className="inline-flex items-center gap-2">
-                            {isBusy ? (
-                                <>
-                                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
-                                    Saving...
-                                </>
-                            ) : (
-                                <>Save changes</>
-                            )}
-                        </span>
-                    </Button>
-                </div>
-            </form>
+            </Tabs>
         </div>
     );
 };
