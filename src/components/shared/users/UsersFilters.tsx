@@ -88,26 +88,6 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                             <div className="space-y-4">
                                 <div>
                                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                                        Search
-                                    </label>
-                                    <div className="relative mt-2">
-                                        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                                        <Input
-                                            value={draftFilters.search}
-                                            onChange={(event) =>
-                                                setDraftFilters({
-                                                    ...draftFilters,
-                                                    search: event.target.value,
-                                                })
-                                            }
-                                            placeholder="Search name, email, username, phone"
-                                            className="h-11 w-full rounded-2xl border-border/60 bg-background/60 pl-10"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Order by
                                     </label>
                                     <Select
@@ -116,7 +96,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             setDraftFilters({ ...draftFilters, ordering: value })
                                         }
                                     >
-                                        <SelectTrigger className="mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="mt-2 h-12 w-full rounded-2xl border-border/60 bg-background/60">
                                             <SelectValue placeholder="Select" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -142,7 +122,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             })
                                         }
                                     >
-                                        <SelectTrigger className="mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="mt-2 h-12 w-full rounded-2xl border-border/60 bg-background/60">
                                             <SelectValue placeholder="Sort" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -168,7 +148,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             })
                                         }
                                     >
-                                        <SelectTrigger className="mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="mt-2 h-12 w-full rounded-2xl border-border/60 bg-background/60">
                                             <SelectValue placeholder="Status" />
                                         </SelectTrigger>
                                         <SelectContent>
