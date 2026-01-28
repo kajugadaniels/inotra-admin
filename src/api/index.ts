@@ -9,6 +9,10 @@ export type {
     PaginatedResponse,
     AdPlacement,
     AdCreative,
+    PlaceCategory,
+    PlaceListItem,
+    PlaceDetail,
+    PlaceImage,
 } from "./types";
 export {
     loginAdminWithPassword,
@@ -31,3 +35,14 @@ export {
     updateAdCreative,
     deleteAdCreative,
 } from "./ads";
+export {
+    listPlaceCategories,
+    createPlaceCategory,
+    updatePlaceCategory,
+    deletePlaceCategory,
+    listPlaces,
+    getPlace,
+    createPlace,
+    updatePlace,
+    deletePlace,
+} from "./places";
