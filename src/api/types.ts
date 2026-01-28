@@ -68,3 +68,62 @@ export type AdCreative = {
     placement_id?: string | null;
     placement_key?: string | null;
 };
+
+export type PlaceCategory = {
+    id?: string;
+    name?: string | null;
+    icon?: string | null;
+    is_active?: boolean | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+};
+
+export type PlaceListItem = {
+    id?: string;
+    name?: string | null;
+    category_id?: string | null;
+    category_name?: string | null;
+    category_icon?: string | null;
+    city?: string | null;
+    country?: string | null;
+    is_active?: boolean | null;
+    is_verified?: boolean | null;
+    avg_rating?: string | number | null;
+    reviews_count?: number | null;
+    first_image_url?: string | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+};
+
+export type PlaceImage = {
+    id?: string;
+    image_url?: string | null;
+    caption?: string | null;
+    sort_order?: number | null;
+};
+
+export type PlaceDetail = {
+    id?: string;
+    name?: string | null;
+    description?: string | null;
+    category_id?: string | null;
+    category_name?: string | null;
+    category_icon?: string | null;
+    address?: string | null;
+    city?: string | null;
+    country?: string | null;
+    latitude?: string | number | null;
+    longitude?: string | number | null;
+    phone?: string | null;
+    whatsapp?: string | null;
+    email?: string | null;
+    website?: string | null;
+    opening_hours?: unknown;
+    is_verified?: boolean | null;
+    is_active?: boolean | null;
+    avg_rating?: string | number | null;
+    reviews_count?: number | null;
+    images?: PlaceImage[];
+    created_at?: string | null;
+    updated_at?: string | null;
+};
