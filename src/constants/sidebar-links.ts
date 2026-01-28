@@ -57,9 +57,30 @@ export const adminSidebarLinks: SidebarLink[] = [
         icon: VanIcon,
     },
     {
-        label: "Places",
-        href: "/places",
+        label: "Listings",
         icon: MapPin,
+        children: [
+            {
+                label: "Listing Categories",
+                href: "/listings/categories",
+                icon: Layers,
+            },
+            {
+                label: "Listings",
+                href: "/listings",
+                icon: MapPin,
+            },
+            {
+                label: "Listing Requests",
+                href: "/listings/requests",
+                icon: FileText,
+            },
+            {
+                label: "Listing Reservations",
+                href: "/listings/reservations",
+                icon: CalendarCheck,
+            },
+        ],
     },
     {
         label: "Events",
