@@ -14,6 +14,7 @@ import {
     UserCog,
     Users,
     type LucideIcon,
+    VanIcon,
 } from "lucide-react";
 
 export type SidebarLink = {
@@ -49,6 +50,11 @@ export const adminSidebarLinks: SidebarLink[] = [
                 icon: UserCog,
             },
         ],
+    },
+    {
+        label: "Trip Packages",
+        href: "/trip-packages",
+        icon: VanIcon,
     },
     {
         label: "Places",

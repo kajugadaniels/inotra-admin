@@ -108,6 +108,9 @@ const AdCreativeDetailsDialog = ({
                                 src={creative.image_url}
                                 alt={creative.title ?? "Ad creative"}
                                 className="h-56 w-full object-cover"
+                                width={800}
+                                height={300}
+                                priority
                             />
                         ) : (
                             <div className="flex h-56 items-center justify-center text-sm text-muted-foreground">
