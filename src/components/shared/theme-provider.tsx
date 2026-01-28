@@ -11,7 +11,7 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     return (
         <NextThemesProvider
             attribute="class"
-            defaultTheme="dark"
+            defaultTheme="light"
             enableSystem={false}
             storageKey="inotra-theme"
             disableTransitionOnChange
