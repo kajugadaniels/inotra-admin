@@ -28,7 +28,7 @@ const ListingCategoryForm = ({
         <div className="space-y-4">
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Listing category name
+                    Listing category name (required)
                 </label>
                 <Input
                     value={form.name}
@@ -45,7 +45,7 @@ const ListingCategoryForm = ({
             </div>
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Icon
+                    Icon (optional)
                 </label>
                 <Input
                     value={form.icon}
@@ -57,7 +57,7 @@ const ListingCategoryForm = ({
             </div>
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Status
+                    Status (optional)
                 </label>
                 <Select
                     value={form.is_active ? "true" : "false"}
