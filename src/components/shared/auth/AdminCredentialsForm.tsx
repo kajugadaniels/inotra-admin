@@ -53,7 +53,7 @@ const AdminCredentialsForm = ({
             {/* Identifier */}
             <div className="space-y-2">
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Email / Phone / Username
+                    Email / Phone / Username (required)
                 </label>
 
                 <div className="relative">
@@ -73,7 +73,7 @@ const AdminCredentialsForm = ({
             {/* Password */}
             <div className="space-y-2">
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Password
+                    Password (required)
                 </label>
 
                 <div className="relative">
