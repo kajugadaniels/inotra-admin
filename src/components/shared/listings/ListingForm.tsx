@@ -70,7 +70,7 @@ const ListingForm = ({
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Listing name
+                        Listing name (required)
                     </label>
                     <Input
                         value={form.name}
@@ -83,7 +83,7 @@ const ListingForm = ({
 
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Listing category
+                        Listing category (optional)
                     </label>
                     <Select
                         value={form.categoryId || "uncategorized"}
@@ -112,7 +112,7 @@ const ListingForm = ({
 
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Description
+                    Description (optional)
                 </label>
                 <Textarea
                     value={form.description}
@@ -126,7 +126,7 @@ const ListingForm = ({
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Address
+                        Address (optional)
                     </label>
                     <Input
                         value={form.address}
@@ -138,7 +138,7 @@ const ListingForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        City
+                        City (optional)
                     </label>
                     <Input
                         value={form.city}
@@ -150,7 +150,7 @@ const ListingForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Country
+                        Country (optional)
                     </label>
                     <Input
                         value={form.country}
@@ -162,7 +162,7 @@ const ListingForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Phone
+                        Phone (optional)
                     </label>
                     <Input
                         value={form.phone}
@@ -174,7 +174,7 @@ const ListingForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        WhatsApp
+                        WhatsApp (optional)
                     </label>
                     <Input
                         value={form.whatsapp}
@@ -186,7 +186,7 @@ const ListingForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Email
+                        Email (optional)
                     </label>
                     <Input
                         value={form.email}
@@ -198,7 +198,7 @@ const ListingForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Website
+                        Website (optional)
                     </label>
                     <Input
                         value={form.website}
@@ -215,7 +215,7 @@ const ListingForm = ({
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Latitude
+                        Latitude (optional)
                     </label>
                     <Input
                         value={form.latitude}
@@ -227,7 +227,7 @@ const ListingForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Longitude
+                        Longitude (optional)
                     </label>
                     <Input
                         value={form.longitude}
@@ -241,7 +241,7 @@ const ListingForm = ({
 
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Opening hours (JSON)
+                    Opening hours (JSON, optional)
                 </label>
                 <Textarea
                     value={form.openingHours}
@@ -255,7 +255,7 @@ const ListingForm = ({
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Status
+                        Status (optional)
                     </label>
                     <Select
                         value={form.is_active ? "true" : "false"}
@@ -273,7 +273,7 @@ const ListingForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Verification
+                        Verification (optional)
                     </label>
                     <Select
                         value={form.is_verified ? "true" : "false"}
@@ -295,7 +295,7 @@ const ListingForm = ({
 
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Upload images
+                    Upload images (optional)
                 </label>
                 <Input
                     type="file"
@@ -315,7 +315,7 @@ const ListingForm = ({
                 <div>
                     <div className="flex items-center justify-between">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                            Existing images
+                            Existing images (optional)
                         </p>
                         {onToggleRemoveImage ? (
                             <p className="text-xs text-muted-foreground">
