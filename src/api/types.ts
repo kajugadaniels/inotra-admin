@@ -102,6 +102,12 @@ export type PlaceImage = {
     sort_order?: number | null;
 };
 
+export type PlaceService = {
+    id?: string;
+    name?: string | null;
+    is_available?: boolean | null;
+};
+
 export type PlaceDetail = {
     id?: string;
     name?: string | null;
@@ -124,6 +130,7 @@ export type PlaceDetail = {
     avg_rating?: string | number | null;
     reviews_count?: number | null;
     images?: PlaceImage[];
+    services?: PlaceService[];
     created_at?: string | null;
     updated_at?: string | null;
 };
