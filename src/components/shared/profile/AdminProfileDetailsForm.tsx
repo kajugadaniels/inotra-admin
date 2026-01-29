@@ -43,7 +43,7 @@ const AdminProfileDetailsForm = ({
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
                 <div className="space-y-2">
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Full name
+                        Full name (optional)
                     </label>
                     <div className="relative">
                         <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -60,7 +60,7 @@ const AdminProfileDetailsForm = ({
 
                 <div className="space-y-2">
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Username
+                        Username (optional)
                     </label>
                     <div className="relative">
                         <UserCircle className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -77,7 +77,7 @@ const AdminProfileDetailsForm = ({
 
                 <div className="space-y-2">
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Email (read only)
+                        Email (read-only, required)
                     </label>
                     <div className="relative">
                         <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -92,7 +92,7 @@ const AdminProfileDetailsForm = ({
 
                 <div className="space-y-2">
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Phone number
+                        Phone number (optional)
                     </label>
                     <div className="relative">
                         <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
