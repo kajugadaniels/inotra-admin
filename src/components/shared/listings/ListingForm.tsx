@@ -10,6 +10,7 @@ import ListingOpeningHours from "./ListingOpeningHours";
 import ListingServices from "./ListingServices";
 import ListingStatus from "./ListingStatus";
 import ListingStepNav from "./ListingStepNav";
+import { Button } from "@/components/ui/button";
 
 export type ListingServiceState = {
     name: string;
@@ -247,16 +248,18 @@ const ListingForm = ({
                     {currentStep.content}
 
                     <div className="sticky bottom-4 mt-10 flex flex-wrap items-center justify-between gap-3 rounded-full border border-border/60 bg-background/80 px-4 py-3 backdrop-blur">
-                        <button
-                            type="button"
+                        <Button
+                            variant="ghost"
+                            size="lg"
                             onClick={() => setStepIndex((prev) => Math.max(prev - 1, 0))}
                             disabled={disabled || stepIndex === 0}
-                            className="rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition disabled:cursor-not-allowed disabled:opacity-60"
+                            className="rounded-full border border-border/60"
                         >
                             Back
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             type="button"
+                            size="lg"
                             onClick={() => {
                                 if (stepIndex === steps.length - 1) {
                                     onSubmit?.();
@@ -265,10 +268,10 @@ const ListingForm = ({
                                 setStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
                             }}
                             disabled={disabled}
-                            className="rounded-full bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-lg shadow-primary/20 transition disabled:cursor-not-allowed disabled:opacity-60"
+                            className="rounded-full"
                         >
                             {stepIndex === steps.length - 1 ? "Save changes" : "Next"}
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>

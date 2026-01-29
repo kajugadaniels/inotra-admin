@@ -108,8 +108,8 @@ const ListingServices = ({
                             <div className="flex items-end">
                                 <Button
                                     type="button"
-                                    variant="ghost"
-                                    className="w-full rounded-full text-xs uppercase tracking-[0.2em] text-muted-foreground"
+                                    variant="destructive"
+                                    className="w-full rounded-full text-xs uppercase tracking-[0.2em] text-white"
                                     onClick={() => {
                                         const next = form.services.filter(
                                             (_, idx) => idx !== index
