@@ -44,20 +44,6 @@ const ListingLocationInfo = ({
             </div>
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Country (optional)
-                </label>
-                <Input
-                    value={form.country}
-                    onChange={(event) =>
-                        onChange({ ...form, country: event.target.value })
-                    }
-                    placeholder="Rwanda"
-                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
-                    disabled={disabled}
-                />
-            </div>
-            <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Latitude (optional)
                 </label>
                 <Input
