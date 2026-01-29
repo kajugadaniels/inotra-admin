@@ -12,6 +12,7 @@ import { getPlace } from "@/api/places";
 import type { PlaceDetail } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const formatDate = (value?: string | null) => {
     if (!value) return "--";
@@ -116,254 +117,309 @@ const ListingDetailsPage = () => {
                 </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-                <div className="space-y-6">
-                    <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-2xl shadow-black/5">
-                        <div className="relative h-64 w-full">
-                            {heroImage ? (
-                                <Image
-                                    src={heroImage}
-                                    alt={listing?.name ?? "Listing"}
-                                    fill
-                                    className="object-cover"
-                                />
-                            ) : (
-                                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-                                    {isLoading ? "Loading image..." : "No image available"}
-                                </div>
-                            )}
-                        </div>
-                        <div className="space-y-4 p-6">
-                            <div className="flex flex-wrap items-center gap-3">
-                                <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
-                                    {listing?.is_active ? (
-                                        <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                                    ) : (
-                                        <XCircle className="h-3.5 w-3.5 text-muted-foreground" />
-                                    )}
-                                    {listing?.is_active ? "Active" : "Inactive"}
-                                </div>
-                                <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
-                                    {listing?.is_verified ? (
-                                        <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-                                    ) : (
-                                        <XCircle className="h-3.5 w-3.5 text-muted-foreground" />
-                                    )}
-                                    {listing?.is_verified ? "Verified" : "Unverified"}
-                                </div>
-                            </div>
-
-                            <div>
-                                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                                    Description
-                                </p>
-                                <p className="mt-2 text-sm text-foreground">
-                                    {listing?.description ||
-                                        (isLoading ? "Loading..." : "No description available.")}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
-                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
-                            <MapPin className="h-4 w-4" />
+            <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
+                <Tabs defaultValue="overview" className="space-y-6">
+                    <TabsList variant="line" className="flex w-full flex-wrap gap-2 bg-transparent p-0">
+                        <TabsTrigger
+                            value="overview"
+                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
+                        >
+                            Overview
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="location"
+                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
+                        >
                             Location
-                        </div>
-                        <p className="mt-3 text-sm font-semibold text-foreground">
-                            {(listing?.city || "--") + ", " + (listing?.country || "--")}
-                        </p>
-                        <p className="mt-2 text-sm text-muted-foreground">
-                            {listing?.address || "No address provided."}
-                        </p>
-                        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                            <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                                    Latitude
-                                </p>
-                                <p className="mt-2 text-sm font-semibold text-foreground">
-                                    {listing?.latitude ?? "--"}
-                                </p>
-                            </div>
-                            <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                                    Longitude
-                                </p>
-                                <p className="mt-2 text-sm font-semibold text-foreground">
-                                    {listing?.longitude ?? "--"}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
-                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
-                            <Phone className="h-4 w-4" />
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="contact"
+                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
+                        >
                             Contact
-                        </div>
-                        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                            <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                                    Phone
-                                </p>
-                                <p className="mt-2 text-sm font-semibold text-foreground">
-                                    {listing?.phone || "--"}
-                                </p>
-                            </div>
-                            <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                                    WhatsApp
-                                </p>
-                                <p className="mt-2 text-sm font-semibold text-foreground">
-                                    {listing?.whatsapp || "--"}
-                                </p>
-                            </div>
-                            <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                                    Email
-                                </p>
-                                <p className="mt-2 text-sm font-semibold text-foreground">
-                                    {listing?.email || "--"}
-                                </p>
-                            </div>
-                            <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                                    Website
-                                </p>
-                                <p className="mt-2 text-sm font-semibold text-foreground">
-                                    {listing?.website || "--"}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="operations"
+                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
+                        >
+                            Operations
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="media"
+                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
+                        >
+                            Media
+                        </TabsTrigger>
+                    </TabsList>
 
-                <div className="space-y-6">
-                    <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
-                        <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                            Listing info
-                        </p>
-                        <div className="mt-4 space-y-3">
-                            <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-4 py-3">
-                                <span className="text-xs text-muted-foreground">Category</span>
-                                <span className="text-xs font-semibold text-foreground">
-                                    {listing?.category_name ?? "Uncategorized"}
-                                </span>
-                            </div>
-                            <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-4 py-3">
-                                <span className="text-xs text-muted-foreground">Created</span>
-                                <span className="text-xs font-semibold text-foreground">
-                                    {formatDateTime(listing?.created_at)}
-                                </span>
-                            </div>
-                            <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-4 py-3">
-                                <span className="text-xs text-muted-foreground">Updated</span>
-                                <span className="text-xs font-semibold text-foreground">
-                                    {formatDateTime(listing?.updated_at)}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
-                        <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                            Opening hours
-                        </p>
-                        <div className="mt-4 space-y-2">
-                            {listing?.opening_hours
-                                ? Object.entries(listing.opening_hours).map(([day, value]) => {
-                                      const label = dayLabels[day] ?? day;
-                                      const isClosed = Boolean((value as any)?.closed);
-                                      return (
-                                          <div
-                                              key={day}
-                                              className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-4 py-3"
-                                          >
-                                              <span className="text-xs font-semibold text-foreground">
-                                                  {label}
-                                              </span>
-                                              <span className="text-xs text-muted-foreground">
-                                                  {isClosed
-                                                      ? "Closed"
-                                                      : `${(value as any)?.open ?? "--"} - ${(value as any)?.close ?? "--"}`}
-                                              </span>
-                                          </div>
-                                      );
-                                  })
-                                : (
-                                    <p className="text-sm text-muted-foreground">
-                                        {isLoading ? "Loading..." : "No hours set."}
-                                    </p>
-                                )}
-                        </div>
-                    </div>
-
-                    <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
-                        <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                            Services
-                        </p>
-                        <div className="mt-4 space-y-2">
-                            {listing?.services?.length ? (
-                                listing.services.map((service, index) => (
-                                    <div
-                                        key={service.id ?? `${service.name ?? "service"}-${index}`}
-                                        className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-4 py-3"
-                                    >
-                                        <span className="text-xs font-semibold text-foreground">
-                                            {service.name || "Service"}
-                                        </span>
-                                        <span className="text-xs text-muted-foreground">
-                                            {service.is_available ? "Available" : "Unavailable"}
-                                        </span>
+                    <TabsContent value="overview">
+                        <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+                            <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-2xl shadow-black/5">
+                                <div className="relative h-64 w-full">
+                                    {heroImage ? (
+                                        <Image
+                                            src={heroImage}
+                                            alt={listing?.name ?? "Listing"}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    ) : (
+                                        <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                                            {isLoading ? "Loading image..." : "No image available"}
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="space-y-4 p-6">
+                                    <div className="flex flex-wrap items-center gap-3">
+                                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
+                                            {listing?.is_active ? (
+                                                <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+                                            ) : (
+                                                <XCircle className="h-3.5 w-3.5 text-muted-foreground" />
+                                            )}
+                                            {listing?.is_active ? "Active" : "Inactive"}
+                                        </div>
+                                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
+                                            {listing?.is_verified ? (
+                                                <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+                                            ) : (
+                                                <XCircle className="h-3.5 w-3.5 text-muted-foreground" />
+                                            )}
+                                            {listing?.is_verified ? "Verified" : "Unverified"}
+                                        </div>
                                     </div>
-                                ))
+
+                                    <div>
+                                        <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                                            Description
+                                        </p>
+                                        <p className="mt-2 text-sm text-foreground">
+                                            {listing?.description ||
+                                                (isLoading
+                                                    ? "Loading..."
+                                                    : "No description available.")}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        Category
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {listing?.category_name ?? "Uncategorized"}
+                                    </p>
+                                </div>
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        Created
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {formatDateTime(listing?.created_at)}
+                                    </p>
+                                </div>
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        Updated
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {formatDateTime(listing?.updated_at)}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="location">
+                        <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
+                            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                                <MapPin className="h-4 w-4" />
+                                Location
+                            </div>
+                            <p className="mt-3 text-sm font-semibold text-foreground">
+                                {(listing?.city || "--") + ", " + (listing?.country || "--")}
+                            </p>
+                            <p className="mt-2 text-sm text-muted-foreground">
+                                {listing?.address || "No address provided."}
+                            </p>
+                            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        Latitude
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {listing?.latitude ?? "--"}
+                                    </p>
+                                </div>
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        Longitude
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {listing?.longitude ?? "--"}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="contact">
+                        <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
+                            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                                <Phone className="h-4 w-4" />
+                                Contact
+                            </div>
+                            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        Phone
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {listing?.phone || "--"}
+                                    </p>
+                                </div>
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        WhatsApp
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {listing?.whatsapp || "--"}
+                                    </p>
+                                </div>
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        Email
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {listing?.email || "--"}
+                                    </p>
+                                </div>
+                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                                        Website
+                                    </p>
+                                    <p className="mt-2 text-sm font-semibold text-foreground">
+                                        {listing?.website || "--"}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="operations">
+                        <div className="grid gap-6 lg:grid-cols-2">
+                            <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
+                                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                                    Opening hours
+                                </p>
+                                <div className="mt-4 space-y-2">
+                                    {listing?.opening_hours ? (
+                                        Object.entries(listing.opening_hours).map(
+                                            ([day, value]) => {
+                                                const label = dayLabels[day] ?? day;
+                                                const isClosed = Boolean((value as any)?.closed);
+                                                return (
+                                                    <div
+                                                        key={day}
+                                                        className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-4 py-3"
+                                                    >
+                                                        <span className="text-xs font-semibold text-foreground">
+                                                            {label}
+                                                        </span>
+                                                        <span className="text-xs text-muted-foreground">
+                                                            {isClosed
+                                                                ? "Closed"
+                                                                : `${(value as any)?.open ?? "--"} - ${(value as any)?.close ?? "--"}`}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            }
+                                        )
+                                    ) : (
+                                        <p className="text-sm text-muted-foreground">
+                                            {isLoading ? "Loading..." : "No hours set."}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
+                                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                                    Services
+                                </p>
+                                <div className="mt-4 space-y-2">
+                                    {listing?.services?.length ? (
+                                        listing.services.map((service, index) => (
+                                            <div
+                                                key={
+                                                    service.id ??
+                                                    `${service.name ?? "service"}-${index}`
+                                                }
+                                                className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-4 py-3"
+                                            >
+                                                <span className="text-xs font-semibold text-foreground">
+                                                    {service.name || "Service"}
+                                                </span>
+                                                <span className="text-xs text-muted-foreground">
+                                                    {service.is_available
+                                                        ? "Available"
+                                                        : "Unavailable"}
+                                                </span>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="text-sm text-muted-foreground">
+                                            {isLoading ? "Loading..." : "No services available."}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="media">
+                        <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
+                            <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                                Gallery
+                            </p>
+                            {listing?.images?.length ? (
+                                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                                    {listing.images.map((image) => (
+                                        <div
+                                            key={image.id}
+                                            className="overflow-hidden rounded-2xl border border-border/60 bg-background/70"
+                                        >
+                                            {image.image_url ? (
+                                                <Image
+                                                    src={image.image_url}
+                                                    alt={image.caption || "Listing image"}
+                                                    width={320}
+                                                    height={220}
+                                                    className="h-40 w-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="flex h-40 items-center justify-center text-xs text-muted-foreground">
+                                                    No image
+                                                </div>
+                                            )}
+                                            {image.caption ? (
+                                                <p className="px-3 py-2 text-xs text-muted-foreground">
+                                                    {image.caption}
+                                                </p>
+                                            ) : null}
+                                        </div>
+                                    ))}
+                                </div>
                             ) : (
-                                <p className="text-sm text-muted-foreground">
-                                    {isLoading ? "Loading..." : "No services available."}
+                                <p className="mt-3 text-sm text-muted-foreground">
+                                    {isLoading ? "Loading..." : "No images available."}
                                 </p>
                             )}
                         </div>
-                    </div>
-
-                    <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
-                        <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                            Gallery
-                        </p>
-                        {listing?.images?.length ? (
-                            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                                {listing.images.map((image) => (
-                                    <div
-                                        key={image.id}
-                                        className="overflow-hidden rounded-2xl border border-border/60 bg-background/70"
-                                    >
-                                        {image.image_url ? (
-                                            <Image
-                                                src={image.image_url}
-                                                alt={image.caption || "Listing image"}
-                                                width={320}
-                                                height={220}
-                                                className="h-40 w-full object-cover"
-                                            />
-                                        ) : (
-                                            <div className="flex h-40 items-center justify-center text-xs text-muted-foreground">
-                                                No image
-                                            </div>
-                                        )}
-                                        {image.caption ? (
-                                            <p className="px-3 py-2 text-xs text-muted-foreground">
-                                                {image.caption}
-                                            </p>
-                                        ) : null}
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="mt-3 text-sm text-muted-foreground">
-                                {isLoading ? "Loading..." : "No images available."}
-                            </p>
-                        )}
-                    </div>
-                </div>
+                    </TabsContent>
+                </Tabs>
             </div>
         </div>
     );
