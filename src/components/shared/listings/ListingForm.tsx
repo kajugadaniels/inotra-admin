@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import type { PlaceCategory, PlaceImage } from "@/api/types";
 import ListingBasicInfo from "./ListingBasicInfo";
 import ListingContactInfo from "./ListingContactInfo";
+import ListingFormSidebar from "./ListingFormSidebar";
 import ListingImages from "./ListingImages";
 import ListingLocationInfo from "./ListingLocationInfo";
 import ListingOpeningHours from "./ListingOpeningHours";
@@ -216,42 +217,54 @@ const ListingForm = ({
 
     return (
         <div className="space-y-6">
-            <ListingStepNav
-                steps={steps}
-                activeIndex={stepIndex}
-                onStepChange={(index) => setStepIndex(index)}
-            />
-
-            <div className="rounded-3xl border border-border/60 bg-background/60 p-5">
-                <div className="mb-4">
-                    <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                        {currentStep.label}
-                    </p>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                        {currentStep.description}
-                    </p>
-                </div>
-
-                {currentStep.content}
+            <div className="md:hidden">
+                <ListingStepNav
+                    steps={steps}
+                    activeIndex={stepIndex}
+                    onStepChange={(index) => setStepIndex(index)}
+                />
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3">
-                <button
-                    type="button"
-                    onClick={() => setStepIndex((prev) => Math.max(prev - 1, 0))}
-                    disabled={disabled || stepIndex === 0}
-                    className="rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                    Back
-                </button>
-                <button
-                    type="button"
-                    onClick={() => setStepIndex((prev) => Math.min(prev + 1, steps.length - 1))}
-                    disabled={disabled || stepIndex === steps.length - 1}
-                    className="rounded-full bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-lg shadow-primary/20 transition disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                    Next
-                </button>
+            <div className="grid gap-6 md:grid-cols-[280px_1fr]">
+                <ListingFormSidebar
+                    steps={steps}
+                    activeIndex={stepIndex}
+                    onStepChange={(index) => setStepIndex(index)}
+                />
+
+                <div className="rounded-3xl border border-border/60 bg-background/60 p-5">
+                    <div className="mb-4">
+                        <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                            {currentStep.label}
+                        </p>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                            {currentStep.description}
+                        </p>
+                    </div>
+
+                    {currentStep.content}
+
+                    <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+                        <button
+                            type="button"
+                            onClick={() => setStepIndex((prev) => Math.max(prev - 1, 0))}
+                            disabled={disabled || stepIndex === 0}
+                            className="rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            Back
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
+                            }
+                            disabled={disabled || stepIndex === steps.length - 1}
+                            className="rounded-full bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-lg shadow-primary/20 transition disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
