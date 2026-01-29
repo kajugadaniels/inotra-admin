@@ -8,7 +8,6 @@ import { authStorage } from "@/api/auth";
 import { createPlace, listPlaceCategories } from "@/api/places";
 import type { PlaceCategory } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
-import { Button } from "@/components/ui/button";
 import {
     ListingForm,
     createDefaultOpeningHours,
@@ -145,25 +144,6 @@ const NewListingPage = () => {
                         Add a new listing to the platform inventory.
                     </p>
                 </div>
-                <div className="flex items-center gap-2">
-                    <Button
-                        type="button"
-                        variant="outline"
-                        className="rounded-full"
-                        onClick={() => router.push("/listings")}
-                        disabled={isLoading}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        type="button"
-                        className="rounded-full"
-                        onClick={handleSubmit}
-                        disabled={isLoading}
-                    >
-                        Create listing
-                    </Button>
-                </div>
             </div>
 
             <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
@@ -173,6 +153,7 @@ const NewListingPage = () => {
                     disabled={isLoading}
                     onChange={setForm}
                     onImagesChange={(files) => setForm({ ...form, images: files })}
+                    onSubmit={handleSubmit}
                 />
             </div>
         </div>
