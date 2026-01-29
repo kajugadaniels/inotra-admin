@@ -56,6 +56,15 @@ const ListingForm = ({
         onImagesChange(files);
     };
 
+    const normalizeWebsite = (value: string) => {
+        const trimmed = value.trim();
+        if (!trimmed) return "";
+        if (/^https?:\/\//i.test(trimmed)) {
+            return trimmed;
+        }
+        return `https://${trimmed}`;
+    };
+
     return (
         <div className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2">
@@ -193,7 +202,9 @@ const ListingForm = ({
                     </label>
                     <Input
                         value={form.website}
-                        onChange={(event) => onChange({ ...form, website: event.target.value })}
+                        onChange={(event) =>
+                            onChange({ ...form, website: normalizeWebsite(event.target.value) })
+                        }
                         placeholder="https://listing.com"
                         className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
                         disabled={disabled}
