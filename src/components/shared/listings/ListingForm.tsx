@@ -3,13 +3,14 @@ import { useMemo, useState } from "react";
 import type { PlaceCategory, PlaceImage } from "@/api/types";
 import ListingBasicInfo from "./ListingBasicInfo";
 import ListingContactInfo from "./ListingContactInfo";
+import ListingFormSidebar from "./ListingFormSidebar";
 import ListingImages from "./ListingImages";
 import ListingLocationInfo from "./ListingLocationInfo";
 import ListingOpeningHours from "./ListingOpeningHours";
 import ListingServices from "./ListingServices";
 import ListingStatus from "./ListingStatus";
+import ListingStepNav from "./ListingStepNav";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export type ListingServiceState = {
     name: string;
@@ -116,7 +117,7 @@ const ListingForm = ({
     onToggleRemoveImage,
     onSubmit,
 }: ListingFormProps) => {
-    const [activeStep, setActiveStep] = useState("basic");
+    const [stepIndex, setStepIndex] = useState(0);
 
     const steps = useMemo(
         () => [
@@ -215,74 +216,66 @@ const ListingForm = ({
         ]
     );
 
+    const currentStep = steps[stepIndex];
+
     return (
-        <Tabs
-            value={activeStep}
-            onValueChange={setActiveStep}
-            className="space-y-6"
-        >
-            <TabsList variant="line" className="flex w-full flex-wrap gap-2 bg-transparent p-0">
-                {steps.map((step) => (
-                    <TabsTrigger
-                        key={step.key}
-                        value={step.key}
-                        className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
-                    >
-                        {step.label}
-                    </TabsTrigger>
-                ))}
-            </TabsList>
+        <div className="space-y-6">
+            <div className="md:hidden">
+                <ListingStepNav
+                    steps={steps}
+                    activeIndex={stepIndex}
+                    onStepChange={(index) => setStepIndex(index)}
+                />
+            </div>
 
-            {steps.map((step, index) => (
-                <TabsContent key={step.key} value={step.key}>
-                    <div className="rounded-3xl border border-border/60 bg-background/60 p-5">
-                        <div className="mb-4">
-                            <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                                {step.label}
-                            </p>
-                            <p className="mt-2 text-sm text-muted-foreground">
-                                {step.description}
-                            </p>
-                        </div>
+            <div className="grid gap-6 md:grid-cols-[280px_1fr]">
+                <ListingFormSidebar
+                    steps={steps}
+                    activeIndex={stepIndex}
+                    onStepChange={(index) => setStepIndex(index)}
+                />
 
-                        {step.content}
-
-                        <div className="sticky bottom-4 mt-10 flex flex-wrap items-center justify-between gap-3 rounded-full border border-border/60 bg-background/80 px-4 py-3 backdrop-blur">
-                            <Button
-                                variant="ghost"
-                                size="lg"
-                                onClick={() =>
-                                    setActiveStep(
-                                        steps[Math.max(index - 1, 0)].key
-                                    )
-                                }
-                                disabled={disabled || index === 0}
-                                className="rounded-full border border-border/60"
-                            >
-                                Back
-                            </Button>
-                            <Button
-                                type="button"
-                                size="lg"
-                                onClick={() => {
-                                    if (index === steps.length - 1) {
-                                        onSubmit?.();
-                                        return;
-                                    }
-                                    setActiveStep(
-                                        steps[Math.min(index + 1, steps.length - 1)].key
-                                    );
-                                }}
-                                disabled={disabled}
-                                className="rounded-full"
-                            >
-                                {index === steps.length - 1 ? "Save changes" : "Next"}
-                            </Button>
-                        </div>
+                <div className="rounded-3xl border border-border/60 bg-background/60 p-5">
+                    <div className="mb-4">
+                        <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                            {currentStep.label}
+                        </p>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                            {currentStep.description}
+                        </p>
                     </div>
-                </TabsContent>
-            ))}
-        </Tabs>
+
+                    {currentStep.content}
+
+                    <div className="sticky bottom-4 mt-10 flex flex-wrap items-center justify-between gap-3 rounded-full border border-border/60 bg-background/80 px-4 py-3 backdrop-blur">
+                        <Button
+                            variant="ghost"
+                            size="lg"
+                            onClick={() => setStepIndex((prev) => Math.max(prev - 1, 0))}
+                            disabled={disabled || stepIndex === 0}
+                            className="rounded-full border border-border/60"
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            type="button"
+                            size="lg"
+                            onClick={() => {
+                                if (stepIndex === steps.length - 1) {
+                                    onSubmit?.();
+                                    return;
+                                }
+                                setStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
+                            }}
+                            disabled={disabled}
+                            className="rounded-full"
+                        >
+                            {stepIndex === steps.length - 1 ? "Save changes" : "Next"}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
