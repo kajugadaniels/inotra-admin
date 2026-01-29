@@ -26,11 +26,10 @@ const formatDate = (value?: string | null) => {
 type ListingTableProps = {
     listings: PlaceListItem[];
     isLoading: boolean;
-    onView: (listing: PlaceListItem) => void;
     onDelete: (listing: PlaceListItem) => void;
 };
 
-const ListingTable = ({ listings, isLoading, onView, onDelete }: ListingTableProps) => {
+const ListingTable = ({ listings, isLoading, onDelete }: ListingTableProps) => {
     return (
         <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <Table>
@@ -104,15 +103,19 @@ const ListingTable = ({ listings, isLoading, onView, onDelete }: ListingTablePro
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <div className="inline-flex items-center gap-2">
-                                            <Button
-                                                type="button"
-                                                variant="ghost"
-                                                size="icon-sm"
-                                                onClick={() => onView(listing)}
-                                                aria-label="View listing"
-                                            >
-                                                <Eye className="h-4 w-4" />
-                                            </Button>
+                                            {listing.id ? (
+                                                <Button
+                                                    asChild
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="icon-sm"
+                                                    aria-label="View listing"
+                                                >
+                                                    <Link href={`/listings/${listing.id}`}>
+                                                        <Eye className="h-4 w-4" />
+                                                    </Link>
+                                                </Button>
+                                            ) : null}
                                             {listing.id ? (
                                                 <Button
                                                     asChild
