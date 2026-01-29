@@ -9,7 +9,13 @@ import { getPlace, listPlaceCategories, updatePlace } from "@/api/places";
 import type { PlaceCategory, PlaceDetail } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
-import { ListingForm, type ListingFormState } from "@/components/shared/listings";
+import {
+    ListingForm,
+    createDefaultOpeningHours,
+    parseOpeningHours,
+    serializeOpeningHours,
+    type ListingFormState,
+} from "@/components/shared/listings";
 
 const emptyForm = (): ListingFormState => ({
     name: "",
@@ -24,7 +30,7 @@ const emptyForm = (): ListingFormState => ({
     whatsapp: "",
     email: "",
     website: "",
-    openingHours: "",
+    openingHours: createDefaultOpeningHours(),
     is_verified: false,
     is_active: true,
     images: [],
@@ -77,9 +83,7 @@ const EditListingPage = () => {
                         whatsapp: listing.whatsapp ?? "",
                         email: listing.email ?? "",
                         website: listing.website ?? "",
-                        openingHours: listing.opening_hours
-                            ? JSON.stringify(listing.opening_hours, null, 2)
-                            : "",
+                        openingHours: parseOpeningHours(listing.opening_hours),
                         is_verified: listing.is_verified ?? false,
                         is_active: listing.is_active ?? true,
                         images: [],
@@ -109,18 +113,6 @@ const EditListingPage = () => {
             .finally(() => setIsLoading(false));
     }, [apiBaseUrl, listingId]);
 
-    const parseOpeningHours = () => {
-        if (!form.openingHours.trim()) return undefined;
-        try {
-            return JSON.parse(form.openingHours);
-        } catch {
-            toast.error("Opening hours must be valid JSON", {
-                description: "Please correct the JSON structure before saving.",
-            });
-            return null;
-        }
-    };
-
     const handleSubmit = async () => {
         if (!listingId) return;
         if (!form.name.trim()) {
@@ -144,8 +136,7 @@ const EditListingPage = () => {
             return;
         }
 
-        const opening_hours = parseOpeningHours();
-        if (opening_hours === null) return;
+        const opening_hours = serializeOpeningHours(form.openingHours);
 
         setIsLoading(true);
         try {
