@@ -103,6 +103,7 @@ type ListingFormProps = {
     onChange: (next: ListingFormState) => void;
     onImagesChange: (files: File[]) => void;
     onToggleRemoveImage?: (imageId: string) => void;
+    onSubmit?: () => void;
 };
 
 const ListingForm = ({
@@ -113,6 +114,7 @@ const ListingForm = ({
     onChange,
     onImagesChange,
     onToggleRemoveImage,
+    onSubmit,
 }: ListingFormProps) => {
     const [stepIndex, setStepIndex] = useState(0);
 
@@ -244,7 +246,7 @@ const ListingForm = ({
 
                     {currentStep.content}
 
-                    <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+                    <div className="sticky bottom-4 mt-10 flex flex-wrap items-center justify-between gap-3 rounded-full border border-border/60 bg-background/80 px-4 py-3 backdrop-blur">
                         <button
                             type="button"
                             onClick={() => setStepIndex((prev) => Math.max(prev - 1, 0))}
@@ -255,13 +257,17 @@ const ListingForm = ({
                         </button>
                         <button
                             type="button"
-                            onClick={() =>
-                                setStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
-                            }
-                            disabled={disabled || stepIndex === steps.length - 1}
+                            onClick={() => {
+                                if (stepIndex === steps.length - 1) {
+                                    onSubmit?.();
+                                    return;
+                                }
+                                setStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
+                            }}
+                            disabled={disabled}
                             className="rounded-full bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-lg shadow-primary/20 transition disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            Next
+                            {stepIndex === steps.length - 1 ? "Save changes" : "Next"}
                         </button>
                     </div>
                 </div>
