@@ -41,7 +41,7 @@ const AdminPasswordForm = ({
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
                 <div className="space-y-2 lg:col-span-2">
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Current password
+                        Current password (required)
                     </label>
                     <div className="relative">
                         <KeyRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -59,7 +59,7 @@ const AdminPasswordForm = ({
 
                 <div className="space-y-2">
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        New password
+                        New password (required)
                     </label>
                     <div className="relative">
                         <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -77,7 +77,7 @@ const AdminPasswordForm = ({
 
                 <div className="space-y-2">
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Confirm new password
+                        Confirm new password (required)
                     </label>
                     <div className="relative">
                         <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
