@@ -23,6 +23,7 @@ type Args = {
         is_active?: boolean;
         remove_image_ids?: string[];
         images?: File[];
+        services?: { name: string; is_available?: boolean }[];
     };
 };
 
@@ -51,6 +52,9 @@ function buildFormData(data: Args["data"]) {
     }
     if (typeof data.is_active === "boolean") {
         payload.append("is_active", data.is_active ? "true" : "false");
+    }
+    if (data.services?.length) {
+        payload.append("services", JSON.stringify(data.services));
     }
     if (data.remove_image_ids?.length) {
         data.remove_image_ids.forEach((id) => payload.append("remove_image_ids", id));
