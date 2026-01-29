@@ -190,6 +190,33 @@ const ListingDetailsDialog = ({ listingId, open, onOpenChange }: ListingDetailsD
                             </p>
                         )}
                     </div>
+
+                    <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                            Services
+                        </p>
+                        {listing?.services?.length ? (
+                            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                                {listing.services.map((service, index) => (
+                                    <div
+                                        key={service.id ?? `${service.name ?? "service"}-${index}`}
+                                        className="rounded-2xl border border-border/60 bg-background/70 p-4"
+                                    >
+                                        <p className="text-sm font-semibold text-foreground">
+                                            {service.name || "Service"}
+                                        </p>
+                                        <p className="mt-1 text-xs text-muted-foreground">
+                                            {service.is_available ? "Available" : "Unavailable"}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="mt-2 text-sm text-muted-foreground">
+                                {isLoading ? "Loading..." : "No services available."}
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <DialogFooter>
