@@ -9,7 +9,6 @@ import type { PlaceCategory, PlaceListItem } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
     ListingDeleteDialog,
-    ListingDetailsDialog,
     ListingFilters,
     type ListingFiltersState,
     ListingHeader,
@@ -36,7 +35,6 @@ const ListingsPage = () => {
     const [searchInput, setSearchInput] = useState("");
 
     const [deleteOpen, setDeleteOpen] = useState(false);
-    const [detailsOpen, setDetailsOpen] = useState(false);
     const [selectedListing, setSelectedListing] = useState<PlaceListItem | null>(null);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
@@ -112,11 +110,6 @@ const ListingsPage = () => {
         setDeleteOpen(true);
     };
 
-    const openDetailsDialog = (listing: PlaceListItem) => {
-        setSelectedListing(listing);
-        setDetailsOpen(true);
-    };
-
     return (
         <div className="space-y-6">
             <ListingHeader isLoading={isLoading} />
@@ -136,7 +129,6 @@ const ListingsPage = () => {
             <ListingTable
                 listings={results}
                 isLoading={isLoading}
-                onView={openDetailsDialog}
                 onDelete={openDeleteDialog}
             />
 
@@ -156,11 +148,6 @@ const ListingsPage = () => {
                 }
             />
 
-            <ListingDetailsDialog
-                listingId={selectedListing?.id ?? null}
-                open={detailsOpen}
-                onOpenChange={setDetailsOpen}
-            />
         </div>
     );
 };
