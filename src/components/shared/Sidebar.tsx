@@ -74,11 +74,16 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                             const Icon = link.icon;
 
                             if (link.children?.length) {
-                                const isChildActive = link.children.some(
-                                    (child) =>
-                                        child.href &&
-                                        (pathname === child.href || pathname.startsWith(child.href))
-                                );
+                                const activeChildHref =
+                                    link.children
+                                        .map((child) => child.href)
+                                        .filter((href): href is string => Boolean(href))
+                                        .filter(
+                                            (href) =>
+                                                pathname === href || pathname.startsWith(`${href}/`)
+                                        )
+                                        .sort((a, b) => b.length - a.length)[0] ?? null;
+                                const isChildActive = Boolean(activeChildHref);
                                 const isExpanded = isChildActive || openSections[link.label];
 
                                 return (
@@ -146,9 +151,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                                             <div className="mt-1 flex flex-col gap-1">
                                                 {link.children.map((child) => {
                                                     const childActive =
-                                                        child.href &&
-                                                        (pathname === child.href ||
-                                                            pathname.startsWith(child.href));
+                                                        Boolean(child.href) &&
+                                                        child.href === activeChildHref;
                                                     const ChildIcon = child.icon;
 
                                                     return (
