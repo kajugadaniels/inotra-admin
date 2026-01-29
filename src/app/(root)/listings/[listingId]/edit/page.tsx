@@ -8,7 +8,6 @@ import { authStorage } from "@/api/auth";
 import { getPlace, listPlaceCategories, updatePlace } from "@/api/places";
 import type { PlaceCategory, PlaceDetail } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
-import { Button } from "@/components/ui/button";
 import {
     ListingForm,
     createDefaultOpeningHours,
@@ -211,25 +210,6 @@ const EditListingPage = () => {
                         Update listing details, images, and availability.
                     </p>
                 </div>
-                <div className="flex items-center gap-2">
-                    <Button
-                        type="button"
-                        variant="outline"
-                        className="rounded-full"
-                        onClick={() => router.push("/listings")}
-                        disabled={isLoading}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        type="button"
-                        className="rounded-full"
-                        onClick={handleSubmit}
-                        disabled={isLoading}
-                    >
-                        Save changes
-                    </Button>
-                </div>
             </div>
 
             <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
@@ -241,6 +221,7 @@ const EditListingPage = () => {
                     onChange={setForm}
                     onImagesChange={(files) => setForm({ ...form, images: files })}
                     onToggleRemoveImage={toggleRemoveImage}
+                    onSubmit={handleSubmit}
                 />
             </div>
         </div>
