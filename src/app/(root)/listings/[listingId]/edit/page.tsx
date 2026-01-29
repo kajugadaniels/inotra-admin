@@ -29,6 +29,7 @@ const emptyForm = (): ListingFormState => ({
     is_active: true,
     images: [],
     removeImageIds: [],
+    services: [],
 });
 
 const EditListingPage = () => {
@@ -83,6 +84,11 @@ const EditListingPage = () => {
                         is_active: listing.is_active ?? true,
                         images: [],
                         removeImageIds: [],
+                        services:
+                            listing.services?.map((service) => ({
+                                name: service.name ?? "",
+                                is_available: service.is_available ?? true,
+                            })) ?? [],
                     });
                     setExistingImages(listing.images ?? []);
                 } else {
@@ -123,6 +129,12 @@ const EditListingPage = () => {
             });
             return;
         }
+        if (form.services.length === 0 || form.services.some((service) => !service.name.trim())) {
+            toast.error("Listing services required", {
+                description: "Add at least one service with a valid name.",
+            });
+            return;
+        }
 
         const tokens = authStorage.getTokens();
         if (!tokens?.access) {
@@ -159,6 +171,10 @@ const EditListingPage = () => {
                     is_active: form.is_active,
                     remove_image_ids: form.removeImageIds,
                     images: form.images,
+                    services: form.services.map((service) => ({
+                        name: service.name.trim(),
+                        is_available: service.is_available,
+                    })),
                 },
             });
 
