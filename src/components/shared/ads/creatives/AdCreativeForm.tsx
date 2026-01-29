@@ -64,7 +64,7 @@ const AdCreativeForm = ({
         <div className="space-y-4">
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Placement
+                    Placement (required)
                 </label>
                 <Select
                     value={form.placementId}
@@ -91,7 +91,7 @@ const AdCreativeForm = ({
 
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Title
+                    Title (optional)
                 </label>
                 <Input
                     value={form.title}
@@ -104,7 +104,7 @@ const AdCreativeForm = ({
 
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Target URL
+                    Target URL (optional)
                 </label>
                 <Input
                     value={form.target_url}
@@ -120,7 +120,7 @@ const AdCreativeForm = ({
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Starts at
+                        Starts at (optional)
                     </label>
                     <Input
                         type="datetime-local"
@@ -134,7 +134,7 @@ const AdCreativeForm = ({
                 </div>
                 <div>
                     <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                        Ends at
+                        Ends at (optional)
                     </label>
                     <Input
                         type="datetime-local"
@@ -150,7 +150,7 @@ const AdCreativeForm = ({
 
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Creative image
+                    Creative image (optional)
                 </label>
                 <Input
                     type="file"
@@ -179,7 +179,9 @@ const AdCreativeForm = ({
             {showRemoveImage ? (
                 <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/60 px-4 py-3">
                     <div>
-                        <p className="text-sm font-semibold text-foreground">Remove image</p>
+                        <p className="text-sm font-semibold text-foreground">
+                            Remove image (optional)
+                        </p>
                         <p className="text-xs text-muted-foreground">
                             Clear the current creative image.
                         </p>
@@ -200,7 +202,9 @@ const AdCreativeForm = ({
 
             <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/60 px-4 py-3">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">Active status</p>
+                    <p className="text-sm font-semibold text-foreground">
+                        Active status (optional)
+                    </p>
                     <p className="text-xs text-muted-foreground">
                         Toggle whether this creative is active.
                     </p>
