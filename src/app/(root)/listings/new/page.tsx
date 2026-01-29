@@ -9,7 +9,12 @@ import { createPlace, listPlaceCategories } from "@/api/places";
 import type { PlaceCategory } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
-import { ListingForm, type ListingFormState } from "@/components/shared/listings";
+import {
+    ListingForm,
+    createDefaultOpeningHours,
+    serializeOpeningHours,
+    type ListingFormState,
+} from "@/components/shared/listings";
 
 const DEFAULT_FORM: ListingFormState = {
     name: "",
@@ -24,7 +29,7 @@ const DEFAULT_FORM: ListingFormState = {
     whatsapp: "",
     email: "",
     website: "",
-    openingHours: "",
+    openingHours: createDefaultOpeningHours(),
     is_verified: false,
     is_active: true,
     images: [],
@@ -55,18 +60,6 @@ const NewListingPage = () => {
             });
     }, [apiBaseUrl]);
 
-    const parseOpeningHours = () => {
-        if (!form.openingHours.trim()) return undefined;
-        try {
-            return JSON.parse(form.openingHours);
-        } catch {
-            toast.error("Opening hours must be valid JSON", {
-                description: "Please correct the JSON structure before saving.",
-            });
-            return null;
-        }
-    };
-
     const handleSubmit = async () => {
         if (!form.name.trim()) {
             toast.error("Listing name required", {
@@ -89,8 +82,7 @@ const NewListingPage = () => {
             return;
         }
 
-        const opening_hours = parseOpeningHours();
-        if (opening_hours === null) return;
+        const opening_hours = serializeOpeningHours(form.openingHours);
 
         setIsLoading(true);
         try {
