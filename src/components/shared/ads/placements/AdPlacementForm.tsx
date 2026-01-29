@@ -28,7 +28,7 @@ const AdPlacementForm = ({ form, onChange, disabled = false }: AdPlacementFormPr
         <div className="space-y-4">
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Placement key
+                    Placement key (required)
                 </label>
                 <Input
                     value={form.key}
@@ -45,7 +45,7 @@ const AdPlacementForm = ({ form, onChange, disabled = false }: AdPlacementFormPr
             </div>
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Title
+                    Title (optional)
                 </label>
                 <Input
                     value={form.title}
@@ -57,7 +57,7 @@ const AdPlacementForm = ({ form, onChange, disabled = false }: AdPlacementFormPr
             </div>
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Status
+                    Status (optional)
                 </label>
                 <Select
                     value={form.is_active ? "true" : "false"}
