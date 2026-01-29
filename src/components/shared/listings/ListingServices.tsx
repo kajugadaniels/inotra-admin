@@ -58,7 +58,7 @@ const ListingServices = ({
                 ) : (
                     form.services.map((service, index) => (
                         <div
-                            key={`${service.name}-${index}`}
+                            key={index}
                             className="grid gap-3 rounded-2xl border border-border/60 bg-background/70 p-3 md:grid-cols-[1fr_auto_auto]"
                         >
                             <div>
