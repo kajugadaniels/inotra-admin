@@ -1,5 +1,13 @@
-import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui";
-import { ListingFormState, ListingServiceState } from "./ListingForm";
+import type { PlaceCategory } from "@/api/types";
+import { Input } from "@/components/ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { ListingFormState } from "./ListingForm";
 
 type ListingBasicInfoProps = {
     form: ListingFormState;
@@ -12,23 +20,27 @@ const ListingBasicInfo = ({ form, categories, disabled, onChange }: ListingBasic
     return (
         <div className="grid gap-4 md:grid-cols-2">
             <div>
-                <label className="text-sm">Listing name (required)</label>
+                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Listing name (required)
+                </label>
                 <Input
                     value={form.name}
                     onChange={(e) => onChange({ ...form, name: e.target.value })}
                     placeholder="Kigali City View"
-                    className="mt-2 rounded-lg"
+                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
                     disabled={disabled}
                 />
             </div>
             <div>
-                <label className="text-sm">Listing category (optional)</label>
+                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Listing category (optional)
+                </label>
                 <Select
                     value={form.categoryId || "uncategorized"}
                     onValueChange={(value) => onChange({ ...form, categoryId: value === "uncategorized" ? "" : value })}
                     disabled={disabled}
                 >
-                    <SelectTrigger className="mt-2 w-full rounded-lg">
+                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
                         <SelectValue placeholder="Choose category" />
                     </SelectTrigger>
                     <SelectContent>
