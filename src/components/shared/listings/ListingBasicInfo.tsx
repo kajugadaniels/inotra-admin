@@ -7,7 +7,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { ListingFormState } from "./ListingForm";
+import { Textarea } from "@/components/ui/textarea";
+import type { ListingFormState } from "./ListingForm";
 
 type ListingBasicInfoProps = {
     form: ListingFormState;
@@ -16,42 +17,72 @@ type ListingBasicInfoProps = {
     onChange: (next: ListingFormState) => void;
 };
 
-const ListingBasicInfo = ({ form, categories, disabled, onChange }: ListingBasicInfoProps) => {
+const ListingBasicInfo = ({
+    form,
+    categories,
+    disabled = false,
+    onChange,
+}: ListingBasicInfoProps) => {
     return (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                        Listing name (required)
+                    </label>
+                    <Input
+                        value={form.name}
+                        onChange={(event) =>
+                            onChange({ ...form, name: event.target.value })
+                        }
+                        placeholder="Kigali City View"
+                        className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                        disabled={disabled}
+                    />
+                </div>
+
+                <div>
+                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                        Listing category (optional)
+                    </label>
+                    <Select
+                        value={form.categoryId || "uncategorized"}
+                        onValueChange={(value) =>
+                            onChange({
+                                ...form,
+                                categoryId: value === "uncategorized" ? "" : value,
+                            })
+                        }
+                        disabled={disabled}
+                    >
+                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                            <SelectValue placeholder="Choose category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="uncategorized">Uncategorized</SelectItem>
+                            {categories.map((category) => (
+                                <SelectItem key={category.id} value={String(category.id)}>
+                                    {category.name ?? "Untitled"}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+            </div>
+
             <div>
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Listing name (required)
+                    Description (optional)
                 </label>
-                <Input
-                    value={form.name}
-                    onChange={(e) => onChange({ ...form, name: e.target.value })}
-                    placeholder="Kigali City View"
-                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                <Textarea
+                    value={form.description}
+                    onChange={(event) =>
+                        onChange({ ...form, description: event.target.value })
+                    }
+                    placeholder="Describe the listing experience in a premium way."
+                    className="admin-field mt-2 min-h-[120px] rounded-2xl border-border/60 bg-background/60"
                     disabled={disabled}
                 />
-            </div>
-            <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Listing category (optional)
-                </label>
-                <Select
-                    value={form.categoryId || "uncategorized"}
-                    onValueChange={(value) => onChange({ ...form, categoryId: value === "uncategorized" ? "" : value })}
-                    disabled={disabled}
-                >
-                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
-                        <SelectValue placeholder="Choose category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="uncategorized">Uncategorized</SelectItem>
-                        {categories.map((category) => (
-                            <SelectItem key={category.id} value={String(category.id)}>
-                                {category.name ?? "Untitled"}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
             </div>
         </div>
     );
