@@ -3,7 +3,6 @@ export { default as ListingFilters } from "./ListingFilters";
 export type { ListingFiltersState } from "./ListingFilters";
 export { default as ListingTable } from "./ListingTable";
 export { default as ListingPagination } from "./ListingPagination";
-export { default as ListingDetailsDialog } from "./ListingDetailsDialog";
 export { default as ListingDeleteDialog } from "./ListingDeleteDialog";
 export { default as ListingForm } from "./ListingForm";
 export {
