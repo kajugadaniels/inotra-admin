@@ -21,6 +21,7 @@ type Args = {
         is_verified?: boolean;
         is_active?: boolean;
         images?: File[];
+        services?: { name: string; is_available?: boolean }[];
     };
 };
 
@@ -51,6 +52,9 @@ export function createPlace({ apiBaseUrl, accessToken, data }: Args) {
     }
     if (typeof data.is_active === "boolean") {
         payload.append("is_active", data.is_active ? "true" : "false");
+    }
+    if (data.services?.length) {
+        payload.append("services", JSON.stringify(data.services));
     }
     if (data.images?.length) {
         data.images.forEach((image) => payload.append("images", image));
