@@ -77,15 +77,20 @@ const ListingForm = ({
                         Listing category
                     </label>
                     <Select
-                        value={form.categoryId}
-                        onValueChange={(value) => onChange({ ...form, categoryId: value })}
+                        value={form.categoryId || "uncategorized"}
+                        onValueChange={(value) =>
+                            onChange({
+                                ...form,
+                                categoryId: value === "uncategorized" ? "" : value,
+                            })
+                        }
                         disabled={disabled}
                     >
                         <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
                             <SelectValue placeholder="Choose category" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="">Uncategorized</SelectItem>
+                            <SelectItem value="uncategorized">Uncategorized</SelectItem>
                             {categories.map((category) => (
                                 <SelectItem key={category.id} value={String(category.id)}>
                                     {category.name ?? "Untitled"}
