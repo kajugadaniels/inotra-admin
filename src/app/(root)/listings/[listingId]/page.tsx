@@ -13,6 +13,7 @@ import type { PlaceDetail } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ListingMap from "@/components/shared/listings/ListingMap";
 
 const formatDate = (value?: string | null) => {
     if (!value) return "--";
@@ -56,6 +57,8 @@ const ListingDetailsPage = () => {
 
     const [listing, setListing] = useState<PlaceDetail | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    const mapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY ?? "";
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
@@ -260,6 +263,39 @@ const ListingDetailsPage = () => {
                                     <p className="mt-2 text-sm font-semibold text-foreground">
                                         {listing?.longitude ?? "--"}
                                     </p>
+                                </div>
+                            </div>
+
+                            <div className="mt-6">
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    Map preview (optional)
+                                </p>
+                                <p className="mt-2 text-xs text-muted-foreground">
+                                    This map displays the stored coordinates for the listing.
+                                </p>
+                                <div className="mt-4">
+                                    <ListingMap
+                                        latitude={
+                                            listing?.latitude !== null &&
+                                            listing?.latitude !== undefined
+                                                ? String(listing.latitude)
+                                                : ""
+                                        }
+                                        longitude={
+                                            listing?.longitude !== null &&
+                                            listing?.longitude !== undefined
+                                                ? String(listing.longitude)
+                                                : ""
+                                        }
+                                        disabled
+                                        onLocationSelect={() => undefined}
+                                    />
+                                    {!mapsApiKey ? (
+                                        <p className="mt-2 text-xs text-muted-foreground">
+                                            Add NEXT_PUBLIC_GOOGLE_MAP_API_KEY in admin/.env to
+                                            render the map preview.
+                                        </p>
+                                    ) : null}
                                 </div>
                             </div>
                         </div>
