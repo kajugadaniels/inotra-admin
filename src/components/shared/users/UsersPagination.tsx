@@ -32,7 +32,7 @@ const UsersPagination = ({ page, totalPages, isLoading, onPageChange }: UsersPag
                                     if (isLoading || page <= 1) return;
                                     onPageChange(page - 1);
                                 }}
-                                className={page <= 1 || isLoading ? "pointer-events-none opacity-50" : ""}
+                                className={page <= 1 || isLoading ? "pointer-events-none opacity-50 text-xs" : ""}
                             />
                         </PaginationItem>
                         <PaginationItem>
@@ -43,7 +43,7 @@ const UsersPagination = ({ page, totalPages, isLoading, onPageChange }: UsersPag
                                     if (isLoading || page >= totalPages) return;
                                     onPageChange(page + 1);
                                 }}
-                                className={page >= totalPages || isLoading ? "pointer-events-none opacity-50" : ""}
+                                className={page >= totalPages || isLoading ? "pointer-events-none opacity-50 text-xs" : ""}
                             />
                         </PaginationItem>
                     </PaginationContent>

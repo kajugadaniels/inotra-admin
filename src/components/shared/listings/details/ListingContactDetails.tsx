@@ -22,7 +22,7 @@ const ListingContactDetails = ({
                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                         Phone
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
+                    <p className="mt-2 text-xs font-semibold text-foreground">
                         {listing?.phone || "--"}
                     </p>
                 </div>
@@ -30,7 +30,7 @@ const ListingContactDetails = ({
                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                         WhatsApp
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
+                    <p className="mt-2 text-xs font-semibold text-foreground">
                         {listing?.whatsapp || "--"}
                     </p>
                 </div>
@@ -38,7 +38,7 @@ const ListingContactDetails = ({
                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                         Email
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
+                    <p className="mt-2 text-xs font-semibold text-foreground">
                         {listing?.email || "--"}
                     </p>
                 </div>
@@ -46,7 +46,7 @@ const ListingContactDetails = ({
                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                         Website
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
+                    <p className="mt-2 text-xs font-semibold text-foreground">
                         {listing?.website || "--"}
                     </p>
                 </div>

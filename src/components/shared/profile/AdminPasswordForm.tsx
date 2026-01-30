@@ -31,7 +31,7 @@ const AdminPasswordForm = ({
         >
             <div className="flex items-start justify-between gap-4">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">Update password</p>
+                    <p className="text-xs font-semibold text-foreground">Update password</p>
                     <p className="mt-1 text-xs text-muted-foreground">
                         Use a strong password with uppercase letters, numbers, and symbols.
                     </p>
@@ -40,7 +40,7 @@ const AdminPasswordForm = ({
 
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
                 <div className="space-y-2 lg:col-span-2">
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         Current password (required)
                     </label>
                     <div className="relative">
@@ -51,14 +51,14 @@ const AdminPasswordForm = ({
                             onChange={(event) => onCurrentPasswordChange(event.target.value)}
                             placeholder="••••••••"
                             disabled={isBusy}
-                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30 text-xs"
                         />
                         <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
                     </div>
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         New password (required)
                     </label>
                     <div className="relative">
@@ -69,14 +69,14 @@ const AdminPasswordForm = ({
                             onChange={(event) => onNewPasswordChange(event.target.value)}
                             placeholder="••••••••"
                             disabled={isBusy}
-                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30 text-xs"
                         />
                         <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
                     </div>
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         Confirm new password (required)
                     </label>
                     <div className="relative">
@@ -87,7 +87,7 @@ const AdminPasswordForm = ({
                             onChange={(event) => onConfirmPasswordChange(event.target.value)}
                             placeholder="••••••••"
                             disabled={isBusy}
-                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                            className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30 text-xs"
                         />
                         <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
                     </div>
@@ -102,9 +102,9 @@ const AdminPasswordForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-12 rounded-full bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto"
+                    className="h-12 rounded-full bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto text-xs"
                 >
-                    <span className="inline-flex items-center gap-2">
+                    <span className="inline-flex items-center gap-2 text-xs">
                         {isBusy ? (
                             <>
                                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />

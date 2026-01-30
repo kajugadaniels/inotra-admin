@@ -40,7 +40,7 @@ const ListingOpeningHours = ({
         <div className="space-y-4">
             <div className="flex items-center justify-between gap-3">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">
+                    <p className="text-xs font-semibold text-foreground">
                         Opening hours (optional)
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -66,7 +66,7 @@ const ListingOpeningHours = ({
                                 </p>
                             </div>
                             <div>
-                                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                     Opens (required)
                                 </label>
                                 <Input
@@ -75,12 +75,12 @@ const ListingOpeningHours = ({
                                     onChange={(event) =>
                                         updateDay(day, { open: event.target.value })
                                     }
-                                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                                     disabled={disabled || value.closed}
                                 />
                             </div>
                             <div>
-                                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                     Closes (required)
                                 </label>
                                 <Input
@@ -89,7 +89,7 @@ const ListingOpeningHours = ({
                                     onChange={(event) =>
                                         updateDay(day, { close: event.target.value })
                                     }
-                                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                                     disabled={disabled || value.closed}
                                 />
                             </div>

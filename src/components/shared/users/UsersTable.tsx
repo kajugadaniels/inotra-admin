@@ -43,13 +43,13 @@ const UsersTable = ({ users, isLoading }: UsersTableProps) => {
                 <TableBody>
                     {isLoading ? (
                         <TableRow>
-                            <TableCell colSpan={5} className="py-10 text-center text-sm text-muted-foreground">
+                            <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
                                 Loading users...
                             </TableCell>
                         </TableRow>
                     ) : users.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={5} className="py-10 text-center text-sm text-muted-foreground">
+                            <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
                                 No users found for the selected filters.
                             </TableCell>
                         </TableRow>
@@ -70,7 +70,7 @@ const UsersTable = ({ users, isLoading }: UsersTableProps) => {
                                                 </AvatarFallback>
                                             </Avatar>
                                             <div className="min-w-0">
-                                                <p className="truncate text-sm font-semibold text-foreground">
+                                                <p className="truncate text-xs font-semibold text-foreground">
                                                     {label}
                                                 </p>
                                                 <p className="text-xs text-muted-foreground">
@@ -80,13 +80,13 @@ const UsersTable = ({ users, isLoading }: UsersTableProps) => {
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                             <Mail className="h-4 w-4" />
                                             {user.email ?? "--"}
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                             <Phone className="h-4 w-4" />
                                             {user.phone_number ?? "--"}
                                         </div>
@@ -101,7 +101,7 @@ const UsersTable = ({ users, isLoading }: UsersTableProps) => {
                                             {active ? "Active" : "Inactive"}
                                         </div>
                                     </TableCell>
-                                    <TableCell className="text-sm text-muted-foreground">
+                                    <TableCell className="text-xs text-muted-foreground">
                                         {formatDate(user.date_joined)}
                                     </TableCell>
                                 </TableRow>

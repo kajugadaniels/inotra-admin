@@ -47,7 +47,7 @@ const ListingOperationsDetails = ({
                             );
                         })
                     ) : (
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                             {isLoading ? "Loading..." : "No hours set."}
                         </p>
                     )}
@@ -74,7 +74,7 @@ const ListingOperationsDetails = ({
                             </div>
                         ))
                     ) : (
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                             {isLoading ? "Loading..." : "No services available."}
                         </p>
                     )}

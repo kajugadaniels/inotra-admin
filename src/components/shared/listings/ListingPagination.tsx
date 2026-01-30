@@ -13,7 +13,7 @@ const ListingPagination = ({
     isLoading,
     onPageChange,
 }: ListingPaginationProps) => (
-    <div className="flex items-center justify-between rounded-3xl border border-border/60 bg-card/70 px-5 py-4 text-sm shadow-2xl shadow-black/5 backdrop-blur-xl">
+    <div className="flex items-center justify-between rounded-3xl border border-border/60 bg-card/70 px-5 py-4 text-xs shadow-2xl shadow-black/5 backdrop-blur-xl">
         <p className="text-xs text-muted-foreground">
             Page <span className="font-semibold text-foreground">{page}</span> of {totalPages}
         </p>
@@ -21,7 +21,7 @@ const ListingPagination = ({
             <Button
                 type="button"
                 variant="outline"
-                className="rounded-full"
+                className="rounded-full text-xs"
                 disabled={isLoading || page <= 1}
                 onClick={() => onPageChange(page - 1)}
             >
@@ -30,7 +30,7 @@ const ListingPagination = ({
             <Button
                 type="button"
                 variant="outline"
-                className="rounded-full"
+                className="rounded-full  text-xs"
                 disabled={isLoading || page >= totalPages}
                 onClick={() => onPageChange(page + 1)}
             >

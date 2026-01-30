@@ -38,17 +38,17 @@ const ListingCategoryDetailsDialog = ({
             <DialogContent className="max-w-lg">
                 <DialogHeader>
                     <DialogTitle>Listing category details</DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-xs">
                         Review the metadata for this listing category.
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-4 text-sm">
+                <div className="space-y-4 text-xs">
                     <div className="rounded-2xl border border-border/60 bg-background/60 p-4">
                         <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                             Category name
                         </p>
-                        <p className="mt-2 text-base font-semibold text-foreground">{name}</p>
+                        <p className="mt-2 text- font-semibold text-foreground">{name}</p>
                     </div>
 
                     <div className="grid gap-3 sm:grid-cols-2">
@@ -56,13 +56,13 @@ const ListingCategoryDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Icon
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">{icon}</p>
+                            <p className="mt-2 text-xs font-semibold text-foreground">{icon}</p>
                         </div>
                         <div className="rounded-2xl border border-border/60 bg-background/60 p-4">
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Status
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {status ? "Active" : "Inactive"}
                             </p>
                         </div>
@@ -73,7 +73,7 @@ const ListingCategoryDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Created
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {formatDate(category?.created_at)}
                             </p>
                         </div>
@@ -81,7 +81,7 @@ const ListingCategoryDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Updated
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {formatDate(category?.updated_at)}
                             </p>
                         </div>

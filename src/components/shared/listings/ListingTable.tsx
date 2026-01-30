@@ -67,7 +67,7 @@ const ListingTable = ({ listings, isLoading, onDelete }: ListingTableProps) => {
                                 <TableRow key={listing.id ?? name}>
                                     <TableCell>
                                         <div className="min-w-0">
-                                            <p className="truncate text-sm font-semibold text-foreground">
+                                            <p className="truncate text-xs font-semibold text-foreground">
                                                 {name}
                                             </p>
                                             <p className="mt-1 text-xs text-muted-foreground">
@@ -75,7 +75,7 @@ const ListingTable = ({ listings, isLoading, onDelete }: ListingTableProps) => {
                                             </p>
                                         </div>
                                     </TableCell>
-                                    <TableCell className="text-sm text-muted-foreground">
+                                    <TableCell className="text-xs text-muted-foreground">
                                         {category}
                                     </TableCell>
                                     <TableCell>
@@ -98,7 +98,7 @@ const ListingTable = ({ listings, isLoading, onDelete }: ListingTableProps) => {
                                             {verified ? "Verified" : "Unverified"}
                                         </div>
                                     </TableCell>
-                                    <TableCell className="text-sm text-muted-foreground">
+                                    <TableCell className="text-xs text-muted-foreground">
                                         {formatDate(listing.created_at)}
                                     </TableCell>
                                     <TableCell className="text-right">

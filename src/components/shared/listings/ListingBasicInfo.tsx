@@ -36,7 +36,7 @@ const ListingBasicInfo = ({
                             onChange({ ...form, name: event.target.value })
                         }
                         placeholder="Kigali City View"
-                        className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                        className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                         disabled={disabled}
                     />
                 </div>
@@ -55,7 +55,7 @@ const ListingBasicInfo = ({
                         }
                         disabled={disabled}
                     >
-                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
                             <SelectValue placeholder="Choose category" />
                         </SelectTrigger>
                         <SelectContent>
@@ -80,7 +80,7 @@ const ListingBasicInfo = ({
                         onChange({ ...form, description: event.target.value })
                     }
                     placeholder="Describe the listing experience in a premium way."
-                    className="mt-2 h-[120px] rounded-2xl border-border/60 bg-background/60"
+                    className="mt-2 h-[120px] rounded-2xl border-border/60 bg-background/60 text-xs"
                     rows={7}
                     disabled={disabled}
                 />

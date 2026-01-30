@@ -55,7 +55,7 @@ const ListingCategoriesFilters = ({
         <div className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">Filters</p>
+                    <p className="text-xs font-semibold text-foreground">Filters</p>
                     <p className="mt-1 text-xs text-muted-foreground">
                         Refine listing categories by status or sorting.
                     </p>
@@ -83,7 +83,7 @@ const ListingCategoriesFilters = ({
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Sort by
                                     </label>
                                     <Select
@@ -106,7 +106,7 @@ const ListingCategoriesFilters = ({
                                 </div>
 
                                 <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Status
                                     </label>
                                     <Select
@@ -121,7 +121,7 @@ const ListingCategoriesFilters = ({
                                             })
                                         }
                                     >
-                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
                                             <SelectValue placeholder="Status" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -137,14 +137,14 @@ const ListingCategoriesFilters = ({
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="h-11 rounded-full"
+                                    className="h-11 rounded-full text-xs"
                                     onClick={() => setDialogOpen(false)}
                                 >
                                     Cancel
                                 </Button>
                                 <Button
                                     type="button"
-                                    className="h-11 rounded-full"
+                                    className="h-11 rounded-full text-xs"
                                     onClick={() => {
                                         onFiltersChange(draftFilters);
                                         setDialogOpen(false);
@@ -171,14 +171,14 @@ const ListingCategoriesFilters = ({
 
             <div className="mt-4">
                 <div className="relative">
-                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground text-xs" />
                     <Input
                         value={filters.search}
                         onChange={(event) =>
                             onFiltersChange({ ...filters, search: event.target.value })
                         }
                         placeholder="Search category name or icon"
-                        className="admin-field rounded-2xl border-border/60 bg-background/60 pl-10"
+                        className="admin-field rounded-2xl border-border/60 bg-background/60 pl-10 text-xs"
                         disabled={isLoading}
                     />
                 </div>

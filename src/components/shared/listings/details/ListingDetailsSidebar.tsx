@@ -31,7 +31,7 @@ const ListingDetailsSidebar = ({ tabs }: ListingDetailsSidebarProps) => {
                                 {tab.label}
                             </span>
                             {tab.description ? (
-                                <span className="text-[11px] text-muted-foreground">
+                                <span className="text-xs text-muted-foreground">
                                     {tab.description}
                                 </span>
                             ) : null}

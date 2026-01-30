@@ -74,7 +74,7 @@ const ListingImages = ({
             <div>
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                        <p className="text-sm font-semibold text-foreground">
+                        <p className="text-xs font-semibold text-foreground">
                             Images (optional)
                         </p>
                         <p className="text-xs text-muted-foreground">
@@ -84,7 +84,7 @@ const ListingImages = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="rounded-full"
+                        className="rounded-full text-xs"
                         onClick={() => inputRef.current?.click()}
                         disabled={disabled}
                     >
@@ -105,7 +105,7 @@ const ListingImages = ({
                             : "border-border/60"
                     }`}
                 >
-                    <p className="text-sm font-semibold text-foreground">
+                    <p className="text-xs font-semibold text-foreground">
                         Drag & drop images here
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -142,7 +142,7 @@ const ListingImages = ({
                                     <p className="text-xs font-semibold text-foreground">
                                         {preview.name}
                                     </p>
-                                    <p className="text-[11px] text-muted-foreground">
+                                    <p className="text-xs text-muted-foreground">
                                         {formatBytes(preview.size)}
                                     </p>
                                 </div>
@@ -168,7 +168,7 @@ const ListingImages = ({
             {existingImages.length ? (
                 <div>
                     <div className="flex items-center justify-between">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                             Existing images (optional)
                         </p>
                         {onToggleRemoveImage ? (
@@ -213,7 +213,7 @@ const ListingImages = ({
                                                 ? "Marked for removal"
                                                 : "Click to remove"}
                                         </p>
-                                        <p className="text-[11px] text-muted-foreground">
+                                        <p className="text-xs text-muted-foreground">
                                             {image.caption || "No caption"}
                                         </p>
                                     </div>

@@ -24,7 +24,7 @@ const ListingContactInfo = ({
     return (
         <div className="grid gap-4 md:grid-cols-2">
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Phone (optional)
                 </label>
                 <Input
@@ -33,12 +33,12 @@ const ListingContactInfo = ({
                         onChange({ ...form, phone: event.target.value })
                     }
                     placeholder="+250 7xx xxx xxx"
-                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                     disabled={disabled}
                 />
             </div>
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     WhatsApp (optional)
                 </label>
                 <Input
@@ -47,12 +47,12 @@ const ListingContactInfo = ({
                         onChange({ ...form, whatsapp: event.target.value })
                     }
                     placeholder="+250 7xx xxx xxx"
-                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                     disabled={disabled}
                 />
             </div>
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Email (optional)
                 </label>
                 <Input
@@ -62,12 +62,12 @@ const ListingContactInfo = ({
                         onChange({ ...form, email: event.target.value })
                     }
                     placeholder="info@listing.com"
-                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                     disabled={disabled}
                 />
             </div>
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Website (optional)
                 </label>
                 <Input
@@ -79,7 +79,7 @@ const ListingContactInfo = ({
                         })
                     }
                     placeholder="https://listing.com"
-                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                     disabled={disabled}
                 />
             </div>

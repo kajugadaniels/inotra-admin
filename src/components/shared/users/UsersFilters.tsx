@@ -59,7 +59,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
         <div className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">Filters</p>
+                    <p className="text-xs font-semibold text-foreground">Filters</p>
                     <p className="mt-1 text-xs text-muted-foreground">
                         Search and refine the user list.
                     </p>
@@ -70,7 +70,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="rounded-full border-border/60 bg-background/70"
+                                className="rounded-full border-border/60 bg-background/70 text-xs shadow-sm hover:bg-background"
                                 disabled={isLoading}
                             >
                                 <Filter className="mr-2 h-4 w-4" />
@@ -87,7 +87,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Order by
                                     </label>
                                     <Select
@@ -96,7 +96,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             setDraftFilters({ ...draftFilters, ordering: value })
                                         }
                                     >
-                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
                                             <SelectValue placeholder="Select" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -110,7 +110,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                 </div>
 
                                 <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Sort direction
                                     </label>
                                     <Select
@@ -122,7 +122,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             })
                                         }
                                     >
-                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
                                             <SelectValue placeholder="Sort" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -133,7 +133,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                 </div>
 
                                 <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Status
                                     </label>
                                     <Select
@@ -148,7 +148,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                             })
                                         }
                                     >
-                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
                                             <SelectValue placeholder="Status" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -205,7 +205,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                             onFiltersChange({ ...filters, search: event.target.value })
                         }
                         placeholder="Search name, email, username, phone"
-                        className="admin-field rounded-2xl border-border/60 bg-background/60 pl-10"
+                        className="admin-field rounded-2xl border-border/60 bg-background/60 pl-10 text-xs"
                         disabled={isLoading}
                     />
                 </div>

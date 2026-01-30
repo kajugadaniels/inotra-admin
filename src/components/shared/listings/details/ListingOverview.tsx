@@ -36,7 +36,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                             className="object-cover"
                         />
                     ) : (
-                        <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                        <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
                             {isLoading ? "Loading image..." : "No image available"}
                         </div>
                     )}
@@ -65,7 +65,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                         <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
                             Description
                         </p>
-                        <p className="mt-2 text-sm text-foreground">
+                        <p className="mt-2 text-xs text-foreground">
                             {listing?.description ||
                                 (isLoading ? "Loading..." : "No description available.")}
                         </p>
@@ -78,24 +78,8 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                         Category
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
+                    <p className="mt-2 text-xs font-semibold text-foreground">
                         {listing?.category_name ?? "Uncategorized"}
-                    </p>
-                </div>
-                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                        Created
-                    </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
-                        {formatDateTime(listing?.created_at)}
-                    </p>
-                </div>
-                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                        Updated
-                    </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
-                        {formatDateTime(listing?.updated_at)}
                     </p>
                 </div>
             </div>

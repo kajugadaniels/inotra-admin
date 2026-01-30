@@ -52,7 +52,7 @@ const ListingFormSidebar = ({
                                     {step.label}
                                 </span>
                                 {step.description ? (
-                                    <span className="text-[11px] text-muted-foreground">
+                                    <span className="text-xs text-muted-foreground">
                                         {step.description}
                                     </span>
                                 ) : null}

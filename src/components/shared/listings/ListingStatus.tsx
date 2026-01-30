@@ -21,7 +21,7 @@ const ListingStatus = ({
     return (
         <div className="grid gap-4 md:grid-cols-2">
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Status (optional)
                 </label>
                 <Select
@@ -41,7 +41,7 @@ const ListingStatus = ({
                 </Select>
             </div>
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Verification (optional)
                 </label>
                 <Select
@@ -51,7 +51,7 @@ const ListingStatus = ({
                     }
                     disabled={disabled}
                 >
-                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
                         <SelectValue placeholder="Verification" />
                     </SelectTrigger>
                     <SelectContent>

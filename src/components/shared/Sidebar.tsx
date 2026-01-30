@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
                     {/* Section label */}
                     <div className="mt-6 flex items-center justify-between">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
                             Workspace
                         </p>
                     </div>

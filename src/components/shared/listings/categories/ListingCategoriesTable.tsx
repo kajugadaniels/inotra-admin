@@ -52,13 +52,13 @@ const ListingCategoriesTable = ({
                 <TableBody>
                     {isLoading ? (
                         <TableRow>
-                            <TableCell colSpan={5} className="py-10 text-center text-sm text-muted-foreground">
+                            <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
                                 Loading listing categories...
                             </TableCell>
                         </TableRow>
                     ) : categories.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={5} className="py-10 text-center text-sm text-muted-foreground">
+                            <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
                                 No listing categories found for the selected filters.
                             </TableCell>
                         </TableRow>
@@ -72,12 +72,12 @@ const ListingCategoriesTable = ({
                                 <TableRow key={category.id ?? name}>
                                     <TableCell>
                                         <div className="min-w-0">
-                                            <p className="truncate text-sm font-semibold text-foreground">
+                                            <p className="truncate text-xs font-semibold text-foreground">
                                                 {name}
                                             </p>
                                         </div>
                                     </TableCell>
-                                    <TableCell className="text-sm text-muted-foreground">
+                                    <TableCell className="text-xs text-muted-foreground">
                                         {icon}
                                     </TableCell>
                                     <TableCell>
@@ -90,7 +90,7 @@ const ListingCategoriesTable = ({
                                             {active ? "Active" : "Inactive"}
                                         </div>
                                     </TableCell>
-                                    <TableCell className="text-sm text-muted-foreground">
+                                    <TableCell className="text-xs text-muted-foreground">
                                         {formatDate(category.created_at)}
                                     </TableCell>
                                     <TableCell className="text-right">

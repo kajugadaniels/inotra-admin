@@ -21,15 +21,15 @@ const ListingLocationDetails = ({
                 <MapPin className="h-4 w-4" />
                 Location
             </div>
-            <p className="mt-3 text-sm font-semibold text-foreground">
+            <p className="mt-3 text-xs font-semibold text-foreground">
                 {(listing?.city || "--") + ", " + (listing?.country || "--")}
             </p>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-xs text-muted-foreground">
                 {listing?.address || "No address provided."}
             </p>
 
             <div className="mt-6">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Map preview (optional)
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground">

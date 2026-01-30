@@ -80,13 +80,13 @@ const ListingDeleteDialog = ({
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Delete listing?</AlertDialogTitle>
-                    <AlertDialogDescription>
+                    <AlertDialogDescription className="text-xs">
                         This will permanently remove the listing and its images from the platform.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                    <AlertDialogCancel disabled={isDeleting} className="text-xs">Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="text-xs">
                         Delete listing
                     </AlertDialogAction>
                 </AlertDialogFooter>

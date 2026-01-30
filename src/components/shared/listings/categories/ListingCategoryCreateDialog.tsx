@@ -102,7 +102,7 @@ const ListingCategoryCreateDialog = ({
             <DialogContent className="max-w-xl">
                 <DialogHeader>
                     <DialogTitle>New listing category</DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-xs">
                         Create a category to organize listings across the platform.
                     </DialogDescription>
                 </DialogHeader>
@@ -113,7 +113,7 @@ const ListingCategoryCreateDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
@@ -121,7 +121,7 @@ const ListingCategoryCreateDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleCreate}
                         disabled={isSubmitting}
                     >

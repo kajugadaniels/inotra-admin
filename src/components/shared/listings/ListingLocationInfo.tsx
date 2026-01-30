@@ -19,7 +19,7 @@ const ListingLocationInfo = ({
 
     if (!apiKey) {
         return (
-            <div className="rounded-3xl border border-border/60 bg-background/60 p-5 text-sm text-muted-foreground">
+            <div className="rounded-3xl border border-border/60 bg-background/60 p-5 text-xs text-muted-foreground">
                 Google Maps key is missing. Add NEXT_PUBLIC_GOOGLE_MAP_API_KEY in admin/.env to enable map and address autocomplete.
             </div>
         );
@@ -100,7 +100,7 @@ const ListingLocationContent = ({
         <div className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         Address (optional)
                     </label>
                     <Input
@@ -110,7 +110,7 @@ const ListingLocationContent = ({
                             onChange({ ...form, address: event.target.value })
                         }
                         placeholder="KG 123 St"
-                        className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                        className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                         disabled={disabled}
                     />
                     <p className="mt-2 text-xs text-muted-foreground">
@@ -118,7 +118,7 @@ const ListingLocationContent = ({
                     </p>
                 </div>
                 <div>
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         City (optional)
                     </label>
                     <Input
@@ -127,14 +127,14 @@ const ListingLocationContent = ({
                             onChange({ ...form, city: event.target.value })
                         }
                         placeholder="Kigali"
-                        className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                        className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                         disabled={disabled}
                     />
                 </div>
             </div>
 
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Map picker (optional)
                 </label>
                 <p className="mt-2 text-xs text-muted-foreground">

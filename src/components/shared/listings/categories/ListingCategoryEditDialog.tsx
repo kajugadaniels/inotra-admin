@@ -115,7 +115,7 @@ const ListingCategoryEditDialog = ({
             <DialogContent className="max-w-xl">
                 <DialogHeader>
                     <DialogTitle>Edit listing category</DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-xs">
                         Update the listing category details and visibility.
                     </DialogDescription>
                 </DialogHeader>
@@ -126,7 +126,7 @@ const ListingCategoryEditDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
@@ -134,7 +134,7 @@ const ListingCategoryEditDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleUpdate}
                         disabled={isSubmitting}
                     >

@@ -32,9 +32,8 @@ const AdminProfileHeader = ({
                     <h1 className="mt-2 text-2xl font-semibold text-foreground sm:text-3xl">
                         Admin profile
                     </h1>
-                    <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                        Keep your contact details and avatar up to date. Changes apply immediately across the
-                        admin workspace.
+                    <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
+                        Keep your contact details and avatar up to date. Changes apply immediately across the admin workspace.
                     </p>
                 </div>
 
@@ -66,7 +65,7 @@ const AdminProfileHeader = ({
                     </div>
 
                     <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-foreground">{userLabel}</p>
+                        <p className="truncate text-xs font-semibold text-foreground">{userLabel}</p>
                         <div className="mt-1 inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
                             <ShieldCheck className="h-3.5 w-3.5" />
                             Administrator

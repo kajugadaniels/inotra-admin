@@ -7,7 +7,7 @@ const UsersHeader = () => {
             <h1 className="mt-2 text-2xl font-semibold text-foreground sm:text-3xl">
                 User directory
             </h1>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground">
                 Review all user accounts, filter by status, and sort the latest activity.
             </p>
         </div>

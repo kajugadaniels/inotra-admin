@@ -80,14 +80,13 @@ const ListingCategoryDeleteDialog = ({
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Delete listing category?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        This will remove the category from the platform. Listings attached
-                        to it will keep their records but lose the category association.
+                    <AlertDialogDescription className="text-xs">
+                        This will remove the category from the platform. Listings attached to it will keep their records but lose the category association.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                    <AlertDialogCancel disabled={isDeleting} className="text-xs">Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="text-xs">
                         Delete category
                     </AlertDialogAction>
                 </AlertDialogFooter>

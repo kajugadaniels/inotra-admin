@@ -11,13 +11,13 @@ const ListingCategoriesHeader = ({ isLoading, onCreate }: ListingCategoriesHeade
     <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
             <h1 className="text-2xl font-semibold text-foreground">Listing categories</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground text-xs">
                 Manage the categories used to organize listings.
             </p>
         </div>
         <Button
             type="button"
-            className="rounded-full"
+            className="rounded-full h-11 text-xs"
             onClick={onCreate}
             disabled={isLoading}
         >

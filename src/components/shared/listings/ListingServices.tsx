@@ -24,7 +24,7 @@ const ListingServices = ({
         <div className="rounded-2xl border border-border/60 bg-background/60 p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">
+                    <p className="text-xs font-semibold text-foreground">
                         Listing services (required)
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -34,7 +34,7 @@ const ListingServices = ({
                 <Button
                     type="button"
                     variant="outline"
-                    className="rounded-full"
+                    className="rounded-full text-xs"
                     onClick={() =>
                         onChange({
                             ...form,
@@ -62,7 +62,7 @@ const ListingServices = ({
                             className="grid gap-3 rounded-2xl border border-border/60 bg-background/70 p-3 md:grid-cols-[1fr_auto_auto]"
                         >
                             <div>
-                                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                     Service name (required)
                                 </label>
                                 <Input
@@ -76,12 +76,12 @@ const ListingServices = ({
                                         onChange({ ...form, services: next });
                                     }}
                                     placeholder="Wi-Fi"
-                                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
+                                    className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60 text-xs"
                                     disabled={disabled}
                                 />
                             </div>
                             <div>
-                                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                     Available (optional)
                                 </label>
                                 <Select
@@ -96,7 +96,7 @@ const ListingServices = ({
                                     }}
                                     disabled={disabled}
                                 >
-                                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
                                         <SelectValue placeholder="Availability" />
                                     </SelectTrigger>
                                     <SelectContent>

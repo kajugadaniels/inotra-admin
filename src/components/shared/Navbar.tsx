@@ -75,15 +75,6 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 ring-1 ring-primary/50">
                     <ShieldCheck className="h-5 w-5 text-primary" />
                 </div>
-
-                <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                        Admin Console
-                    </p>
-                    <p className="text-sm font-semibold text-foreground">
-                        Operations Hub
-                    </p>
-                </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -108,7 +99,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                                     </AvatarFallback>
                                 </Avatar>
 
-                                <div className="flex flex-col items-start text-[11px] leading-tight">
+                                <div className="flex flex-col items-start text-xs leading-tight">
                                     <span className="max-w-[170px] truncate font-semibold text-foreground">
                                         {userLabel}
                                     </span>
@@ -120,7 +111,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
 
                     <DropdownMenuContent align="end" className="w-64">
                         <DropdownMenuLabel className="space-y-0.5">
-                            <p className="truncate text-sm font-semibold">{userLabel}</p>
+                            <p className="truncate text-xs font-semibold">{userLabel}</p>
                             {userEmail ? (
                                 <p className="truncate text-xs font-normal text-muted-foreground">
                                     {userEmail}

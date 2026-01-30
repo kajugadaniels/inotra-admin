@@ -240,7 +240,7 @@ const ListingForm = ({
                         <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
                             {currentStep.label}
                         </p>
-                        <p className="mt-2 text-sm text-muted-foreground">
+                        <p className="mt-2 text-xs text-muted-foreground">
                             {currentStep.description}
                         </p>
                     </div>
@@ -253,7 +253,7 @@ const ListingForm = ({
                             size="lg"
                             onClick={() => setStepIndex((prev) => Math.max(prev - 1, 0))}
                             disabled={disabled || stepIndex === 0}
-                            className="rounded-full border border-border/60"
+                            className="rounded-full border border-border/60 text-xs"
                         >
                             Back
                         </Button>
@@ -268,7 +268,7 @@ const ListingForm = ({
                                 setStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
                             }}
                             disabled={disabled}
-                            className="rounded-full"
+                            className="rounded-full border border-border/60 text-xs"
                         >
                             {stepIndex === steps.length - 1 ? "Save changes" : "Next"}
                         </Button>
