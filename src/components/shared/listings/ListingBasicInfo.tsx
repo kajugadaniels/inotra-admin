@@ -80,7 +80,8 @@ const ListingBasicInfo = ({
                         onChange({ ...form, description: event.target.value })
                     }
                     placeholder="Describe the listing experience in a premium way."
-                    className="admin-field mt-2 min-h-[120px] rounded-2xl border-border/60 bg-background/60"
+                    className="mt-2 h-[120px] rounded-2xl border-border/60 bg-background/60"
+                    rows={7}
                     disabled={disabled}
                 />
             </div>
