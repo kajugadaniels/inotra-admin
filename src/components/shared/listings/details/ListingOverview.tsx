@@ -31,47 +31,52 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
     };
 
     return (
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-2xl shadow-black/5">
-                <div className="relative h-64 w-full">
+        <div className="mt-6 grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
+            {/* Main Image and Description Section */}
+            <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5">
+                <div className="relative w-full h-72 sm:h-96">
                     {selectedImage ? (
                         <Image
                             src={selectedImage}
                             alt={listing?.name ?? "Listing"}
                             fill
-                            className="object-cover"
+                            className="object-cover transition-transform transform hover:scale-105"
                         />
                     ) : (
-                        <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+                        <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
                             {isLoading ? "Loading image..." : "No image available"}
                         </div>
                     )}
                 </div>
+
                 <div className="space-y-4 p-6">
-                    <div className="flex flex-wrap items-center gap-3">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
+                    <div className="flex gap-4">
+                        {/* Active/Inactive Badge */}
+                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-medium text-muted-foreground hover:bg-primary hover:text-background transition-colors duration-300">
                             {listing?.is_active ? (
-                                <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+                                <CheckCircle2 className="h-4 w-4 text-primary" />
                             ) : (
-                                <XCircle className="h-3.5 w-3.5 text-muted-foreground" />
+                                <XCircle className="h-4 w-4 text-muted-foreground" />
                             )}
                             {listing?.is_active ? "Active" : "Inactive"}
                         </div>
-                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
+
+                        {/* Verified/Unverified Badge */}
+                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-medium text-muted-foreground hover:bg-primary hover:text-background transition-colors duration-300">
                             {listing?.is_verified ? (
-                                <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+                                <ShieldCheck className="h-4 w-4 text-primary" />
                             ) : (
-                                <XCircle className="h-3.5 w-3.5 text-muted-foreground" />
+                                <XCircle className="h-4 w-4 text-muted-foreground" />
                             )}
                             {listing?.is_verified ? "Verified" : "Unverified"}
                         </div>
                     </div>
 
                     <div>
-                        <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                        <p className="text-xs uppercase tracking-widest text-muted-foreground">
                             Description
                         </p>
-                        <p className="mt-2 text-xs text-foreground">
+                        <p className="mt-2 text-sm text-foreground">
                             {listing?.description ||
                                 (isLoading ? "Loading..." : "No description available.")}
                         </p>
@@ -79,41 +84,41 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                 </div>
             </div>
 
+            {/* Category and Gallery Section */}
             <div className="space-y-4">
-                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                {/* Category */}
+                <div className="rounded-2xl border border-border/60 bg-background/70 p-6 shadow-xl shadow-black/5">
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground">
                         Category
                     </p>
-                    <p className="mt-2 text-xs font-semibold text-foreground">
+                    <p className="mt-2 text-sm font-semibold text-foreground">
                         {listing?.category_name ?? "Uncategorized"}
                     </p>
                 </div>
 
-                <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
-                    <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                {/* Image Gallery */}
+                <div className="rounded-2xl border border-border/60 bg-card/70 p-6 shadow-xl shadow-black/5">
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground">
                         Gallery
                     </p>
                     {listing?.images?.length ? (
-                        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                            <div className="overflow-hidden rounded-2xl border border-border/60 bg-background/70">
-                                <div className="relative w-full h-40">
-                                    {listing.images.map((image) => (
-                                        <div
-                                            key={image.id}
-                                            className="cursor-pointer"
-                                            onClick={() => handleThumbnailClick(image.image_url)}
-                                        >
-                                            <Image
-                                                src={image.image_url}
-                                                alt={image.caption || "Listing image"}
-                                                width={80}
-                                                height={80}
-                                                className="object-cover"
-                                            />
-                                        </div>
-                                    ))}
+                        <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                            {/* Thumbnails */}
+                            {listing.images.map((image) => (
+                                <div
+                                    key={image.id}
+                                    className="relative overflow-hidden rounded-xl border border-border/60 bg-background/70 cursor-pointer hover:scale-105 transition-transform duration-300"
+                                    onClick={() => handleThumbnailClick(image.image_url)}
+                                >
+                                    <Image
+                                        src={image.image_url}
+                                        alt={image.caption || "Listing image"}
+                                        width={80}
+                                        height={80}
+                                        className="h-full w-full object-cover"
+                                    />
                                 </div>
-                            </div>
+                            ))}
                         </div>
                     ) : (
                         <p className="mt-3 text-sm text-muted-foreground">

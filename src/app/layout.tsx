@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Urbanist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import ThemeProvider from "@/components/shared/theme-provider";
 import "./globals.css";
 
-const geistSans = Urbanist({
+const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
 });
