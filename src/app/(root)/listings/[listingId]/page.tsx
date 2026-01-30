@@ -248,25 +248,6 @@ const ListingDetailsPage = () => {
                             <p className="mt-2 text-sm text-muted-foreground">
                                 {listing?.address || "No address provided."}
                             </p>
-                            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                                        Latitude
-                                    </p>
-                                    <p className="mt-2 text-sm font-semibold text-foreground">
-                                        {listing?.latitude ?? "--"}
-                                    </p>
-                                </div>
-                                <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
-                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                                        Longitude
-                                    </p>
-                                    <p className="mt-2 text-sm font-semibold text-foreground">
-                                        {listing?.longitude ?? "--"}
-                                    </p>
-                                </div>
-                            </div>
-
                             <div className="mt-6">
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                     Map preview (optional)
