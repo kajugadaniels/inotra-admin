@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CheckCircle2, ShieldCheck, XCircle } from "lucide-react";
+import { useState } from "react";
 
 import type { PlaceDetail } from "@/api/types";
 
@@ -23,14 +24,19 @@ type ListingOverviewProps = {
 
 const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
     const heroImage = listing?.images?.[0]?.image_url ?? null;
+    const [selectedImage, setSelectedImage] = useState(heroImage);
+
+    const handleThumbnailClick = (imageUrl: string) => {
+        setSelectedImage(imageUrl);
+    };
 
     return (
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-2xl shadow-black/5">
                 <div className="relative h-64 w-full">
-                    {heroImage ? (
+                    {selectedImage ? (
                         <Image
-                            src={heroImage}
+                            src={selectedImage}
                             alt={listing?.name ?? "Listing"}
                             fill
                             className="object-cover"
@@ -81,6 +87,39 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                     <p className="mt-2 text-xs font-semibold text-foreground">
                         {listing?.category_name ?? "Uncategorized"}
                     </p>
+                </div>
+
+                <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
+                    <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                        Gallery
+                    </p>
+                    {listing?.images?.length ? (
+                        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                            <div className="overflow-hidden rounded-2xl border border-border/60 bg-background/70">
+                                <div className="relative w-full h-40">
+                                    {listing.images.map((image) => (
+                                        <div
+                                            key={image.id}
+                                            className="cursor-pointer"
+                                            onClick={() => handleThumbnailClick(image.image_url)}
+                                        >
+                                            <Image
+                                                src={image.image_url}
+                                                alt={image.caption || "Listing image"}
+                                                width={80}
+                                                height={80}
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <p className="mt-3 text-sm text-muted-foreground">
+                            {isLoading ? "Loading..." : "No images available."}
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
