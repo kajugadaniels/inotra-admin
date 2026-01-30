@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans } from "next/font/google";  // Import DM Sans from Google Fonts
 import { Toaster } from "@/components/ui/sonner";
 import ThemeProvider from "@/components/shared/theme-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const dmSans = DM_Sans({
+    variable: "--font-dm-sans",  // Use this variable for the font
     subsets: ["latin"],
 });
 
@@ -29,7 +24,7 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body
                 suppressHydrationWarning
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${dmSans.variable} antialiased`}
             >
                 <ThemeProvider>
                     <Toaster position="top-right" richColors closeButton />

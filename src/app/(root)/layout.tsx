@@ -60,7 +60,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <div className="pointer-events-none absolute inset-0 opacity-70 [background:radial-gradient(900px_circle_at_20%_10%,hsl(var(--primary)/0.10),transparent_55%),radial-gradient(700px_circle_at_80%_0%,hsl(var(--foreground)/0.06),transparent_50%)]" />
                 <div className="relative mx-auto flex min-h-[70vh] w-full max-w-5xl flex-col items-center justify-center px-6 py-16 text-center">
                     <div className="w-full max-w-xl rounded-3xl border border-border/60 bg-card/70 px-7 py-9 shadow-2xl shadow-black/10 backdrop-blur-xl">
-                        <p className="text-xs font-semibold uppercase tracking-[0.32em] text-muted-foreground">
+                        <p className="text-xs font-semibold uppercase text-muted-foreground">
                             Verifying access
                         </p>
                         <h2 className="mt-3 text-2xl font-semibold text-foreground">

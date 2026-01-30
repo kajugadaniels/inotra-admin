@@ -343,7 +343,7 @@ const AdminLoginPage = () => {
 
             <div className="mt-7 flex items-center gap-3">
                 <div className="h-px flex-1 bg-border/60" />
-                <span className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
+                <span className="text-xs uppercase font-bold text-muted-foreground">
                     or
                 </span>
                 <div className="h-px flex-1 bg-border/60" />

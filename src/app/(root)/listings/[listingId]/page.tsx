@@ -88,7 +88,7 @@ const ListingDetailsPage = () => {
                 <div>
                     <Link
                         href="/listings"
-                        className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground"
+                        className="inline-flex items-center gap-2 text-xs font-bold capitalize text-muted-foreground"
                     >
                         <ArrowLeft className="h-4 w-4" />
                         Back to listings

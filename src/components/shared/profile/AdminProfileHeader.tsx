@@ -26,7 +26,7 @@ const AdminProfileHeader = ({
 
             <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.32em] text-muted-foreground">
+                    <p className="text-xs font-semibold uppercase text-muted-foreground">
                         Profile
                     </p>
                     <h1 className="mt-2 text-2xl font-semibold text-foreground sm:text-3xl">
