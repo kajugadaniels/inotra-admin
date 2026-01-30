@@ -155,7 +155,7 @@ const AdCreativeEditDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
@@ -163,7 +163,7 @@ const AdCreativeEditDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

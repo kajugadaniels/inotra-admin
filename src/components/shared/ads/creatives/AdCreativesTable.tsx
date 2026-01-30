@@ -53,13 +53,13 @@ const AdCreativesTable = ({
                 <TableBody>
                     {isLoading ? (
                         <TableRow>
-                            <TableCell colSpan={5} className="py-10 text-center text-sm text-muted-foreground">
+                            <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
                                 Loading creatives...
                             </TableCell>
                         </TableRow>
                     ) : creatives.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={5} className="py-10 text-center text-sm text-muted-foreground">
+                            <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
                                 No creatives found for the selected filters.
                             </TableCell>
                         </TableRow>
@@ -85,16 +85,16 @@ const AdCreativesTable = ({
                                                 ) : null}
                                             </div>
                                             <div className="min-w-0">
-                                                <p className="truncate text-sm font-semibold text-foreground">
+                                                <p className="truncate text-xs font-semibold text-foreground">
                                                     {title}
                                                 </p>
                                             </div>
                                         </div>
                                     </TableCell>
-                                    <TableCell className="text-sm text-muted-foreground">
+                                    <TableCell className="text-xs text-muted-foreground">
                                         {creative.placement_key ?? "--"}
                                     </TableCell>
-                                    <TableCell className="text-sm text-muted-foreground">
+                                    <TableCell className="text-xs text-muted-foreground">
                                         {formatDate(creative.starts_at)} → {formatDate(creative.ends_at)}
                                     </TableCell>
                                     <TableCell>

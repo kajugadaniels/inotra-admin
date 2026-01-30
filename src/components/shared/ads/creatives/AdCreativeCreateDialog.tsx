@@ -126,7 +126,7 @@ const AdCreativeCreateDialog = ({
             <DialogContent className="max-w-2xl">
                 <DialogHeader>
                     <DialogTitle>New ad creative</DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-xs">
                         Upload a creative and configure its placement and schedule.
                     </DialogDescription>
                 </DialogHeader>

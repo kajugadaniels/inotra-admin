@@ -10,6 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import Image from "next/image";
 
 export type AdCreativeFormState = {
     placementId: string;
@@ -63,7 +64,7 @@ const AdCreativeForm = ({
     return (
         <div className="space-y-4">
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Placement (required)
                 </label>
                 <Select
@@ -90,7 +91,7 @@ const AdCreativeForm = ({
             </div>
 
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Title (optional)
                 </label>
                 <Input
@@ -103,7 +104,7 @@ const AdCreativeForm = ({
             </div>
 
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Target URL (optional)
                 </label>
                 <Input
@@ -119,7 +120,7 @@ const AdCreativeForm = ({
 
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         Starts at (optional)
                     </label>
                     <Input
@@ -133,7 +134,7 @@ const AdCreativeForm = ({
                     />
                 </div>
                 <div>
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         Ends at (optional)
                     </label>
                     <Input
@@ -149,7 +150,7 @@ const AdCreativeForm = ({
             </div>
 
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Creative image (optional)
                 </label>
                 <Input
@@ -167,10 +168,12 @@ const AdCreativeForm = ({
                 />
                 {previewUrl || currentImageUrl ? (
                     <div className="mt-3 overflow-hidden rounded-2xl border border-border/60">
-                        <img
+                        <Image
                             src={previewUrl ?? currentImageUrl ?? ""}
                             alt="Preview"
                             className="h-40 w-full object-cover"
+                            width={800}
+                            height={200}
                         />
                     </div>
                 ) : null}
@@ -179,7 +182,7 @@ const AdCreativeForm = ({
             {showRemoveImage ? (
                 <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/60 px-4 py-3">
                     <div>
-                        <p className="text-sm font-semibold text-foreground">
+                        <p className="text-xs font-semibold text-foreground">
                             Remove image (optional)
                         </p>
                         <p className="text-xs text-muted-foreground">
@@ -202,7 +205,7 @@ const AdCreativeForm = ({
 
             <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/60 px-4 py-3">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">
+                    <p className="text-xs font-semibold text-foreground">
                         Active status (optional)
                     </p>
                     <p className="text-xs text-muted-foreground">

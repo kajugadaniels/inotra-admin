@@ -80,18 +80,19 @@ const AdCreativeDeleteDialog = ({
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Delete creative?</AlertDialogTitle>
-                    <AlertDialogDescription>
+                    <AlertDialogDescription className="text-xs">
                         This will remove the creative and its uploaded image.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel
                         disabled={isSubmitting}
+                        className="rounded-full text-xs"
                     >
                         Cancel
                     </AlertDialogCancel>
                     <AlertDialogAction
-                        className="h-11 rounded-full"
+                        className="rounded-full text-xs"
                         onClick={handleDelete}
                         disabled={isSubmitting}
                     >

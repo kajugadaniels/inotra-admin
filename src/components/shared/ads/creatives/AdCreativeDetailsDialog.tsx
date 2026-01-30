@@ -113,7 +113,7 @@ const AdCreativeDetailsDialog = ({
                                 priority
                             />
                         ) : (
-                            <div className="flex h-56 items-center justify-center text-sm text-muted-foreground">
+                            <div className="flex h-56 items-center justify-center text-xs text-muted-foreground">
                                 {isLoading ? "Loading image..." : "No image uploaded"}
                             </div>
                         )}
@@ -124,7 +124,7 @@ const AdCreativeDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Title
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {creative?.title ?? (isLoading ? "Loading..." : "--")}
                             </p>
                         </div>
@@ -132,7 +132,7 @@ const AdCreativeDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Placement
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {creative?.placement_key ?? (isLoading ? "Loading..." : "--")}
                             </p>
                         </div>
@@ -140,7 +140,7 @@ const AdCreativeDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Starts at
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {isLoading ? "Loading..." : formatDateTime(creative?.starts_at)}
                             </p>
                         </div>
@@ -148,7 +148,7 @@ const AdCreativeDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Ends at
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {isLoading ? "Loading..." : formatDateTime(creative?.ends_at)}
                             </p>
                         </div>
@@ -156,7 +156,7 @@ const AdCreativeDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Status
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {creative
                                     ? creative.is_active
                                         ? "Active"
@@ -170,7 +170,7 @@ const AdCreativeDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Target URL
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {creative?.target_url ?? (isLoading ? "Loading..." : "--")}
                             </p>
                         </div>
@@ -178,7 +178,7 @@ const AdCreativeDetailsDialog = ({
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs">
                         Close
                     </Button>
                 </DialogFooter>

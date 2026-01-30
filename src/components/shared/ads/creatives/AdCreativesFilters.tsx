@@ -57,7 +57,7 @@ const AdCreativesFilters = ({
         <div className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">Filters</p>
+                    <p className="text-xs font-semibold text-foreground">Filters</p>
                     <p className="mt-1 text-xs text-muted-foreground">
                         Refine creatives by placement, status, or sorting.
                     </p>
@@ -68,7 +68,7 @@ const AdCreativesFilters = ({
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="rounded-full border-border/60 bg-background/70"
+                                className="rounded-full border-border/60 bg-background/70 text-xs"
                                 disabled={isLoading}
                             >
                                 <Filter className="mr-2 h-4 w-4" />
@@ -85,7 +85,7 @@ const AdCreativesFilters = ({
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Sort by
                                     </label>
                                     <Select
@@ -108,7 +108,7 @@ const AdCreativesFilters = ({
                                 </div>
 
                                 <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Status
                                     </label>
                                     <Select
@@ -135,7 +135,7 @@ const AdCreativesFilters = ({
                                 </div>
 
                                 <div>
-                                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                         Placement
                                     </label>
                                     <Select
@@ -166,14 +166,14 @@ const AdCreativesFilters = ({
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="h-11 rounded-full"
+                                    className="h-11 rounded-full text-xs"
                                     onClick={() => setDialogOpen(false)}
                                 >
                                     Cancel
                                 </Button>
                                 <Button
                                     type="button"
-                                    className="h-11 rounded-full"
+                                    className="h-11 rounded-full text-xs"
                                     onClick={() => {
                                         onFiltersChange(draftFilters);
                                         setDialogOpen(false);
@@ -200,7 +200,7 @@ const AdCreativesFilters = ({
 
             <div className="mt-4">
                 <div className="relative">
-                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground text-xs" />
                     <Input
                         value={filters.search}
                         onChange={(event) =>

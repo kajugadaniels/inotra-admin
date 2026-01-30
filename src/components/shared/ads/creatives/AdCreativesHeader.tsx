@@ -18,14 +18,14 @@ const AdCreativesHeader = ({ isLoading, onCreate }: AdCreativesHeaderProps) => {
                     <h1 className="mt-2 text-2xl font-semibold text-foreground sm:text-3xl">
                         Ad creatives
                     </h1>
-                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground">
                         Create and manage banner creatives linked to placements and schedules.
                     </p>
                 </div>
 
                 <Button
                     type="button"
-                    className="h-11 rounded-full"
+                    className="h-11 rounded-full text-xs"
                     onClick={onCreate}
                     disabled={isLoading}
                 >
