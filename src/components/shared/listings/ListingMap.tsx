@@ -4,6 +4,12 @@ import { useMemo } from "react";
 import { Map, Marker, type MapMouseEvent } from "@vis.gl/react-google-maps";
 
 const DEFAULT_CENTER = { lat: -1.9441, lng: 30.0619 };
+const RWANDA_BOUNDS = {
+    north: -1.0,
+    south: -2.9,
+    east: 30.9,
+    west: 28.8,
+};
 
 type ListingMapProps = {
     latitude: string;
@@ -46,6 +52,7 @@ const ListingMap = ({
                 onClick={handleClick}
                 gestureHandling={disabled ? "none" : "greedy"}
                 disableDefaultUI
+                restriction={{ latLngBounds: RWANDA_BOUNDS, strictBounds: true }}
                 className="h-64 w-full"
             >
                 {coords ? <Marker position={coords} /> : null}
