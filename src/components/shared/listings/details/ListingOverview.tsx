@@ -25,7 +25,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
     const heroImage = listing?.images?.[0]?.image_url ?? null;
 
     return (
-        <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-2xl shadow-black/5">
                 <div className="relative h-64 w-full">
                     {heroImage ? (

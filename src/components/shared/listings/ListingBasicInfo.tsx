@@ -27,7 +27,7 @@ const ListingBasicInfo = ({
         <div className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         Listing name (required)
                     </label>
                     <Input
@@ -42,7 +42,7 @@ const ListingBasicInfo = ({
                 </div>
 
                 <div>
-                    <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                         Listing category (optional)
                     </label>
                     <Select
@@ -71,7 +71,7 @@ const ListingBasicInfo = ({
             </div>
 
             <div>
-                <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Description (optional)
                 </label>
                 <Textarea

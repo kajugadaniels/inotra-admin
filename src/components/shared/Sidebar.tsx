@@ -51,10 +51,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                         </div>
 
                         <div className="leading-tight">
-                            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
                                 INOTRA
                             </p>
-                            <p className="text-sm font-semibold text-foreground">Admin Portal</p>
+                            <p className="text-xs font-semibold text-foreground">Admin Portal</p>
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                                             type="button"
                                             onClick={() => toggleSection(link.label)}
                                             className={cn(
-                                                "group relative flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition",
+                                                "group relative flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-medium transition",
                                                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                                                 isChildActive
                                                     ? "bg-primary/10 text-foreground ring-1 ring-primary/20"
@@ -161,7 +161,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                                                             href={child.href ?? "#"}
                                                             onClick={onClose}
                                                             className={cn(
-                                                                "group relative flex items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium transition",
+                                                                "group relative flex items-center gap-3 rounded-2xl px-3 py-2 text-xs font-medium transition",
                                                                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                                                                 childActive
                                                                     ? "bg-primary/10 text-foreground ring-1 ring-primary/20"
@@ -208,7 +208,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                                     href={link.href ?? "#"}
                                     onClick={onClose}
                                     className={cn(
-                                        "group relative flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition",
+                                        "group relative flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-medium transition",
                                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                                         isActive
                                             ? "bg-primary/10 text-foreground ring-1 ring-primary/20"
