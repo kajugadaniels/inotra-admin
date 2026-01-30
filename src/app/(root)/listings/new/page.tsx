@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { authStorage } from "@/api/auth";
+import { authStorage, extractErrorDetail } from "@/api/auth";
 import { createPlace, listPlaceCategories } from "@/api/places";
 import type { PlaceCategory } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
@@ -113,8 +113,9 @@ const NewListingPage = () => {
             });
 
             if (!result.ok || !result.body?.place) {
+                const detail = extractErrorDetail(result.body);
                 toast.error("Listing creation failed", {
-                    description: result.body?.message ?? "Please review the form and retry.",
+                    description: detail ?? "Please review the form and retry.",
                 });
                 return;
             }
