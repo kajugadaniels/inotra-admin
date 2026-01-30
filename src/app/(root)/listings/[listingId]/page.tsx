@@ -122,39 +122,47 @@ const ListingDetailsPage = () => {
             </div>
 
             <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
-                <Tabs defaultValue="overview" className="space-y-6">
-                    <TabsList variant="line" className="flex w-full flex-wrap gap-2 bg-transparent p-0">
-                        <TabsTrigger
-                            value="overview"
-                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
+                <Tabs defaultValue="overview" orientation="vertical" className="gap-6 lg:flex-row">
+                    <div className="rounded-3xl border border-border/60 bg-background/70 p-4 lg:w-60">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                            Listing sections
+                        </p>
+                        <TabsList
+                            variant="line"
+                            className="mt-4 w-full gap-2 bg-transparent p-0"
                         >
-                            Overview
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="location"
-                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
-                        >
-                            Location
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="contact"
-                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
-                        >
-                            Contact
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="operations"
-                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
-                        >
-                            Operations
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="media"
-                            className="rounded-full border border-border/60 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
-                        >
-                            Media
-                        </TabsTrigger>
-                    </TabsList>
+                            <TabsTrigger
+                                value="overview"
+                                className="w-full rounded-2xl border border-border/60 bg-background/60 px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em]"
+                            >
+                                Overview
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="location"
+                                className="w-full rounded-2xl border border-border/60 bg-background/60 px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em]"
+                            >
+                                Location
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="contact"
+                                className="w-full rounded-2xl border border-border/60 bg-background/60 px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em]"
+                            >
+                                Contact
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="operations"
+                                className="w-full rounded-2xl border border-border/60 bg-background/60 px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em]"
+                            >
+                                Operations
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="media"
+                                className="w-full rounded-2xl border border-border/60 bg-background/60 px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em]"
+                            >
+                                Media
+                            </TabsTrigger>
+                        </TabsList>
+                    </div>
 
                     <TabsContent value="overview">
                         <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
