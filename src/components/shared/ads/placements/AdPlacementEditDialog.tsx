@@ -112,7 +112,7 @@ const AdPlacementEditDialog = ({
             <DialogContent className="max-w-xl">
                 <DialogHeader>
                     <DialogTitle>Edit placement</DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-xs">
                         Update placement metadata and availability.
                     </DialogDescription>
                 </DialogHeader>
@@ -123,7 +123,7 @@ const AdPlacementEditDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-12 rounded-full"
+                        className="h-12 rounded-full text-xs"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
@@ -131,7 +131,7 @@ const AdPlacementEditDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-12 rounded-full"
+                        className="h-12 rounded-full text-xs"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

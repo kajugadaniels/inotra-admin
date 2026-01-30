@@ -99,7 +99,7 @@ const AdPlacementCreateDialog = ({
             <DialogContent className="max-w-xl">
                 <DialogHeader>
                     <DialogTitle>New ad placement</DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-xs">
                         Create a new placement key for ad inventory.
                     </DialogDescription>
                 </DialogHeader>
@@ -109,7 +109,7 @@ const AdPlacementCreateDialog = ({
                 <DialogFooter>
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         variant="outline"
                         onClick={handleClose}
                         disabled={isSubmitting}
@@ -118,7 +118,7 @@ const AdPlacementCreateDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

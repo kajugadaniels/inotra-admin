@@ -187,14 +187,16 @@ body {
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {
-    cursor: pointer;
+    cursor: pointer !important;
+    font-size: 12px !important;
   }
 }
 
 @layer components {
   .admin-field {
-    height: 3rem !important;
-    min-height: 3rem !important;
+    height: 2.6rem !important;
+    min-height: 2.6rem !important;
+    font-size: 12px !important;
   }
 }
 

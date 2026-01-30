@@ -80,14 +80,13 @@ const AdPlacementDeleteDialog = ({
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Delete placement?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        This will remove the placement key. Existing creatives remain but will no
-                        longer reference this placement.
+                    <AlertDialogDescription className="text-xs">
+                        This will remove the placement key. Existing creatives remain but will no longer reference this placement.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isSubmitting}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} disabled={isSubmitting}>
+                    <AlertDialogCancel disabled={isSubmitting} className="text-xs">Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} disabled={isSubmitting} className="text-xs">
                         Delete placement
                     </AlertDialogAction>
                 </AlertDialogFooter>

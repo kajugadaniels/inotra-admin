@@ -87,7 +87,7 @@ const AdPlacementDetailsDialog = ({
             <DialogContent className="max-w-xl">
                 <DialogHeader>
                     <DialogTitle>Placement details</DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-xs">
                         Review placement metadata and availability settings.
                     </DialogDescription>
                 </DialogHeader>
@@ -97,7 +97,7 @@ const AdPlacementDetailsDialog = ({
                         <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                             Placement key
                         </p>
-                        <p className="mt-2 text-sm font-semibold text-foreground">
+                        <p className="mt-2 text-xs font-semibold text-foreground">
                             {placement?.key ?? (isLoading ? "Loading..." : "--")}
                         </p>
                     </div>
@@ -107,7 +107,7 @@ const AdPlacementDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Title
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {placement?.title ?? (isLoading ? "Loading..." : "--")}
                             </p>
                         </div>
@@ -115,7 +115,7 @@ const AdPlacementDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Status
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {placement
                                     ? placement.is_active
                                         ? "Active"
@@ -129,7 +129,7 @@ const AdPlacementDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Created
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {isLoading
                                     ? "Loading..."
                                     : formatDateTime(placement?.created_at)}
@@ -139,7 +139,7 @@ const AdPlacementDetailsDialog = ({
                             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                                 Updated
                             </p>
-                            <p className="mt-2 text-sm font-semibold text-foreground">
+                            <p className="mt-2 text-xs font-semibold text-foreground">
                                 {isLoading
                                     ? "Loading..."
                                     : formatDateTime(placement?.updated_at)}
@@ -149,7 +149,7 @@ const AdPlacementDetailsDialog = ({
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs">
                         Close
                     </Button>
                 </DialogFooter>
