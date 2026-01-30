@@ -57,6 +57,8 @@ const ListingLocationContent = ({
         const autocomplete = new placesLib.Autocomplete(addressRef.current, {
             fields: ["formatted_address", "geometry", "address_components"],
             types: ["geocode"],
+            componentRestrictions: { country: "rw" },
+            strictBounds: false,
         });
 
         const listener = autocomplete.addListener("place_changed", () => {
