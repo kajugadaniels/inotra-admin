@@ -13,6 +13,7 @@ import type { PlaceDetail } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { APIProvider } from "@vis.gl/react-google-maps";
 import ListingMap from "@/components/shared/listings/ListingMap";
 
 const formatDate = (value?: string | null) => {
@@ -274,28 +275,30 @@ const ListingDetailsPage = () => {
                                     This map displays the stored coordinates for the listing.
                                 </p>
                                 <div className="mt-4">
-                                    <ListingMap
-                                        latitude={
-                                            listing?.latitude !== null &&
-                                            listing?.latitude !== undefined
-                                                ? String(listing.latitude)
-                                                : ""
-                                        }
-                                        longitude={
-                                            listing?.longitude !== null &&
-                                            listing?.longitude !== undefined
-                                                ? String(listing.longitude)
-                                                : ""
-                                        }
-                                        disabled
-                                        onLocationSelect={() => undefined}
-                                    />
-                                    {!mapsApiKey ? (
-                                        <p className="mt-2 text-xs text-muted-foreground">
-                                            Add NEXT_PUBLIC_GOOGLE_MAP_API_KEY in admin/.env to
-                                            render the map preview.
-                                        </p>
-                                    ) : null}
+                                    {mapsApiKey ? (
+                                        <APIProvider apiKey={mapsApiKey}>
+                                            <ListingMap
+                                                latitude={
+                                                    listing?.latitude !== null &&
+                                                    listing?.latitude !== undefined
+                                                        ? String(listing.latitude)
+                                                        : ""
+                                                }
+                                                longitude={
+                                                    listing?.longitude !== null &&
+                                                    listing?.longitude !== undefined
+                                                        ? String(listing.longitude)
+                                                        : ""
+                                                }
+                                                disabled
+                                                onLocationSelect={() => undefined}
+                                            />
+                                        </APIProvider>
+                                    ) : (
+                                        <div className="flex h-64 items-center justify-center rounded-3xl border border-border/60 bg-background/60 text-sm text-muted-foreground">
+                                            Add NEXT_PUBLIC_GOOGLE_MAP_API_KEY in admin/.env to render the map preview.
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
