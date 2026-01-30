@@ -55,8 +55,7 @@ const ListingLocationContent = ({
         if (!placesLib || !addressRef.current) return;
 
         const autocomplete = new placesLib.Autocomplete(addressRef.current, {
-            fields: ["formatted_address", "geometry", "address_components"],
-            types: ["geocode"],
+            fields: ["formatted_address", "geometry", "address_components", "name"],
             componentRestrictions: { country: "rw" },
             strictBounds: false,
         });
@@ -68,6 +67,8 @@ const ListingLocationContent = ({
 
             if (place.formatted_address) {
                 updates.address = place.formatted_address;
+            } else if (place.name) {
+                updates.address = place.name;
             }
 
             if (place.geometry?.location) {
