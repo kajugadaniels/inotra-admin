@@ -9,12 +9,12 @@ import {
     Megaphone,
     Image,
     PartyPopper,
-    Ticket,
     TicketCheck,
     UserCog,
     Users,
     type LucideIcon,
     VanIcon,
+    UserStar,
 } from "lucide-react";
 
 export type SidebarLink = {
@@ -36,7 +36,7 @@ export const adminSidebarLinks: SidebarLink[] = [
         icon: LineChart,
     },
     {
-        label: "Accounts",
+        label: "Users",
         icon: Users,
         children: [
             {
@@ -45,8 +45,13 @@ export const adminSidebarLinks: SidebarLink[] = [
                 icon: Users,
             },
             {
-                label: "Users",
+                label: "Clients",
                 href: "/users",
+                icon: UserStar,
+            },
+            {
+                label: "Customer Representatives",
+                href: "/customer-representatives",
                 icon: UserCog,
             },
         ],
