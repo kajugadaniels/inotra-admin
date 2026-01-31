@@ -4,19 +4,6 @@ import { useState } from "react";
 
 import type { PlaceDetail } from "@/api/types";
 
-const formatDateTime = (value?: string | null) => {
-    if (!value) return "--";
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "--";
-    return new Intl.DateTimeFormat(undefined, {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-    }).format(date);
-};
-
 type ListingOverviewProps = {
     listing: PlaceDetail | null;
     isLoading: boolean;
@@ -33,7 +20,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
     return (
         <div className="mt-6 grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
             {/* Main Image and Description Section */}
-            <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5">
+            <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5 w-[1000px] max-w-full backdrop-blur-xl">
                 <div className="relative w-full h-72 sm:h-96">
                     {selectedImage ? (
                         <Image

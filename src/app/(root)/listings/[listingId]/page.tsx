@@ -130,29 +130,39 @@ const ListingDetailsPage = () => {
                         </TabsList>
 
                         <TabsContent value="overview">
-                            <ListingOverview listing={listing} isLoading={isLoading} />
+                            <ListingOverview
+                                listing={listing}
+                                isLoading={isLoading}
+                            />
                         </TabsContent>
 
-                        <TabsContent value="location" className="w-full">
-                            <div className="w-full">
-                                <ListingLocationDetails
-                                    listing={listing}
-                                    isLoading={isLoading}
-                                    mapsApiKey={mapsApiKey}
-                                />
-                            </div>
+                        <TabsContent value="location">
+                            <ListingLocationDetails
+                                listing={listing}
+                                isLoading={isLoading}
+                                mapsApiKey={mapsApiKey}
+                            />
                         </TabsContent>
 
                         <TabsContent value="contact">
-                            <ListingContactDetails listing={listing} isLoading={isLoading} />
+                            <ListingContactDetails
+                                listing={listing}
+                                isLoading={isLoading}
+                            />
                         </TabsContent>
 
                         <TabsContent value="operations">
-                            <ListingOperationsDetails listing={listing} isLoading={isLoading} />
+                            <ListingOperationsDetails
+                                listing={listing}
+                                isLoading={isLoading}
+                            />
                         </TabsContent>
 
                         <TabsContent value="media">
-                            <ListingMediaDetails listing={listing} isLoading={isLoading} />
+                            <ListingMediaDetails
+                                listing={listing}
+                                isLoading={isLoading}
+                            />
                         </TabsContent>
                     </div>
                 </Tabs>
