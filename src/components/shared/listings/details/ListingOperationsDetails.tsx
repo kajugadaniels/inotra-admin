@@ -1,4 +1,6 @@
 import type { PlaceDetail } from "@/api/types";
+import { Badge } from "@/components/ui/badge";
+import { CheckCheckIcon, XIcon } from "lucide-react";
 
 const dayLabels: Record<string, string> = {
     monday: "Monday",
@@ -58,21 +60,32 @@ const ListingOperationsDetails = ({
                 <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
                     Services
                 </p>
-                <div className="mt-4 space-y-2">
+
+                <div className="mt-4">
                     {listing?.services?.length ? (
-                        listing.services.map((service, index) => (
-                            <div
-                                key={service.id ?? `${service.name ?? "service"}-${index}`}
-                                className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-4 py-3"
-                            >
-                                <span className="text-xs font-semibold text-foreground">
-                                    {service.name || "Service"}
-                                </span>
-                                <span className="text-xs text-muted-foreground">
-                                    {service.is_available ? "Available" : "Unavailable"}
-                                </span>
-                            </div>
-                        ))
+                        <div className="flex flex-wrap gap-2">
+                            {listing.services.map((service, index) => {
+                                const key = service.id ?? `${service.name ?? "service"}-${index}`;
+                                const name = service.name || "Service";
+                                const available = !!service.is_available;
+
+                                return (
+                                    <Badge
+                                        key={key}
+                                        variant={available ? "default" : "destructive"}
+                                        className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs"
+                                        title={available ? "Available" : "Unavailable"}
+                                    >
+                                        {available ? (
+                                            <CheckCheckIcon className="h-4 w-4" />
+                                        ) : (
+                                            <XIcon className="h-4 w-4" />
+                                        )}
+                                        <span className="font-semibold">{name}</span>
+                                    </Badge>
+                                );
+                            })}
+                        </div>
                     ) : (
                         <p className="text-xs text-muted-foreground">
                             {isLoading ? "Loading..." : "No services available."}
@@ -80,6 +93,8 @@ const ListingOperationsDetails = ({
                     )}
                 </div>
             </div>
+
+
         </div>
     );
 };
