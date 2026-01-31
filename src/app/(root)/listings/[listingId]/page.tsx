@@ -16,7 +16,6 @@ import {
     ListingContactDetails,
     ListingDetailsSidebar,
     ListingLocationDetails,
-    ListingMediaDetails,
     ListingOperationsDetails,
     ListingOverview,
 } from "@/components/shared/listings/details";
@@ -79,7 +78,6 @@ const ListingDetailsPage = () => {
         { key: "location", label: "Location", description: "Where it is located" },
         { key: "contact", label: "Contact", description: "Reach the owner" },
         { key: "operations", label: "Operations", description: "Hours & services" },
-        { key: "media", label: "Media", description: "Gallery assets" },
     ];
 
     return (
@@ -158,12 +156,6 @@ const ListingDetailsPage = () => {
                             />
                         </TabsContent>
 
-                        <TabsContent value="media">
-                            <ListingMediaDetails
-                                listing={listing}
-                                isLoading={isLoading}
-                            />
-                        </TabsContent>
                     </div>
                 </Tabs>
             </div>
