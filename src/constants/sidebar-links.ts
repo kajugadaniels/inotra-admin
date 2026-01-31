@@ -10,6 +10,7 @@ import {
     Image,
     PartyPopper,
     TicketCheck,
+    MessageCircle,
     UserCog,
     Users,
     type LucideIcon,
@@ -57,9 +58,25 @@ export const adminSidebarLinks: SidebarLink[] = [
         ],
     },
     {
-        label: "Trip Packages",
-        href: "/trip-packages",
+        label: "Trips",
         icon: VanIcon,
+        children: [
+            {
+                label: "Trip Packages",
+                href: "/trip-packages",
+                icon: VanIcon,
+            },
+            {
+                label: "Quotations",
+                href: "/quotations",
+                icon: FileText,
+            },
+            {
+                label: "Chats",
+                href: "/chats",
+                icon: MessageCircle,
+            },
+        ],
     },
     {
         label: "Listings",
@@ -88,7 +105,7 @@ export const adminSidebarLinks: SidebarLink[] = [
         ],
     },
     {
-        label: "Operations",
+        label: "Events",
         icon: CalendarCheck,
         children: [
             {
