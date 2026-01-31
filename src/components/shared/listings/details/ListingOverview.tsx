@@ -7,6 +7,8 @@ import {
     XCircle,
     ImageIcon,
     Shapes,
+    ChevronLeft,
+    ChevronRight,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -25,38 +27,129 @@ type ListingOverviewProps = {
     isLoading: boolean;
 };
 
+const AUTOPLAY_DELAY = 3500;
+
 const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
     const images = listing?.images ?? [];
-    const heroImage = images?.[0]?.image_url ?? null;
 
-    const [selectedImage, setSelectedImage] = useState<string | null>(heroImage);
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
 
+    // Thumbnail carousel API (to auto-scroll thumbnails as main image changes)
+    const [thumbApi, setThumbApi] = useState<any>(null);
+
+    // Reset selection when listing/images change
     useEffect(() => {
-        setSelectedImage(heroImage);
-    }, [heroImage]);
+        setSelectedIndex(0);
+    }, [listing?.id, images.length]);
+
+    // Clamp index if images count changes
+    useEffect(() => {
+        if (selectedIndex >= images.length) setSelectedIndex(0);
+    }, [images.length, selectedIndex]);
 
     const selectedMeta = useMemo(() => {
-        if (!selectedImage) return null;
-        const idx = images.findIndex((img) => img.image_url === selectedImage);
-        if (idx === -1) return null;
-        return { ...images[idx], index: idx };
-    }, [images, selectedImage]);
+        if (!images.length) return null;
+        const safeIndex = Math.min(selectedIndex, images.length - 1);
+        return { ...images[safeIndex], index: safeIndex };
+    }, [images, selectedIndex]);
 
-    const handleThumbnailClick = (imageUrl: string) => setSelectedImage(imageUrl);
+    const selectedImage = selectedMeta?.image_url ?? null;
+
+    const goNext = () => {
+        if (images.length <= 1) return;
+        setSelectedIndex((prev) => (prev + 1) % images.length);
+    };
+
+    const goPrev = () => {
+        if (images.length <= 1) return;
+        setSelectedIndex((prev) => (prev - 1 + images.length) % images.length);
+    };
+
+    const handleThumbnailClick = (idx: number) => setSelectedIndex(idx);
+
+    // Auto-slide main image
+    useEffect(() => {
+        if (isPaused) return;
+        if (isLoading) return;
+        if (images.length <= 1) return;
+
+        const id = window.setInterval(() => {
+            setSelectedIndex((prev) => (prev + 1) % images.length);
+        }, AUTOPLAY_DELAY);
+
+        return () => window.clearInterval(id);
+    }, [images.length, isPaused, isLoading]);
+
+    // Keep thumbnail carousel aligned with selected index
+    useEffect(() => {
+        if (!thumbApi) return;
+        if (!images.length) return;
+        thumbApi.scrollTo(selectedIndex);
+    }, [thumbApi, selectedIndex, images.length]);
+
+    const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            goPrev();
+        }
+        if (e.key === "ArrowRight") {
+            e.preventDefault();
+            goNext();
+        }
+    };
+
+    const canNavigate = images.length > 1;
 
     return (
-        <div className="mt-6 w-[850px] space-y-6 backdrop-blur-xl">
+        <div
+            className="mt-6 w-[850px] space-y-6 backdrop-blur-xl outline-none"
+            tabIndex={0}
+            onKeyDown={onKeyDown}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onFocus={() => setIsPaused(true)}
+            onBlur={() => setIsPaused(false)}
+        >
             <section className="w-full overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl">
                 {/* MAIN IMAGE */}
                 <div className="relative w-full aspect-[16/9] sm:aspect-[21/9]">
                     {selectedImage ? (
-                        <Image
-                            src={selectedImage}
-                            alt={listing?.name ?? "Listing"}
-                            fill
-                            priority
-                            className="object-cover transition-transform duration-300 hover:scale-[1.02]"
-                        />
+                        <>
+                            <Image
+                                src={selectedImage}
+                                alt={listing?.name ?? "Listing"}
+                                fill
+                                priority
+                                className="object-cover transition-transform duration-300 hover:scale-[1.02]"
+                            />
+
+                            {/* MAIN IMAGE ARROWS */}
+                            {canNavigate ? (
+                                <>
+                                    <button
+                                        type="button"
+                                        onClick={goPrev}
+                                        aria-label="Previous image"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-border/60 bg-background/70 p-2 text-muted-foreground shadow-sm backdrop-blur-md transition hover:bg-primary hover:text-background"
+                                    >
+                                        <ChevronLeft className="h-5 w-5" />
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={goNext}
+                                        aria-label="Next image"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-border/60 bg-background/70 p-2 text-muted-foreground shadow-sm backdrop-blur-md transition hover:bg-primary hover:text-background"
+                                    >
+                                        <ChevronRight className="h-5 w-5" />
+                                    </button>
+                                </>
+                            ) : null}
+
+                            {/* Subtle bottom gradient for readability */}
+                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/35 to-transparent" />
+                        </>
                     ) : (
                         <div className="flex h-full items-center justify-center gap-2 text-sm text-muted-foreground">
                             <ImageIcon className="h-4 w-4" />
@@ -70,18 +163,15 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                     {isLoading && !listing ? (
                         <div className="flex gap-3 overflow-hidden">
                             {Array.from({ length: 6 }).map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="h-16 w-20 animate-pulse rounded-xl bg-muted"
-                                />
+                                <div key={i} className="h-16 w-20 animate-pulse rounded-xl bg-muted" />
                             ))}
                         </div>
                     ) : images.length ? (
                         <div className="relative">
-                            <Carousel opts={{ align: "start" }} className="w-full">
+                            <Carousel setApi={setThumbApi} opts={{ align: "start" }} className="w-full">
                                 <CarouselContent>
-                                    {images.map((image) => {
-                                        const isSelected = image.image_url === selectedImage;
+                                    {images.map((image, idx) => {
+                                        const isSelected = idx === selectedIndex;
 
                                         return (
                                             <CarouselItem
@@ -90,7 +180,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                                             >
                                                 <button
                                                     type="button"
-                                                    onClick={() => handleThumbnailClick(image.image_url)}
+                                                    onClick={() => handleThumbnailClick(idx)}
                                                     className={[
                                                         "relative h-16 w-full overflow-hidden rounded-xl border bg-background/70 transition",
                                                         "hover:shadow-md hover:scale-[1.02]",
@@ -98,9 +188,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                                                             ? "border-primary ring-2 ring-primary/40"
                                                             : "border-border/60",
                                                     ].join(" ")}
-                                                    aria-label={
-                                                        image.caption ? `Select: ${image.caption}` : "Select image"
-                                                    }
+                                                    aria-label={image.caption ? `Select: ${image.caption}` : "Select image"}
                                                     aria-current={isSelected ? "true" : "false"}
                                                 >
                                                     <Image
@@ -115,17 +203,22 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                                     })}
                                 </CarouselContent>
 
-                                <CarouselPrevious className="-left-3" />
-                                <CarouselNext className="-right-3" />
+                                {/* Thumbnail arrows (also move main image index) */}
+                                <CarouselPrevious
+                                    className="-left-3"
+                                    onClickCapture={() => goPrev()}
+                                />
+                                <CarouselNext
+                                    className="-right-3"
+                                    onClickCapture={() => goNext()}
+                                />
                             </Carousel>
 
-                            {/* Optional indicator */}
+                            {/* Indicator */}
                             {selectedMeta ? (
                                 <div className="mt-3 text-xs text-muted-foreground">
                                     Image {selectedMeta.index + 1} / {images.length}
-                                    {selectedMeta.caption ? (
-                                        <span className="ml-2">• {selectedMeta.caption}</span>
-                                    ) : null}
+                                    {selectedMeta.caption ? <span className="ml-2">• {selectedMeta.caption}</span> : null}
                                 </div>
                             ) : null}
                         </div>
@@ -164,9 +257,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                             className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-primary hover:text-background"
                         >
                             <Shapes className="h-4 w-4" />
-                            {isLoading && !listing
-                                ? "Loading category..."
-                                : listing?.category_name ?? "Uncategorized"}
+                            {isLoading && !listing ? "Loading category..." : listing?.category_name ?? "Uncategorized"}
                         </Badge>
                     </div>
 
