@@ -20,7 +20,7 @@ const ListingOperationsDetails = ({
     isLoading,
 }: ListingOperationsDetailsProps) => {
     return (
-        <div className="grid gap-6 lg:grid-cols-2 w-[1000px] max-w-full backdrop-blur-xl">
+        <div className="grid gap-6 lg:grid-cols-2 w-[850px] max-w-full backdrop-blur-xl">
             <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
                 <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
                     Opening hours
