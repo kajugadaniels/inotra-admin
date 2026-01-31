@@ -88,24 +88,25 @@ export const adminSidebarLinks: SidebarLink[] = [
         ],
     },
     {
-        label: "Events",
-        href: "/events",
-        icon: PartyPopper,
-    },
-    {
-        label: "Bookings",
-        href: "/bookings",
+        label: "Operations",
         icon: CalendarCheck,
-    },
-    {
-        label: "Tickets",
-        href: "/tickets",
-        icon: TicketCheck,
-    },
-    {
-        label: "Payments",
-        href: "/payments",
-        icon: CreditCard,
+        children: [
+            {
+                label: "Events",
+                href: "/events",
+                icon: PartyPopper,
+            },
+            {
+                label: "Tickets",
+                href: "/tickets",
+                icon: TicketCheck,
+            },
+            {
+                label: "Payments",
+                href: "/payments",
+                icon: CreditCard,
+            },
+        ],
     },
     {
         label: "Reports",
