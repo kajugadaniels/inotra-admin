@@ -133,12 +133,14 @@ const ListingDetailsPage = () => {
                             <ListingOverview listing={listing} isLoading={isLoading} />
                         </TabsContent>
 
-                        <TabsContent value="location">
-                            <ListingLocationDetails
-                                listing={listing}
-                                isLoading={isLoading}
-                                mapsApiKey={mapsApiKey}
-                            />
+                        <TabsContent value="location" className="w-full">
+                            <div className="w-full">
+                                <ListingLocationDetails
+                                    listing={listing}
+                                    isLoading={isLoading}
+                                    mapsApiKey={mapsApiKey}
+                                />
+                            </div>
                         </TabsContent>
 
                         <TabsContent value="contact">
