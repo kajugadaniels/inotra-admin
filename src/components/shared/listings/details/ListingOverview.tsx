@@ -1,8 +1,17 @@
+"use client";
+
 import Image from "next/image";
-import { CheckCircle2, ShieldCheck, XCircle } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle2, ShieldCheck, XCircle, ImageIcon } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
 import type { PlaceDetail } from "@/api/types";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type ListingOverviewProps = {
     listing: PlaceDetail | null;
@@ -10,36 +19,50 @@ type ListingOverviewProps = {
 };
 
 const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
-    const heroImage = listing?.images?.[0]?.image_url ?? null;
-    const [selectedImage, setSelectedImage] = useState(heroImage);
+    const images = listing?.images ?? [];
+    const heroImage = images?.[0]?.image_url ?? null;
 
-    const handleThumbnailClick = (imageUrl: string) => {
-        setSelectedImage(imageUrl);
-    };
+    const [selectedImage, setSelectedImage] = useState<string | null>(heroImage);
+
+    // Keep selected image in sync when listing changes
+    useEffect(() => {
+        setSelectedImage(heroImage);
+    }, [heroImage]);
+
+    const selectedMeta = useMemo(() => {
+        if (!selectedImage) return null;
+        const idx = images.findIndex((img) => img.image_url === selectedImage);
+        if (idx === -1) return null;
+        return { ...images[idx], index: idx };
+    }, [images, selectedImage]);
+
+    const handleThumbnailClick = (imageUrl: string) => setSelectedImage(imageUrl);
 
     return (
-        <div className="mt-6 grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
-            {/* Main Image and Description Section */}
-            <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5 w-[1000px] max-w-full backdrop-blur-xl">
-                <div className="relative w-full h-72 sm:h-96">
+        <div className="mt-6 w-[850px] backdrop-blur-xl space-y-6">
+            {/* Main Image + Status + Description */}
+            <section className="w-full overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl">
+                <div className="relative w-full aspect-[16/9] sm:aspect-[21/9]">
                     {selectedImage ? (
                         <Image
                             src={selectedImage}
                             alt={listing?.name ?? "Listing"}
                             fill
-                            className="object-cover transition-transform transform hover:scale-105"
+                            priority
+                            className="object-cover transition-transform duration-300 hover:scale-[1.02]"
                         />
                     ) : (
-                        <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-                            {isLoading ? "Loading image..." : "No image available"}
+                        <div className="flex h-full items-center justify-center gap-2 text-sm text-muted-foreground">
+                            <ImageIcon className="h-4 w-4" />
+                            <span>{isLoading ? "Loading image..." : "No image available"}</span>
                         </div>
                     )}
                 </div>
 
-                <div className="space-y-4 p-6">
-                    <div className="flex gap-4">
-                        {/* Active/Inactive Badge */}
-                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-medium text-muted-foreground hover:bg-primary hover:text-background transition-colors duration-300">
+                <div className="space-y-5 p-6">
+                    {/* Badges */}
+                    <div className="flex flex-wrap items-center gap-3">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-primary hover:text-background">
                             {listing?.is_active ? (
                                 <CheckCircle2 className="h-4 w-4 text-primary" />
                             ) : (
@@ -48,8 +71,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                             {listing?.is_active ? "Active" : "Inactive"}
                         </div>
 
-                        {/* Verified/Unverified Badge */}
-                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-medium text-muted-foreground hover:bg-primary hover:text-background transition-colors duration-300">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-primary hover:text-background">
                             {listing?.is_verified ? (
                                 <ShieldCheck className="h-4 w-4 text-primary" />
                             ) : (
@@ -57,63 +79,134 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                             )}
                             {listing?.is_verified ? "Verified" : "Unverified"}
                         </div>
+
+                        {/* Optional image position indicator */}
+                        {images.length > 0 && selectedMeta ? (
+                            <div className="ml-auto inline-flex items-center rounded-full border border-border/60 bg-background/70 px-4 py-2 text-xs font-medium text-muted-foreground">
+                                Image {selectedMeta.index + 1} / {images.length}
+                            </div>
+                        ) : null}
                     </div>
 
-                    <div>
+                    {/* Description */}
+                    <div className="space-y-2">
                         <p className="text-xs uppercase tracking-widest text-muted-foreground">
                             Description
                         </p>
-                        <p className="mt-2 text-sm text-foreground">
-                            {listing?.description ||
-                                (isLoading ? "Loading..." : "No description available.")}
-                        </p>
+
+                        {isLoading && !listing ? (
+                            <div className="space-y-2">
+                                <div className="h-4 w-3/4 animate-pulse rounded bg-muted" />
+                                <div className="h-4 w-5/6 animate-pulse rounded bg-muted" />
+                                <div className="h-4 w-2/3 animate-pulse rounded bg-muted" />
+                            </div>
+                        ) : (
+                            <p className="text-sm leading-relaxed text-foreground">
+                                {listing?.description || "No description available."}
+                            </p>
+                        )}
+
+                        {/* Selected caption */}
+                        {selectedMeta?.caption ? (
+                            <p className="text-xs text-muted-foreground">
+                                {selectedMeta.caption}
+                            </p>
+                        ) : null}
                     </div>
                 </div>
-            </div>
+            </section>
 
-            {/* Category and Gallery Section */}
-            <div className="space-y-4">
+            {/* Below: Category + Gallery */}
+            <section className="grid w-full gap-6 lg:grid-cols-3">
                 {/* Category */}
                 <div className="rounded-2xl border border-border/60 bg-background/70 p-6 shadow-xl shadow-black/5">
                     <p className="text-xs uppercase tracking-widest text-muted-foreground">
                         Category
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
-                        {listing?.category_name ?? "Uncategorized"}
-                    </p>
-                </div>
 
-                {/* Image Gallery */}
-                <div className="rounded-2xl border border-border/60 bg-card/70 p-6 shadow-xl shadow-black/5">
-                    <p className="text-xs uppercase tracking-widest text-muted-foreground">
-                        Gallery
-                    </p>
-                    {listing?.images?.length ? (
-                        <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                            {/* Thumbnails */}
-                            {listing.images.map((image) => (
-                                <div
-                                    key={image.id}
-                                    className="relative overflow-hidden rounded-xl border border-border/60 bg-background/70 cursor-pointer hover:scale-105 transition-transform duration-300"
-                                    onClick={() => handleThumbnailClick(image.image_url)}
-                                >
-                                    <Image
-                                        src={image.image_url}
-                                        alt={image.caption || "Listing image"}
-                                        width={80}
-                                        height={80}
-                                        className="h-full w-full object-cover"
-                                    />
-                                </div>
-                            ))}
-                        </div>
+                    {isLoading && !listing ? (
+                        <div className="mt-3 h-5 w-40 animate-pulse rounded bg-muted" />
                     ) : (
-                        <p className="mt-3 text-sm text-muted-foreground">
-                            {isLoading ? "Loading..." : "No images available."}
+                        <p className="mt-2 text-sm font-semibold text-foreground">
+                            {listing?.category_name ?? "Uncategorized"}
                         </p>
                     )}
                 </div>
-            </div>
+
+                {/* Gallery Carousel */}
+                <div className="rounded-2xl border border-border/60 bg-card/70 p-6 shadow-xl shadow-black/5 lg:col-span-2">
+                    <div className="flex items-center justify-between gap-3">
+                        <p className="text-xs uppercase tracking-widest text-muted-foreground">
+                            Gallery
+                        </p>
+                        {images.length > 0 ? (
+                            <p className="text-xs text-muted-foreground">
+                                Click a thumbnail to preview
+                            </p>
+                        ) : null}
+                    </div>
+
+                    {isLoading && !listing ? (
+                        <div className="mt-4 flex gap-3 overflow-hidden">
+                            {Array.from({ length: 6 }).map((_, i) => (
+                                <div
+                                    key={i}
+                                    className="h-16 w-20 animate-pulse rounded-xl bg-muted"
+                                />
+                            ))}
+                        </div>
+                    ) : images.length ? (
+                        <div className="relative mt-4">
+                            <Carousel
+                                opts={{ align: "start" }}
+                                className="w-full"
+                            >
+                                <CarouselContent>
+                                    {images.map((image) => {
+                                        const isSelected = image.image_url === selectedImage;
+
+                                        return (
+                                            <CarouselItem
+                                                key={image.id}
+                                                className="basis-1/3 sm:basis-1/5 lg:basis-1/6"
+                                            >
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleThumbnailClick(image.image_url)}
+                                                    className={[
+                                                        "relative h-16 w-full overflow-hidden rounded-xl border bg-background/70 transition",
+                                                        "hover:shadow-md hover:scale-[1.02]",
+                                                        isSelected
+                                                            ? "border-primary ring-2 ring-primary/40"
+                                                            : "border-border/60",
+                                                    ].join(" ")}
+                                                    aria-label={image.caption ? `Select: ${image.caption}` : "Select image"}
+                                                    aria-current={isSelected ? "true" : "false"}
+                                                >
+                                                    <Image
+                                                        src={image.image_url}
+                                                        alt={image.caption || "Listing image"}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </button>
+                                            </CarouselItem>
+                                        );
+                                    })}
+                                </CarouselContent>
+
+                                {/* Navigation */}
+                                <CarouselPrevious className="-left-3" />
+                                <CarouselNext className="-right-3" />
+                            </Carousel>
+                        </div>
+                    ) : (
+                        <p className="mt-3 text-sm text-muted-foreground">
+                            No images available.
+                        </p>
+                    )}
+                </div>
+            </section>
         </div>
     );
 };
