@@ -7,14 +7,14 @@ import type { PlaceListItem } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { TrashIcon, XIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type ListingDeleteDialogProps = {
     listing: PlaceListItem | null;
@@ -85,10 +85,14 @@ const ListingDeleteDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isDeleting} className="text-xs">Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="text-xs">
-                        Delete listing
-                    </AlertDialogAction>
+                    <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isDeleting} className="text-xs rounded-full h-11">
+                        <XIcon className="mr-2 h-4 w-4" />
+                        Cancel
+                    </Button>
+                    <Button variant="destructive" onClick={handleDelete} disabled={isDeleting} className="text-xs rounded-full h-11">
+                        <TrashIcon className="mr-2 h-4 w-4" />
+                        Delete Listing
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

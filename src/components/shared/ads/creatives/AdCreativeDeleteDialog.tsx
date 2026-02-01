@@ -9,14 +9,14 @@ import type { AdCreative } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { TrashIcon, XIcon } from "lucide-react";
 
 type AdCreativeDeleteDialogProps = {
     creative: AdCreative | null;
@@ -85,19 +85,24 @@ const AdCreativeDeleteDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel
+                    <Button
+                        variant="outline"
+                        onClick={() => onOpenChange(false)}
                         disabled={isSubmitting}
-                        className="rounded-full text-xs"
+                        className="rounded-full text-xs h-11"
                     >
+                        <XIcon className="mr-2 h-4 w-4" />
                         Cancel
-                    </AlertDialogCancel>
-                    <AlertDialogAction
-                        className="rounded-full text-xs"
+                    </Button>
+                    <Button
+                        variant="destructive"
+                        className="rounded-full text-xs h-11"
                         onClick={handleDelete}
                         disabled={isSubmitting}
                     >
-                        Delete creative
-                    </AlertDialogAction>
+                        <TrashIcon className="mr-2 h-4 w-4" />
+                        Delete Creative
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

@@ -66,7 +66,7 @@ const ListingCategoriesFilters = ({
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="rounded-full border-border/60 bg-background/70"
+                                className="rounded-full border-border/60 bg-background/70 h-11 text-xs"
                                 disabled={isLoading}
                             >
                                 <Filter className="mr-2 h-4 w-4" />

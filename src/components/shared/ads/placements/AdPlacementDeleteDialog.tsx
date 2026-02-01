@@ -9,14 +9,14 @@ import type { AdPlacement } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { TrashIcon, XIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type AdPlacementDeleteDialogProps = {
     placement: AdPlacement | null;
@@ -85,10 +85,14 @@ const AdPlacementDeleteDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isSubmitting} className="text-xs">Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} disabled={isSubmitting} className="text-xs">
-                        Delete placement
-                    </AlertDialogAction>
+                    <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting} className="text-xs rounded-full h-11">
+                        <XIcon className="mr-2 h-4 w-4" />
+                        Cancel
+                    </Button>
+                    <Button variant="destructive" onClick={handleDelete} disabled={isSubmitting} className="text-xs rounded-full h-11">
+                        <TrashIcon className="mr-2 h-4 w-4" />
+                        Delete Placement
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

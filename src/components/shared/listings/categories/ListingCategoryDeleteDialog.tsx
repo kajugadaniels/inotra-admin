@@ -7,14 +7,14 @@ import type { PlaceCategory } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { TrashIcon, XIcon } from "lucide-react";
 
 type ListingCategoryDeleteDialogProps = {
     category: PlaceCategory | null;
@@ -85,10 +85,14 @@ const ListingCategoryDeleteDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isDeleting} className="text-xs">Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="text-xs">
+                    <Button disabled={isDeleting} variant={"outline"} className="text-xs rounded-full h-11" onClick={() => onOpenChange(false)}>
+                        <XIcon className="mr-2 h-4 w-4" />
+                        Cancel
+                    </Button>
+                    <Button onClick={handleDelete} variant={"destructive"} disabled={isDeleting} className="text-xs rounded-full h-11">
+                        <TrashIcon className="mr-2 h-4 w-4" />
                         Delete category
-                    </AlertDialogAction>
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
