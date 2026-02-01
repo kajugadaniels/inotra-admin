@@ -23,6 +23,8 @@ type Args = {
         is_active?: boolean;
         remove_image_ids?: string[];
         images?: File[];
+        logo?: File | null;
+        remove_logo?: boolean;
         services?: { name: string; is_available?: boolean }[];
     };
 };
@@ -53,6 +55,12 @@ function buildFormData(data: Args["data"]) {
     if (typeof data.is_active === "boolean") {
         payload.append("is_active", data.is_active ? "true" : "false");
     }
+    if (data.logo) {
+        payload.append("logo", data.logo);
+    }
+    if (data.remove_logo) {
+        payload.append("remove_logo", "true");
+    }
     if (data.services?.length) {
         payload.append("services", JSON.stringify(data.services));
     }
@@ -67,7 +75,12 @@ function buildFormData(data: Args["data"]) {
 }
 
 export function updatePlace({ apiBaseUrl, accessToken, placeId, data }: Args) {
-    const useFormData = Boolean(data.images?.length || data.remove_image_ids?.length);
+    const useFormData = Boolean(
+        data.images?.length ||
+            data.remove_image_ids?.length ||
+            data.logo ||
+            data.remove_logo
+    );
 
     return requestJson<{ message: string; place: PlaceDetail }>({
         apiBaseUrl,
