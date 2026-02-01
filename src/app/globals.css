@@ -195,6 +195,7 @@ body {
   .admin-field {
     height: 3rem !important;
     min-height: 3rem !important;
+    font-size: 13px !important;
   }
 }
 
