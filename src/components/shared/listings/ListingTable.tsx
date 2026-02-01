@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2, Eye, Pencil, Trash2, XCircle } from "lucide-react";
 
@@ -66,13 +67,30 @@ const ListingTable = ({ listings, isLoading, onDelete }: ListingTableProps) => {
                             return (
                                 <TableRow key={listing.id ?? name}>
                                     <TableCell>
-                                        <div className="min-w-0">
-                                            <p className="truncate text-xs font-semibold text-foreground">
-                                                {name}
-                                            </p>
-                                            <p className="mt-1 text-xs text-muted-foreground">
-                                                {(listing.city || "--") + ", " + (listing.country || "--")}
-                                            </p>
+                                        <div className="flex items-center gap-3">
+                                            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-border/60 bg-muted/60">
+                                                {listing.logo_url ? (
+                                                    <Image
+                                                        src={listing.logo_url}
+                                                        alt={name}
+                                                        fill
+                                                        sizes="40px"
+                                                        className="object-contain"
+                                                    />
+                                                ) : (
+                                                    <div className="flex h-full w-full items-center justify-center text-[10px] font-semibold uppercase text-muted-foreground">
+                                                        {name.slice(0, 2)}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs font-semibold text-foreground">
+                                                    {name}
+                                                </p>
+                                                <p className="mt-1 text-xs text-muted-foreground">
+                                                    {(listing.city || "--") + ", " + (listing.country || "--")}
+                                                </p>
+                                            </div>
                                         </div>
                                     </TableCell>
                                     <TableCell className="text-xs text-muted-foreground">
