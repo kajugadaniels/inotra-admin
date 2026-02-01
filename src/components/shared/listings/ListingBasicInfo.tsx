@@ -98,7 +98,8 @@ const ListingBasicInfo = ({
                             alt="Listing logo preview"
                             className="h-32 w-full object-contain bg-white"
                         />
-                    } : null}
+                    </div>
+                ) : null}
                 <FileUpload
                     accept="image/*"
                     disabled={disabled}
