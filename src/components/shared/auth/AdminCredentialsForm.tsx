@@ -36,20 +36,6 @@ const AdminCredentialsForm = ({
             onSubmit={onSubmit}
             className="mt-7 space-y-5 rounded-3xl"
         >
-            {/* Header */}
-            <div className="flex items-start justify-between gap-3">
-                <div>
-                    <p className="text-sm font-semibold text-foreground">Admin sign in</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                        Use your admin credentials to continue.
-                    </p>
-                </div>
-
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-border/60 bg-background/60">
-                    <ShieldCheck className="h-5 w-5 text-muted-foreground" />
-                </div>
-            </div>
-
             {/* Identifier */}
             <div className="space-y-2">
                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">

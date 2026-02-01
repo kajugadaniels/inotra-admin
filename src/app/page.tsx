@@ -316,16 +316,14 @@ const AdminLoginPage = () => {
 
     return (
         <AdminAuthShell>
-            <AdminLoginHeader
-            />
+            <AdminLoginHeader />
 
             <div className="space-y-3">
                 <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
                     Welcome, Admin.
                 </h2>
                 <p className="max-w-md text-sm text-muted-foreground md:text-base">
-                    Sign in with your authorized email, phone, or username. You can also use
-                    Google to continue.
+                    Sign in with your authorized email, phone, or username. You can also use Google to continue.
                 </p>
             </div>
 
