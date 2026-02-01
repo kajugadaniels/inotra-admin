@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Filter, RefreshCw, Search } from "lucide-react";
 import { toast } from "sonner";
 
 import { extractErrorDetail, listReviews, toggleReviewPublish } from "@/api";
@@ -9,11 +8,8 @@ import { authStorage } from "@/api/auth";
 import type { Review } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import ReviewsFilters, {
-    type ReviewFiltersState,
-} from "@/components/shared/listings/reviews/ReviewsFilters";
+import ListingReviewsHeader from "@/components/shared/listings/reviews/ListingReviewsHeader";
+import ReviewsFilters, { type ReviewFiltersState } from "@/components/shared/listings/reviews/ReviewsFilters";
 import ReviewsTable from "@/components/shared/listings/reviews/ReviewsTable";
 
 const DEFAULT_FILTERS: ReviewFiltersState = {
@@ -37,7 +33,6 @@ const ListingReviewsPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [busyId, setBusyId] = useState<string | undefined>();
     const [refreshTick, setRefreshTick] = useState(0);
-    const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
     const totalPages = Math.max(Math.ceil(total / PAGE_SIZE), 1);
 
@@ -126,94 +121,30 @@ const ListingReviewsPage = () => {
 
     return (
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
-            <header className="flex flex-col gap-3 border-b border-border/60 pb-4 lg:flex-row lg:items-center lg:justify-between">
-                <div className="space-y-1">
-                    <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                        Listings
-                    </p>
-                    <h1 className="text-2xl font-semibold">Listing reviews</h1>
-                    <p className="text-sm text-muted-foreground">
-                        Moderate reviews across all listings with quick toggles.
-                    </p>
-                </div>
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
-                    <div className="relative w-full sm:w-64">
-                        <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                            value={searchInput}
-                            onChange={(e) => setSearchInput(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    e.preventDefault();
-                                    setFilters((prev) => ({ ...prev, search: searchInput.trim() }));
-                                    setPage(1);
-                                    setRefreshTick((x) => x + 1);
-                                }
-                            }}
-                            placeholder="Search comment, place, user"
-                            className="pl-10"
-                        />
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Dialog open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
-                            <DialogTrigger asChild>
-                                <Button variant="outline" size="sm" className="rounded-full">
-                                    <Filter className="mr-2 h-4 w-4" />
-                                    Filters
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="max-w-2xl">
-                                <DialogHeader>
-                                    <DialogTitle>Filter reviews</DialogTitle>
-                                </DialogHeader>
-                                <ReviewsFilters
-                                    filters={filters}
-                                    isLoading={isLoading}
-                                    onChange={setFilters}
-                                    onApply={() => {
-                                        setPage(1);
-                                        setRefreshTick((x) => x + 1);
-                                        setIsFiltersOpen(false);
-                                    }}
-                                    onReset={() => {
-                                        setFilters(DEFAULT_FILTERS);
-                                        setPage(1);
-                                        setRefreshTick((x) => x + 1);
-                                        setIsFiltersOpen(false);
-                                    }}
-                                />
-                            </DialogContent>
-                        </Dialog>
-
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-full"
-                            onClick={() => setRefreshTick((x) => x + 1)}
-                            disabled={isLoading}
-                        >
-                            <RefreshCw className={isLoading ? "mr-2 h-4 w-4 animate-spin" : "mr-2 h-4 w-4"} />
-                            Refresh
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            className="rounded-full"
-                            onClick={() => {
-                                setFilters(DEFAULT_FILTERS);
-                                setSearchInput("");
-                                setPage(1);
-                                setRefreshTick((x) => x + 1);
-                            }}
-                        >
-                            Reset
-                        </Button>
-                        <div className="hidden items-center rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground sm:flex">
-                            {total} results
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <ListingReviewsHeader
+                total={total}
+                isLoading={isLoading}
+                searchValue={searchInput}
+                onSearchChange={setSearchInput}
+                onSearchSubmit={() => {
+                    setFilters((prev) => ({ ...prev, search: searchInput.trim() }));
+                    setPage(1);
+                    setRefreshTick((x) => x + 1);
+                }}
+                onRefresh={() => setRefreshTick((x) => x + 1)}
+                onReset={() => {
+                    setFilters(DEFAULT_FILTERS);
+                    setSearchInput("");
+                    setPage(1);
+                    setRefreshTick((x) => x + 1);
+                }}
+                filters={filters}
+                onFiltersChange={setFilters}
+                onApplyFilters={() => {
+                    setPage(1);
+                    setRefreshTick((x) => x + 1);
+                }}
+            />
 
             <div className="space-y-4">
                 <ReviewsTable
