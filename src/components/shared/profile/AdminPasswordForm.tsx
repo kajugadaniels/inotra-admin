@@ -1,4 +1,4 @@
-import { KeyRound, Lock } from "lucide-react";
+import { KeyRound, Lock, UploadCloudIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -102,8 +102,9 @@ const AdminPasswordForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-12 rounded-full bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto text-xs"
+                    className="h-11 rounded-full text-xs"
                 >
+                    <UploadCloudIcon className="mr-2 h-4 w-4" />
                     <span className="inline-flex items-center gap-2 text-xs">
                         {isBusy ? (
                             <>

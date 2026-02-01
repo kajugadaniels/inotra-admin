@@ -97,7 +97,7 @@ const AdminCredentialsForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-12 w-full rounded-full fw-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
+                    className="h-11 rounded-full text-xs"
                 >
                     <span className="inline-flex items-center gap-2">
                         {authStatus === "signing-in" ? (
@@ -106,7 +106,10 @@ const AdminCredentialsForm = ({
                                 Signing in...
                             </>
                         ) : (
-                            <>Sign in</>
+                            <>
+                                <ShieldCheck className="h-4 w-4" />
+                                Sign in
+                            </>
                         )}
                     </span>
                 </Button>

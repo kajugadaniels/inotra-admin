@@ -8,6 +8,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import type { ListingFormState } from "./ListingForm";
+import { Plus, Trash } from "lucide-react";
 
 type ListingServicesProps = {
     form: ListingFormState;
@@ -34,7 +35,7 @@ const ListingServices = ({
                 <Button
                     type="button"
                     variant="outline"
-                    className="rounded-full text-xs"
+                    className="rounded-full text-xs h-11"
                     onClick={() =>
                         onChange({
                             ...form,
@@ -46,7 +47,8 @@ const ListingServices = ({
                     }
                     disabled={disabled}
                 >
-                    Add service
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Service
                 </Button>
             </div>
 
@@ -109,7 +111,7 @@ const ListingServices = ({
                                 <Button
                                     type="button"
                                     variant="destructive"
-                                    className="w-full rounded-full text-xs uppercase tracking-[0.2em] text-white"
+                                    className="w-full rounded-full text-xs uppercase tracking-[0.2em] text-white h-11"
                                     onClick={() => {
                                         const next = form.services.filter(
                                             (_, idx) => idx !== index
@@ -118,6 +120,7 @@ const ListingServices = ({
                                     }}
                                     disabled={disabled}
                                 >
+                                    <Trash className="mr-2 h-4 w-4" />
                                     Remove
                                 </Button>
                             </div>

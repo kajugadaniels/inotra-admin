@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, PenBoxIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 
@@ -100,8 +100,11 @@ const ListingDetailsPage = () => {
                 </div>
                 <div className="flex items-center gap-2">
                     {listing?.id ? (
-                        <Button asChild variant="outline" className="rounded-full">
-                            <Link href={`/listings/${listing.id}/edit`}>Edit listing</Link>
+                        <Button asChild variant="outline" className="rounded-full h-11 text-xs">
+                            <Link href={`/listings/${listing.id}/edit`}>
+                                <PenBoxIcon className="mr-2 h-4 w-4" />
+                                Edit listing
+                            </Link>
                         </Button>
                     ) : null}
                 </div>

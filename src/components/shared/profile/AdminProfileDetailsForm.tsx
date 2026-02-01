@@ -1,4 +1,4 @@
-import { Mail, Phone, User, UserCircle } from "lucide-react";
+import { Mail, Phone, UploadCloudIcon, User, UserCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -116,7 +116,7 @@ const AdminProfileDetailsForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-12 rounded-full bg-primary px-7 text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25 sm:w-auto text-xs"
+                    className="h-11 rounded-full text-xs"
                 >
                     <span className="inline-flex items-center gap-2 text-xs">
                         {isBusy ? (
@@ -125,7 +125,10 @@ const AdminProfileDetailsForm = ({
                                 Saving...
                             </>
                         ) : (
-                            <>Save changes</>
+                            <>
+                                <UploadCloudIcon className="mr-2 h-4 w-4" />
+                                Save changes
+                            </>
                         )}
                     </span>
                 </Button>

@@ -19,6 +19,7 @@ import {
 import AdPlacementForm, {
     type AdPlacementFormState,
 } from "@/components/shared/ads/placements/AdPlacementForm";
+import { UploadCloudIcon, XIcon } from "lucide-react";
 
 type AdPlacementEditDialogProps = {
     placement: AdPlacement | null;
@@ -123,18 +124,20 @@ const AdPlacementEditDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-12 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
+                        <XIcon className="mr-2 h-4 w-4" />
                         Cancel
                     </Button>
                     <Button
                         type="button"
-                        className="h-12 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >
+                        <UploadCloudIcon className="mr-2 h-4 w-4" />
                         Save changes
                     </Button>
                 </DialogFooter>

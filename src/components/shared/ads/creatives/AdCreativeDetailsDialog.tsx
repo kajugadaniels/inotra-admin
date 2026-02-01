@@ -17,6 +17,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import Image from "next/image";
+import { XIcon } from "lucide-react";
 
 type AdCreativeDetailsDialogProps = {
     creativeId: string | null;
@@ -178,7 +179,8 @@ const AdCreativeDetailsDialog = ({
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs">
+                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full h-11 text-xs">
+                        <XIcon className="mr-2 h-4 w-4" />
                         Close
                     </Button>
                 </DialogFooter>

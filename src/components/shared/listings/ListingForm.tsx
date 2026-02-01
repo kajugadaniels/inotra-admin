@@ -11,6 +11,7 @@ import ListingServices from "./ListingServices";
 import ListingStatus from "./ListingStatus";
 import ListingStepNav from "./ListingStepNav";
 import { Button } from "@/components/ui/button";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 export type ListingServiceState = {
     name: string;
@@ -253,16 +254,15 @@ const ListingForm = ({
                     <div className="sticky bottom-4 mt-10 flex flex-wrap items-center justify-between gap-3 rounded-full border border-border/60 bg-background/80 px-4 py-3 backdrop-blur">
                         <Button
                             variant="ghost"
-                            size="lg"
                             onClick={() => setStepIndex((prev) => Math.max(prev - 1, 0))}
                             disabled={disabled || stepIndex === 0}
-                            className="rounded-full border border-border/60 text-xs"
+                            className="rounded-full border border-border/60 text-xs h-11"
                         >
+                            <ArrowBigLeft className="mr-2 h-4 w-4" />
                             Back
                         </Button>
                         <Button
                             type="button"
-                            size="lg"
                             onClick={() => {
                                 if (stepIndex === steps.length - 1) {
                                     onSubmit?.();
@@ -271,9 +271,10 @@ const ListingForm = ({
                                 setStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
                             }}
                             disabled={disabled}
-                            className="rounded-full border border-border/60 text-xs"
+                            className="rounded-full border border-border/60 text-xs h-11"
                         >
                             {stepIndex === steps.length - 1 ? "Save changes" : "Next"}
+                            <ArrowBigRight className="mr-2 h-4 w-4" />
                         </Button>
                     </div>
                 </div>

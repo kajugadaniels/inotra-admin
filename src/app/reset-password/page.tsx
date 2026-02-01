@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { KeyRound, Lock, Mail } from "lucide-react";
+import { KeyRound, Lock, Mail, UploadCloudIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { confirmAdminPasswordReset } from "@/api/auth";
@@ -183,9 +183,10 @@ const ResetPasswordPage = () => {
 
                 <Button
                     type="submit"
-                    className="h-12 w-full rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
+                    className="h-11 rounded-full text-xs"
                     disabled={isBusy}
                 >
+                    <UploadCloudIcon className="mr-2 h-4 w-4" />
                     {isBusy ? "Updating..." : "Update password"}
                 </Button>
 

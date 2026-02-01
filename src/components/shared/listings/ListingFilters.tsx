@@ -1,4 +1,4 @@
-import { Filter, Search } from "lucide-react";
+import { Filter, Search, XIcon } from "lucide-react";
 import { useState } from "react";
 
 import type { PlaceCategory } from "@/api/types";
@@ -225,6 +225,7 @@ const ListingFilters = ({
                                     className="h-11 rounded-full text-xs"
                                     onClick={() => setDialogOpen(false)}
                                 >
+                                    <XIcon className="mr-2 h-4 w-4" />
                                     Cancel
                                 </Button>
                                 <Button
@@ -236,6 +237,7 @@ const ListingFilters = ({
                                     }}
                                     disabled={isLoading}
                                 >
+                                    <Filter className="mr-2 h-4 w-4" />
                                     Apply filters
                                 </Button>
                             </DialogFooter>
@@ -245,7 +247,7 @@ const ListingFilters = ({
                     <Button
                         type="button"
                         variant="ghost"
-                        className="text-xs uppercase tracking-[0.2em] text-muted-foreground"
+                        className="text-xs uppercase tracking-[0.2em] text-muted-foreground h-11 rounded-full"
                         onClick={onReset}
                         disabled={isLoading}
                     >

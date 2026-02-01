@@ -1,4 +1,4 @@
-import { Filter, Search } from "lucide-react";
+import { Filter, Search, XIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -164,9 +164,10 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="h-11 rounded-full"
+                                    className="h-11 rounded-full h-11"
                                     onClick={() => setDialogOpen(false)}
                                 >
+                                    <XIcon className="mr-2 h-4 w-4" />
                                     Cancel
                                 </Button>
                                 <Button
@@ -178,6 +179,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                                     }}
                                     disabled={isLoading}
                                 >
+                                    <Filter className="mr-2 h-4 w-4" />
                                     Apply filters
                                 </Button>
                             </DialogFooter>
@@ -187,7 +189,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, onReset }: UsersFil
                     <Button
                         type="button"
                         variant="ghost"
-                        className="text-xs uppercase tracking-[0.2em] text-muted-foreground"
+                        className="text-xs uppercase tracking-[0.2em] text-muted-foreground h-11 rounded-full"
                         onClick={onReset}
                         disabled={isLoading}
                     >

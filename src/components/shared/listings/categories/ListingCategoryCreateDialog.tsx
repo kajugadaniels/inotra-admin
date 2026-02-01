@@ -17,6 +17,7 @@ import {
 import ListingCategoryForm, {
     type ListingCategoryFormState,
 } from "./ListingCategoryForm";
+import { UploadCloud, XIcon } from "lucide-react";
 
 type ListingCategoryCreateDialogProps = {
     open: boolean;
@@ -113,19 +114,21 @@ const ListingCategoryCreateDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs h-11"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
+                        <XIcon className="mr-2 h-4 w-4" />
                         Cancel
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs h-11"
                         onClick={handleCreate}
                         disabled={isSubmitting}
                     >
-                        Create category
+                        <UploadCloud className="mr-2 h-4 w-4" />
+                        Create Category
                     </Button>
                 </DialogFooter>
             </DialogContent>

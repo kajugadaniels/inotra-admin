@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Mail } from "lucide-react";
+import { Link2Icon, Mail } from "lucide-react";
 import { toast } from "sonner";
 
 import { requestAdminPasswordReset } from "@/api/auth";
@@ -116,6 +116,7 @@ const ForgotPasswordPage = () => {
                     disabled={isBusy}
                     className="h-12 w-full rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
                 >
+                    <Link2Icon className="mr-2 h-4 w-4" />
                     {isBusy ? "Sending..." : "Send reset code"}
                 </Button>
 

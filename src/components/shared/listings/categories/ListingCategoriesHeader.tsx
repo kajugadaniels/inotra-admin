@@ -17,7 +17,7 @@ const ListingCategoriesHeader = ({ isLoading, onCreate }: ListingCategoriesHeade
         </div>
         <Button
             type="button"
-            className="rounded-full h-11 text-xs"
+            className="rounded-full h-11 text-xs h-11"
             onClick={onCreate}
             disabled={isLoading}
         >

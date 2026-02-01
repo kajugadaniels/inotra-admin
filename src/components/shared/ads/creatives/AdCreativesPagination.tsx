@@ -30,6 +30,7 @@ const AdCreativesPagination = ({
                     size="icon-sm"
                     disabled={!canGoBack || isLoading}
                     onClick={() => onPageChange(page - 1)}
+                    className="h-11 rounded-full"
                 >
                     <ChevronLeft className="h-4 w-4" />
                 </Button>
@@ -39,6 +40,7 @@ const AdCreativesPagination = ({
                     size="icon-sm"
                     disabled={!canGoForward || isLoading}
                     onClick={() => onPageChange(page + 1)}
+                    className="h-11 rounded-full"
                 >
                     <ChevronRight className="h-4 w-4" />
                 </Button>

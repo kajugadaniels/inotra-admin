@@ -19,6 +19,7 @@ import {
 import AdCreativeForm, {
     type AdCreativeFormState,
 } from "@/components/shared/ads/creatives/AdCreativeForm";
+import { UploadCloudIcon, XIcon } from "lucide-react";
 
 type AdCreativeCreateDialogProps = {
     open: boolean;
@@ -143,18 +144,20 @@ const AdCreativeCreateDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
+                        <XIcon className="mr-2 h-4 w-4" />
                         Cancel
                     </Button>
                     <Button
                         type="button"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                     >
+                        <UploadCloudIcon className="mr-2 h-4 w-4" />
                         Create creative
                     </Button>
                 </DialogFooter>

@@ -15,7 +15,7 @@ const ListingHeader = ({ isLoading }: ListingHeaderProps) => (
                 Manage listing inventory and keep category details up to date.
             </p>
         </div>
-        <Button asChild className="rounded-full text-xs" disabled={isLoading}>
+        <Button asChild className="rounded-full text-xs h-11" disabled={isLoading}>
             <Link href="/listings/new">
                 <Plus className="mr-2 h-4 w-4" />
                 New listing

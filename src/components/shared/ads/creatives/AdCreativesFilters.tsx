@@ -1,4 +1,4 @@
-import { Filter, Search } from "lucide-react";
+import { Filter, Search, XIcon } from "lucide-react";
 import { useState } from "react";
 
 import type { AdPlacement } from "@/api/types";
@@ -68,7 +68,7 @@ const AdCreativesFilters = ({
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="rounded-full border-border/60 bg-background/70 text-xs"
+                                className="rounded-full border-border/60 bg-background/70 text-xs h-11"
                                 disabled={isLoading}
                             >
                                 <Filter className="mr-2 h-4 w-4" />
@@ -166,20 +166,22 @@ const AdCreativesFilters = ({
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="h-11 rounded-full text-xs"
+                                    className="h-11 rounded-full text-xs h-11"
                                     onClick={() => setDialogOpen(false)}
                                 >
+                                    <XIcon className="mr-2 h-4 w-4" />
                                     Cancel
                                 </Button>
                                 <Button
                                     type="button"
-                                    className="h-11 rounded-full text-xs"
+                                    className="h-11 rounded-full text-xs h-11"
                                     onClick={() => {
                                         onFiltersChange(draftFilters);
                                         setDialogOpen(false);
                                     }}
                                     disabled={isLoading}
                                 >
+                                    <Filter className="mr-2 h-4 w-4" />
                                     Apply filters
                                 </Button>
                             </DialogFooter>
@@ -189,7 +191,7 @@ const AdCreativesFilters = ({
                     <Button
                         type="button"
                         variant="ghost"
-                        className="text-xs uppercase tracking-[0.2em] text-muted-foreground"
+                        className="text-xs uppercase tracking-[0.2em] text-muted-foreground h-11 rounded-full"
                         onClick={onReset}
                         disabled={isLoading}
                     >

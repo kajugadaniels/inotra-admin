@@ -17,6 +17,7 @@ import {
 import ListingCategoryForm, {
     type ListingCategoryFormState,
 } from "./ListingCategoryForm";
+import { UploadCloudIcon, XIcon } from "lucide-react";
 
 type ListingCategoryEditDialogProps = {
     category: PlaceCategory | null;
@@ -130,6 +131,7 @@ const ListingCategoryEditDialog = ({
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
+                        <XIcon className="mr-2 h-4 w-4" />
                         Cancel
                     </Button>
                     <Button
@@ -138,6 +140,7 @@ const ListingCategoryEditDialog = ({
                         onClick={handleUpdate}
                         disabled={isSubmitting}
                     >
+                        <UploadCloudIcon className="mr-2 h-4 w-4" />
                         Save changes
                     </Button>
                 </DialogFooter>
