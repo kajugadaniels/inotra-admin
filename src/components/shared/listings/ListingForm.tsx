@@ -39,6 +39,9 @@ export type ListingFormState = {
     name: string;
     categoryId: string;
     description: string;
+    logo: File | null;
+    logoPreview?: string | null;
+    removeLogo: boolean;
     address: string;
     city: string;
     country: string;
