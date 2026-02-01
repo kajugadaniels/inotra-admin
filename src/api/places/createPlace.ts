@@ -20,6 +20,7 @@ type Args = {
         opening_hours?: unknown;
         is_verified?: boolean;
         is_active?: boolean;
+        logo?: File | null;
         images?: File[];
         services?: { name: string; is_available?: boolean }[];
     };
@@ -52,6 +53,9 @@ export function createPlace({ apiBaseUrl, accessToken, data }: Args) {
     }
     if (typeof data.is_active === "boolean") {
         payload.append("is_active", data.is_active ? "true" : "false");
+    }
+    if (data.logo) {
+        payload.append("logo", data.logo);
     }
     if (data.services?.length) {
         payload.append("services", JSON.stringify(data.services));
