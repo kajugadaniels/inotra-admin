@@ -136,3 +136,33 @@ export type PlaceDetail = {
     created_at?: string | null;
     updated_at?: string | null;
 };
+
+export type Review = {
+    id: string;
+    place_id?: string | null;
+    place_name?: string | null;
+    user_id?: string | null;
+    user_name?: string | null;
+    user_avatar_url?: string | null;
+    rating: number;
+    comment?: string | null;
+    is_reported?: boolean;
+    published?: boolean;
+    report_review_id?: string | null;
+    created_at?: string | null;
+};
+
+export type ReviewReport = {
+    id: string;
+    review_id?: string | null;
+    place_id?: string | null;
+    place_name?: string | null;
+    reviewer_id?: string | null;
+    reviewer_name?: string | null;
+    reason?: string | null;
+    details?: string | null;
+    status?: string | null;
+    comment?: string | null;
+    reported_by_id?: string | null;
+    created_at?: string | null;
+};
