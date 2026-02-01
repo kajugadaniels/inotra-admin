@@ -31,6 +31,7 @@ type ListingOverviewProps = {
 const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
     const images = listing?.images ?? [];
     const heroImage = images?.[0]?.image_url ?? null;
+    const logoUrl = listing?.logo_url ?? null;
 
     const [selectedImage, setSelectedImage] = useState<string | null>(heroImage);
 
@@ -102,6 +103,26 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
     return (
         <section className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl w-[850px] space-y-6">
             <div className="p-6 space-y-5">
+                {logoUrl ? (
+                    <div className="flex justify-end">
+                        <div className="flex items-center gap-3 rounded-2xl border border-border/60 bg-background/70 px-3 py-2 shadow-sm">
+                            <div className="relative h-12 w-12 overflow-hidden rounded-xl border border-border/60 bg-white">
+                                <Image
+                                    src={logoUrl}
+                                    alt={listing?.name || "Listing logo"}
+                                    fill
+                                    sizes="48px"
+                                    className="object-contain p-1.5"
+                                />
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                                <p className="font-semibold text-foreground">Brand logo</p>
+                                <p>Provided by owner</p>
+                            </div>
+                        </div>
+                    </div>
+                ) : null}
+
                 {/* MAIN CAROUSEL */}
                 <div className="relative">
                     {hasImages ? (
