@@ -19,6 +19,9 @@ const DEFAULT_FORM: ListingFormState = {
     name: "",
     categoryId: "",
     description: "",
+    logo: null,
+    logoPreview: null,
+    removeLogo: false,
     address: "",
     city: "",
     country: "Rwanda",
@@ -104,6 +107,7 @@ const NewListingPage = () => {
                     opening_hours,
                     is_verified: form.is_verified,
                     is_active: form.is_active,
+                    logo: form.logo || undefined,
                     images: form.images,
                     services: form.services.map((service) => ({
                         name: service.name.trim(),
