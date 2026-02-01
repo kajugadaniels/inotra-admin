@@ -1,18 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { RefreshCw } from "lucide-react";
+import { Filter, RefreshCw, Search } from "lucide-react";
 import { toast } from "sonner";
 
-import {
-    authStorage,
-    extractErrorDetail,
-    listReviews,
-    toggleReviewPublish,
-} from "@/api";
+import { extractErrorDetail, listReviews, toggleReviewPublish } from "@/api";
+import { authStorage } from "@/api/auth";
 import type { Review } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import ReviewsFilters, {
     type ReviewFiltersState,
 } from "@/components/shared/listings/reviews/ReviewsFilters";
@@ -32,12 +30,14 @@ const PAGE_SIZE = 20;
 const ListingReviewsPage = () => {
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
     const [filters, setFilters] = useState<ReviewFiltersState>(DEFAULT_FILTERS);
+    const [searchInput, setSearchInput] = useState("");
     const [reviews, setReviews] = useState<Review[]>([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [busyId, setBusyId] = useState<string | undefined>();
     const [refreshTick, setRefreshTick] = useState(0);
+    const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
     const totalPages = Math.max(Math.ceil(total / PAGE_SIZE), 1);
 
@@ -125,26 +125,66 @@ const ListingReviewsPage = () => {
     };
 
     return (
-        <div className="relative min-h-screen overflow-hidden">
-            <div className="pointer-events-none absolute inset-0 -z-10">
-                <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-background" />
-                <div className="absolute -left-40 -top-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl" />
-                <div className="absolute -right-40 -bottom-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl" />
-                <div className="absolute inset-0 opacity-[0.05] [background-image:radial-gradient(rgba(255,255,255,0.6)_1px,transparent_1px)] [background-size:18px_18px]" />
-            </div>
-
-            <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
-                <header className="flex flex-col gap-3 border-b border-border/60 pb-4 md:flex-row md:items-center md:justify-between">
-                    <div>
-                        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                            Listings
-                        </p>
-                        <h1 className="text-2xl font-semibold">Listing reviews</h1>
-                        <p className="text-sm text-muted-foreground">
-                            Moderate reviews across all listings with quick toggles.
-                        </p>
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
+            <header className="flex flex-col gap-3 border-b border-border/60 pb-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="space-y-1">
+                    <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                        Listings
+                    </p>
+                    <h1 className="text-2xl font-semibold">Listing reviews</h1>
+                    <p className="text-sm text-muted-foreground">
+                        Moderate reviews across all listings with quick toggles.
+                    </p>
+                </div>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+                    <div className="relative w-full sm:w-64">
+                        <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    setFilters((prev) => ({ ...prev, search: searchInput.trim() }));
+                                    setPage(1);
+                                    setRefreshTick((x) => x + 1);
+                                }
+                            }}
+                            placeholder="Search comment, place, user"
+                            className="pl-10"
+                        />
                     </div>
-                    <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex items-center gap-2">
+                        <Dialog open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+                            <DialogTrigger asChild>
+                                <Button variant="outline" size="sm" className="rounded-full">
+                                    <Filter className="mr-2 h-4 w-4" />
+                                    Filters
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-2xl">
+                                <DialogHeader>
+                                    <DialogTitle>Filter reviews</DialogTitle>
+                                </DialogHeader>
+                                <ReviewsFilters
+                                    filters={filters}
+                                    isLoading={isLoading}
+                                    onChange={setFilters}
+                                    onApply={() => {
+                                        setPage(1);
+                                        setRefreshTick((x) => x + 1);
+                                        setIsFiltersOpen(false);
+                                    }}
+                                    onReset={() => {
+                                        setFilters(DEFAULT_FILTERS);
+                                        setPage(1);
+                                        setRefreshTick((x) => x + 1);
+                                        setIsFiltersOpen(false);
+                                    }}
+                                />
+                            </DialogContent>
+                        </Dialog>
+
                         <Button
                             variant="outline"
                             size="sm"
@@ -155,58 +195,57 @@ const ListingReviewsPage = () => {
                             <RefreshCw className={isLoading ? "mr-2 h-4 w-4 animate-spin" : "mr-2 h-4 w-4"} />
                             Refresh
                         </Button>
-                        <div className="flex items-center rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="rounded-full"
+                            onClick={() => {
+                                setFilters(DEFAULT_FILTERS);
+                                setSearchInput("");
+                                setPage(1);
+                                setRefreshTick((x) => x + 1);
+                            }}
+                        >
+                            Reset
+                        </Button>
+                        <div className="hidden items-center rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-muted-foreground sm:flex">
                             {total} results
                         </div>
                     </div>
-                </header>
+                </div>
+            </header>
 
-                <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-                    <ReviewsFilters
-                        filters={filters}
-                        isLoading={isLoading}
-                        onChange={setFilters}
-                        onApply={() => setPage(1)}
-                        onReset={() => {
-                            setFilters(DEFAULT_FILTERS);
-                            setPage(1);
-                            setRefreshTick((x) => x + 1);
-                        }}
-                    />
+            <div className="space-y-4">
+                <ReviewsTable
+                    reviews={reviews}
+                    isLoading={isLoading}
+                    busyId={busyId}
+                    onTogglePublish={handleTogglePublish}
+                />
 
-                    <div className="space-y-4">
-                        <ReviewsTable
-                            reviews={reviews}
-                            isLoading={isLoading}
-                            busyId={busyId}
-                            onTogglePublish={handleTogglePublish}
-                        />
-
-                        <div className="flex items-center justify-between gap-4 pt-2 text-sm text-muted-foreground">
-                            <span>
-                                Page {page} of {totalPages}
-                            </span>
-                            <div className="flex gap-2">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="rounded-full"
-                                    disabled={page <= 1}
-                                    onClick={() => setPage((p) => Math.max(1, p - 1))}
-                                >
-                                    Previous
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="rounded-full"
-                                    disabled={page >= totalPages}
-                                    onClick={() => setPage((p) => p + 1)}
-                                >
-                                    Next
-                                </Button>
-                            </div>
-                        </div>
+                <div className="flex items-center justify-between gap-4 pt-2 text-sm text-muted-foreground">
+                    <span>
+                        Page {page} of {totalPages}
+                    </span>
+                    <div className="flex gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="rounded-full"
+                            disabled={page <= 1}
+                            onClick={() => setPage((p) => Math.max(1, p - 1))}
+                        >
+                            Previous
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="rounded-full"
+                            disabled={page >= totalPages}
+                            onClick={() => setPage((p) => p + 1)}
+                        >
+                            Next
+                        </Button>
                     </div>
                 </div>
             </div>
