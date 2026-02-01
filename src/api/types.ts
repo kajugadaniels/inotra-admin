@@ -84,6 +84,7 @@ export type PlaceListItem = {
     category_id?: string | null;
     category_name?: string | null;
     category_icon?: string | null;
+    logo_url?: string | null;
     city?: string | null;
     country?: string | null;
     is_active?: boolean | null;
@@ -115,6 +116,7 @@ export type PlaceDetail = {
     category_id?: string | null;
     category_name?: string | null;
     category_icon?: string | null;
+    logo_url?: string | null;
     address?: string | null;
     city?: string | null;
     country?: string | null;
