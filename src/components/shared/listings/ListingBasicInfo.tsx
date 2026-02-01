@@ -1,5 +1,6 @@
 import type { PlaceCategory } from "@/api/types";
 import { Input } from "@/components/ui/input";
+import { FileUpload } from "@/components/ui/file-upload";
 import {
     Select,
     SelectContent,
@@ -84,6 +85,51 @@ const ListingBasicInfo = ({
                     rows={7}
                     disabled={disabled}
                 />
+            </div>
+
+            <div className="space-y-3">
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Listing logo (optional)
+                </label>
+                {form.logoPreview ? (
+                    <div className="overflow-hidden rounded-2xl border border-border/60 bg-muted/40">
+                        <img
+                            src={form.logoPreview}
+                            alt="Listing logo preview"
+                            className="h-32 w-full object-contain bg-white"
+                        />
+                    } : null}
+                <FileUpload
+                    accept="image/*"
+                    disabled={disabled}
+                    label="Upload logo"
+                    description="Square PNG/JPG up to 8MB"
+                    onFileSelect={(file) => {
+                        onChange({
+                            ...form,
+                            logo: file,
+                            logoPreview: file ? URL.createObjectURL(file) : form.logoPreview,
+                            removeLogo: file ? false : form.removeLogo,
+                        });
+                    }}
+                />
+                {form.logoPreview ? (
+                    <button
+                        type="button"
+                        className="text-xs font-semibold text-destructive underline"
+                        onClick={() =>
+                            onChange({
+                                ...form,
+                                logo: null,
+                                logoPreview: null,
+                                removeLogo: true,
+                            })
+                        }
+                        disabled={disabled}
+                    >
+                        Remove logo
+                    </button>
+                ) : null}
             </div>
         </div>
     );
