@@ -1,11 +1,19 @@
 "use client";
 
-import { Filter, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+    DialogClose,
+    DialogFooter,
+} from "@/components/ui/dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 export type ReviewFiltersState = {
     search: string;
@@ -25,178 +33,163 @@ type Props = {
 };
 
 const ReviewsFilters = ({ filters, isLoading, onChange, onApply, onReset }: Props) => {
-    const [search, setSearch] = useState(filters.search);
+    const [draft, setDraft] = useState<ReviewFiltersState>(filters);
+
+    useEffect(() => {
+        setDraft(filters);
+    }, [filters]);
+
+    const handleApply = () => {
+        onChange(draft);
+        onApply();
+    };
 
     return (
-        <aside className="rounded-3xl border border-border/60 bg-card/60 p-5 shadow-[0_20px_60px_-45px_rgba(0,0,0,0.6)]">
-            <div className="flex items-center gap-2 text-sm font-semibold">
-                <Filter className="h-4 w-4 text-primary" />
-                Filters
+        <div className="space-y-4">
+            <div>
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Reported
+                </label>
+                <Select
+                    value={draft.is_reported}
+                    onValueChange={(value) =>
+                        setDraft({ ...draft, is_reported: value as ReviewFiltersState["is_reported"] })
+                    }
+                    disabled={isLoading}
+                >
+                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
+                        <SelectValue placeholder="Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">Any</SelectItem>
+                        <SelectItem value="true">Reported</SelectItem>
+                        <SelectItem value="false">Clean</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
 
-            <div className="mt-4 space-y-4">
-                <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                        Search
-                    </label>
-                    <div className="relative">
-                        <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    e.preventDefault();
-                                    onChange({ ...filters, search: search.trim() });
-                                    onApply();
-                                }
-                            }}
-                            placeholder="Search comment, place, user"
-                            className="pl-10"
-                        />
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                        <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                            Reported
-                        </label>
-                        <Select
-                            value={filters.is_reported}
-                            onValueChange={(value) =>
-                                onChange({ ...filters, is_reported: value as ReviewFiltersState["is_reported"] })
-                            }
-                            disabled={isLoading}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Any" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">Any</SelectItem>
-                                <SelectItem value="true">Reported</SelectItem>
-                                <SelectItem value="false">Clean</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                            Published
-                        </label>
-                        <Select
-                            value={filters.published}
-                            onValueChange={(value) =>
-                                onChange({ ...filters, published: value as ReviewFiltersState["published"] })
-                            }
-                            disabled={isLoading}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Any" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">Any</SelectItem>
-                                <SelectItem value="true">Published</SelectItem>
-                                <SelectItem value="false">Unpublished</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                        <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                            Rating
-                        </label>
-                        <Select
-                            value={filters.rating}
-                            onValueChange={(value) =>
-                                onChange({ ...filters, rating: value as ReviewFiltersState["rating"] })
-                            }
-                            disabled={isLoading}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Any" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">Any</SelectItem>
-                                <SelectItem value="5">5</SelectItem>
-                                <SelectItem value="4">4</SelectItem>
-                                <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="2">2</SelectItem>
-                                <SelectItem value="1">1</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                            Sort
-                        </label>
-                        <Select
-                            value={filters.sort}
-                            onValueChange={(value) =>
-                                onChange({ ...filters, sort: value as "asc" | "desc" })
-                            }
-                            disabled={isLoading}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Newest" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="desc">Newest</SelectItem>
-                                <SelectItem value="asc">Oldest</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-
-                <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                        Order by
-                    </label>
-                    <Select
-                        value={filters.ordering}
-                        onValueChange={(value) =>
-                            onChange({ ...filters, ordering: value as "created_at" | "rating" })
-                        }
-                        disabled={isLoading}
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="created_at" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="created_at">Created at</SelectItem>
-                            <SelectItem value="rating">Rating</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                <div className="flex gap-2">
-                    <Button
-                        size="sm"
-                        className="flex-1 rounded-full"
-                        disabled={isLoading}
-                        onClick={() => {
-                            onChange({ ...filters, search: search.trim() });
-                            onApply();
-                        }}
-                    >
-                        Apply
-                    </Button>
-                    <Button
-                        size="sm"
-                        variant="ghost"
-                        className="rounded-full"
-                        disabled={isLoading}
-                        onClick={() => {
-                            setSearch("");
-                            onReset();
-                        }}
-                    >
-                        Reset
-                    </Button>
-                </div>
+            <div>
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Published
+                </label>
+                <Select
+                    value={draft.published}
+                    onValueChange={(value) =>
+                        setDraft({ ...draft, published: value as ReviewFiltersState["published"] })
+                    }
+                    disabled={isLoading}
+                >
+                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
+                        <SelectValue placeholder="Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">Any</SelectItem>
+                        <SelectItem value="true">Published</SelectItem>
+                        <SelectItem value="false">Unpublished</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
-        </aside>
+
+            <div>
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Rating
+                </label>
+                <Select
+                    value={draft.rating}
+                    onValueChange={(value) =>
+                        setDraft({ ...draft, rating: value as ReviewFiltersState["rating"] })
+                    }
+                    disabled={isLoading}
+                >
+                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
+                        <SelectValue placeholder="Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">Any</SelectItem>
+                        <SelectItem value="5">5</SelectItem>
+                        <SelectItem value="4">4</SelectItem>
+                        <SelectItem value="3">3</SelectItem>
+                        <SelectItem value="2">2</SelectItem>
+                        <SelectItem value="1">1</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div>
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Sort direction
+                </label>
+                <Select
+                    value={draft.sort}
+                    onValueChange={(value) =>
+                        setDraft({ ...draft, sort: value === "asc" ? "asc" : "desc" })
+                    }
+                    disabled={isLoading}
+                >
+                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
+                        <SelectValue placeholder="Newest" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="desc">Newest</SelectItem>
+                        <SelectItem value="asc">Oldest</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div>
+                <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Order by
+                </label>
+                <Select
+                    value={draft.ordering}
+                    onValueChange={(value) =>
+                        setDraft({ ...draft, ordering: value as ReviewFiltersState["ordering"] })
+                    }
+                    disabled={isLoading}
+                >
+                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
+                        <SelectValue placeholder="Created at" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="created_at">Created at</SelectItem>
+                        <SelectItem value="rating">Rating</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <DialogFooter className="gap-2 pt-2">
+                <DialogClose asChild>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className="h-11 rounded-full text-xs"
+                        disabled={isLoading}
+                    >
+                        Cancel
+                    </Button>
+                </DialogClose>
+                <Button
+                    type="button"
+                    className="h-11 rounded-full text-xs"
+                    onClick={handleApply}
+                    disabled={isLoading}
+                >
+                    Apply filters
+                </Button>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="h-11 rounded-full text-xs"
+                    onClick={() => {
+                        onReset();
+                        setDraft(filters);
+                    }}
+                    disabled={isLoading}
+                >
+                    Reset
+                </Button>
+            </DialogFooter>
+        </div>
     );
 };
 
