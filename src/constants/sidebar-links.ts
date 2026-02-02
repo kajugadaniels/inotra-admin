@@ -43,17 +43,17 @@ export const adminSidebarLinks: SidebarLink[] = [
         children: [
             {
                 label: "Admins",
-                href: "/admins",
+                href: "/users/admins",
                 icon: Users,
             },
             {
-                label: "Clients",
-                href: "/users",
+                label: "Customers",
+                href: "/users/customers",
                 icon: UserStar,
             },
             {
                 label: "Customer Representatives",
-                href: "/customer-representatives",
+                href: "/users/customer-representatives",
                 icon: UserCog,
             },
         ],
