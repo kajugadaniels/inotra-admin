@@ -117,10 +117,6 @@ const ReviewsTable = ({ reviews, isLoading, busyId, onTogglePublish }: Props) =>
                                                 <span className="font-semibold text-foreground">
                                                     {review.place_name || "Unknown listing"}
                                                 </span>
-                                                <span className="text-muted-foreground">
-                                                    {/* Review text is intentionally NOT shown in table */}
-                                                    Click “View” to read the review
-                                                </span>
                                             </div>
                                         </TableCell>
 
