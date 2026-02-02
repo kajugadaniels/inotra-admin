@@ -4,16 +4,28 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { authStorage } from "@/api/auth";
-import { listUsers } from "@/api/users";
+import { deleteUser, getUser, listUsers, updateUserActive } from "@/api/users";
 import type { AdminUser } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
-import { UsersHeader, UsersPagination, UsersTable } from "@/components/shared/users";
+import {
+    UsersHeader,
+    UsersPagination,
+    UsersTable,
+    defaultUsersFilters,
+    type UsersFiltersState,
+} from "@/components/shared/users";
+import UserDeleteDialog from "@/components/shared/users/UserDeleteDialog";
+import UserDetailsSheet from "@/components/shared/users/UserDetailsSheet";
 import { defaultUsersFilters, type UsersFiltersState } from "@/components/shared/users/UsersFilters";
 
 const UsersPage = () => {
     const [filters, setFilters] = useState<UsersFiltersState>(defaultUsersFilters);
     const [page, setPage] = useState(1);
     const [results, setResults] = useState<AdminUser[]>([]);
+    const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
+    const [detailsOpen, setDetailsOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [busyId, setBusyId] = useState<string | null>(null);
     const [count, setCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -83,6 +95,67 @@ const UsersPage = () => {
         setPage(1);
     };
 
+    const tokens = authStorage.getTokens();
+
+    const handleView = async (userId?: string) => {
+        if (!userId || !tokens?.access) return;
+        try {
+            const res = await getUser({ apiBaseUrl, accessToken: tokens.access, userId });
+            if (!res.ok || !res.body || (res.status && res.status >= 400)) {
+                toast.error("Unable to load user", { description: extractErrorDetail(res.body) });
+                return;
+            }
+            setSelectedUser(res.body as AdminUser);
+            setDetailsOpen(true);
+        } catch (error) {
+            toast.error("Unable to load user", {
+                description: error instanceof Error ? error.message : "Check API connectivity.",
+            });
+        }
+    };
+
+    const handleToggleActive = async (user: AdminUser) => {
+        if (!user.id || !tokens?.access) return;
+        setBusyId(user.id);
+        try {
+            const res = await updateUserActive({ apiBaseUrl, accessToken: tokens.access, userId: user.id });
+            if (!res.ok || !res.body || !("user" in res.body)) {
+                toast.error("Update failed", { description: extractErrorDetail(res.body) });
+                return;
+            }
+            const updated = (res.body as any).user as AdminUser;
+            setResults((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+        } catch (error) {
+            toast.error("Update failed", {
+                description: error instanceof Error ? error.message : "Check API connectivity.",
+            });
+        } finally {
+            setBusyId(null);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!selectedUser?.id || !tokens?.access) return;
+        setBusyId(selectedUser.id);
+        try {
+            const res = await deleteUser({ apiBaseUrl, accessToken: tokens.access, userId: selectedUser.id });
+            if (!res.ok) {
+                toast.error("Delete failed", { description: extractErrorDetail(res.body) });
+                return;
+            }
+            setResults((prev) => prev.filter((u) => u.id !== selectedUser.id));
+            setDeleteOpen(false);
+            setSelectedUser(null);
+            toast.success("User deleted");
+        } catch (error) {
+            toast.error("Delete failed", {
+                description: error instanceof Error ? error.message : "Check API connectivity.",
+            });
+        } finally {
+            setBusyId(null);
+        }
+    };
+
     return (
         <div className="space-y-6">
             <UsersHeader
@@ -92,13 +165,32 @@ const UsersPage = () => {
                 onReset={handleReset}
             />
 
-            <UsersTable users={results} isLoading={isLoading} />
+            <UsersTable
+                users={results}
+                isLoading={isLoading}
+                busyId={busyId}
+                onView={handleView}
+                onToggleActive={handleToggleActive}
+                onDelete={(user) => {
+                    setSelectedUser(user);
+                    setDeleteOpen(true);
+                }}
+            />
 
             <UsersPagination
                 page={page}
                 totalPages={totalPages}
                 isLoading={isLoading}
                 onPageChange={setPage}
+            />
+
+            <UserDetailsSheet user={selectedUser} open={detailsOpen} onOpenChange={setDetailsOpen} />
+            <UserDeleteDialog
+                open={deleteOpen}
+                onOpenChange={setDeleteOpen}
+                onConfirm={handleDelete}
+                isLoading={busyId === selectedUser?.id}
+                userLabel={selectedUser?.name || selectedUser?.email || selectedUser?.username || \"user\"}
             />
         </div>
     );
