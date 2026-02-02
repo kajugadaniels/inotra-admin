@@ -88,12 +88,12 @@ export const parseOpeningHours = (raw?: unknown): OpeningHoursState => {
 
     const result: OpeningHoursState = { ...defaultState };
     (Object.keys(defaultState) as DayKey[]).forEach((day) => {
-        const entry = (raw as Record<string, any>)[day];
+        const entry = (raw as Record<string, unknown>)[day];
         if (!entry || typeof entry !== "object") return;
-        const closed = Boolean(entry.closed);
+        const closed = Boolean((entry as { closed?: unknown }).closed);
         result[day] = {
-            open: entry.open ?? defaultState[day].open,
-            close: entry.close ?? defaultState[day].close,
+            open: (entry as { open?: string }).open ?? defaultState[day].open,
+            close: (entry as { close?: string }).close ?? defaultState[day].close,
             closed,
         };
     });
