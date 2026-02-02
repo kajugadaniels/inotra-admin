@@ -6,7 +6,7 @@ import { ArrowLeft, PenBoxIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 
-import { authStorage } from "@/api/auth";
+import { authStorage, extractErrorDetail } from "@/api/auth";
 import { getPlace } from "@/api/places";
 import type { PlaceDetail } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
@@ -59,7 +59,7 @@ const ListingDetailsPage = () => {
             .then((result) => {
                 if (!result.ok || !result.body) {
                     toast.error("Unable to load listing details", {
-                        description: result.body?.message ?? "Please try again.",
+                        description: extractErrorDetail(result.body) || "Please try again.",
                     });
                     return;
                 }
