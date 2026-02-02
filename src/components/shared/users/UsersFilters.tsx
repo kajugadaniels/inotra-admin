@@ -1,3 +1,5 @@
+"use client";
+
 import { Filter, XIcon } from "lucide-react";
 import { useState, type ReactElement } from "react";
 
@@ -26,6 +28,13 @@ export type UsersFiltersState = {
     isActive: "all" | "true" | "false";
 };
 
+export const defaultUsersFilters: UsersFiltersState = {
+    search: "",
+    ordering: "date_joined",
+    sort: "desc",
+    isActive: "all",
+};
+
 type UsersFiltersProps = {
     filters: UsersFiltersState;
     isLoading: boolean;
@@ -49,9 +58,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, trigger }: UsersFil
 
     const handleOpenChange = (open: boolean) => {
         setDialogOpen(open);
-        if (open) {
-            setDraftFilters(filters);
-        }
+        if (open) setDraftFilters(filters);
     };
 
     return (
@@ -123,9 +130,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, trigger }: UsersFil
                                 setDraftFilters({
                                     ...draftFilters,
                                     isActive:
-                                        value === "true" || value === "false"
-                                            ? value
-                                            : "all",
+                                        value === "true" || value === "false" ? value : "all",
                                 })
                             }
                         >
