@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { authStorage } from "@/api/auth";
+import { authStorage, extractErrorDetail } from "@/api/auth";
 import { getAdPlacement } from "@/api/ads";
 import type { AdPlacement } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
@@ -66,7 +66,7 @@ const AdPlacementDetailsDialog = ({
             .then((result) => {
                 if (!result.ok || !result.body) {
                     toast.error("Unable to load placement details", {
-                        description: result.body?.message ?? "Please try again.",
+                        description: extractErrorDetail(result.body) || "Please try again.",
                     });
                     return;
                 }
