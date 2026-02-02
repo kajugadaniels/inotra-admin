@@ -18,7 +18,7 @@ import UserDeleteDialog from "@/components/shared/users/UserDeleteDialog";
 import UserDetailsSheet from "@/components/shared/users/UserDetailsSheet";
 
 const UsersPage = () => {
-    const [filters, setFilters] = useState<UsersFiltersState>(defaultUsersFilters);
+    const [filters, setFilters] = useState<UsersFiltersState>({ ...defaultUsersFilters });
     const [page, setPage] = useState(1);
     const [results, setResults] = useState<AdminUser[]>([]);
     const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
@@ -29,7 +29,7 @@ const UsersPage = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     // Debounce only the API search term (NOT the input)
-    const [debouncedSearch, setDebouncedSearch] = useState(filters.search);
+    const [debouncedSearch, setDebouncedSearch] = useState(defaultUsersFilters.search);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
