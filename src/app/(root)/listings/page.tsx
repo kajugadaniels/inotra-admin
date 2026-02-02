@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { authStorage } from "@/api/auth";
+import { authStorage, extractErrorDetail } from "@/api/auth";
 import { listPlaceCategories, listPlaces } from "@/api/places";
 import type { PlaceCategory, PlaceListItem } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
@@ -68,7 +68,7 @@ const ListingsPage = () => {
                     setCount(listingsResult.body.count ?? 0);
                 } else {
                     toast.error("Unable to load listings", {
-                        description: listingsResult.body?.message ?? "Please try again.",
+                        description: extractErrorDetail(listingsResult.body) || "Please try again.",
                     });
                 }
 
