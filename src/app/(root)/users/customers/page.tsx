@@ -64,7 +64,7 @@ const UsersPage = () => {
             .then((result) => {
                 if (!result.ok || !result.body) {
                     toast.error("Unable to load users", {
-                        description: result.body?.message ?? "Please try again.",
+                        description: extractErrorDetail(result.body) || "Please try again.",
                     });
                     return;
                 }
@@ -121,11 +121,12 @@ const UsersPage = () => {
         setBusyId(user.id);
         try {
             const res = await updateUserActive({ apiBaseUrl, accessToken: tokens.access, userId: user.id });
-            if (!res.ok || !res.body || !("user" in res.body)) {
+            const body = res.body as { user?: AdminUser } | null;
+            if (!res.ok || !body?.user) {
                 toast.error("Update failed", { description: extractErrorDetail(res.body) });
                 return;
             }
-            const updated = (res.body as any).user as AdminUser;
+            const updated = body.user;
             setResults((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
         } catch (error) {
             toast.error("Update failed", {
