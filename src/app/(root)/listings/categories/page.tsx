@@ -12,27 +12,24 @@ import {
     ListingCategoryDeleteDialog,
     ListingCategoryDetailsDialog,
     ListingCategoryEditDialog,
-    ListingCategoriesFilters,
-    type ListingCategoriesFiltersState,
     ListingCategoriesHeader,
     ListingCategoriesPagination,
     ListingCategoriesTable,
 } from "@/components/shared/listings/categories";
+import {
+    defaultListingCategoriesFilters,
+    type ListingCategoriesFiltersState,
+} from "@/components/shared/listings/categories/ListingCategoriesFilters";
 
 const PAGE_SIZE = 10;
 
-const DEFAULT_FILTERS: ListingCategoriesFiltersState = {
-    search: "",
-    sort: "desc",
-    isActive: "all",
-};
-
 const ListingCategoriesPage = () => {
     const [categories, setCategories] = useState<PlaceCategory[]>([]);
-    const [filters, setFilters] = useState<ListingCategoriesFiltersState>(DEFAULT_FILTERS);
+    const [filters, setFilters] = useState<ListingCategoriesFiltersState>(
+        defaultListingCategoriesFilters
+    );
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [searchInput, setSearchInput] = useState("");
 
     const [createOpen, setCreateOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
@@ -41,15 +38,6 @@ const ListingCategoriesPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<PlaceCategory | null>(null);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setFilters((prev) => ({ ...prev, search: searchInput }));
-            setPage(1);
-        }, 300);
-
-        return () => clearTimeout(timer);
-    }, [searchInput]);
 
     useEffect(() => {
         const tokens = authStorage.getTokens();
@@ -89,6 +77,7 @@ const ListingCategoriesPage = () => {
                 !search ||
                 category.name?.toLowerCase().includes(search) ||
                 category.icon?.toLowerCase().includes(search);
+
             const matchesStatus =
                 filters.isActive === "all" ||
                 category.is_active === (filters.isActive === "true");
@@ -110,14 +99,16 @@ const ListingCategoriesPage = () => {
     }, [filteredCategories, page]);
 
     useEffect(() => {
-        if (page > totalPages) {
-            setPage(totalPages);
-        }
+        if (page > totalPages) setPage(totalPages);
     }, [page, totalPages]);
 
     const resetFilters = () => {
-        setFilters(DEFAULT_FILTERS);
-        setSearchInput("");
+        setFilters(defaultListingCategoriesFilters);
+        setPage(1);
+    };
+
+    const handleFiltersChange = (next: ListingCategoriesFiltersState) => {
+        setFilters(next);
         setPage(1);
     };
 
@@ -137,17 +128,12 @@ const ListingCategoriesPage = () => {
 
     return (
         <div className="space-y-6">
-            <ListingCategoriesHeader isLoading={isLoading} onCreate={openCreateDialog} />
-
-            <ListingCategoriesFilters
-                filters={{ ...filters, search: searchInput }}
+            <ListingCategoriesHeader
+                filters={filters}
                 isLoading={isLoading}
-                onFiltersChange={(next) => {
-                    setFilters(next);
-                    setSearchInput(next.search);
-                    setPage(1);
-                }}
+                onFiltersChange={handleFiltersChange}
                 onReset={resetFilters}
+                onCreate={openCreateDialog}
             />
 
             <ListingCategoriesTable
