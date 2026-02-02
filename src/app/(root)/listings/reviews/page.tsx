@@ -157,7 +157,6 @@ const ListingReviewsPage = () => {
                 filters={filters}
                 onFiltersChange={handleFiltersChange}
                 onApplyFilters={handleApplyFilters}
-                onRefresh={() => setRefreshTick((x) => x + 1)}
                 onReset={handleReset}
             />
 

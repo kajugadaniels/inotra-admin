@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { PlaceCategory } from "@/api/types";
 import { Input } from "@/components/ui/input";
 import { FileUpload } from "@/components/ui/file-upload";

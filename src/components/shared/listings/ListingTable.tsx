@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2, Eye, Pencil, Trash2, XCircle } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";

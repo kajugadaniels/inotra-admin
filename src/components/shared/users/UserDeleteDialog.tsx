@@ -52,7 +52,7 @@ const UserDeleteDialog = ({
 
     return (
         <AlertDialog open={open} onOpenChange={onOpenChange}>
-            <AlertDialogContent className="max-w-lg rounded-3xl border-border/60 bg-background/90 backdrop-blur-xl">
+            <AlertDialogContent className="max-w-lg rounded-3xl border-border/60 bg-background backdrop-blur-xl">
                 <AlertDialogHeader>
                     <AlertDialogTitle className="flex items-center gap-2">
                         <AlertTriangle className="h-5 w-5 text-destructive" />
