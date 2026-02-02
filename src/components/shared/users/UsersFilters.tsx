@@ -150,7 +150,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, trigger }: UsersFil
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs mr-5"
                         onClick={() => setDialogOpen(false)}
                     >
                         <XIcon className="mr-2 h-4 w-4" />
@@ -159,7 +159,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, trigger }: UsersFil
 
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={() => {
                             onFiltersChange(draftFilters);
                             setDialogOpen(false);
