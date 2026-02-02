@@ -23,7 +23,14 @@ import {
 
 export type UsersFiltersState = {
     search: string;
-    ordering: string;
+    ordering:
+        | "date_joined"
+        | "email"
+        | "username"
+        | "name"
+        | "first_name"
+        | "last_name"
+        | "phone";
     sort: "asc" | "desc";
     isActive: "all" | "true" | "false";
 };
@@ -81,7 +88,10 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, trigger }: UsersFil
                         <Select
                             value={draftFilters.ordering}
                             onValueChange={(value) =>
-                                setDraftFilters({ ...draftFilters, ordering: value })
+                                setDraftFilters({
+                                    ...draftFilters,
+                                    ordering: value as UsersFiltersState["ordering"],
+                                })
                             }
                         >
                             <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60 text-xs">
