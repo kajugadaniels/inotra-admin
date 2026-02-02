@@ -179,7 +179,7 @@ const UsersPage = () => {
                 onOpenChange={setDeleteOpen}
                 onConfirm={handleDelete}
                 isLoading={busyId === selectedUser?.id}
-                userLabel={selectedUser?.name || selectedUser?.email || selectedUser?.username || \"user\"}
+                userLabel={selectedUser?.name || selectedUser?.email || selectedUser?.username || "user"}
             />
         </div>
     );
