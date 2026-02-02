@@ -7,40 +7,28 @@ import { authStorage } from "@/api/auth";
 import { listUsers } from "@/api/users";
 import type { AdminUser } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
-import {
-    UsersFilters,
-    type UsersFiltersState,
-    UsersHeader,
-    UsersPagination,
-    UsersTable,
-} from "@/components/shared/users";
-import { defaultUsersFilters } from "@/components/shared/users/UsersFilters";
-
-const DEFAULT_FILTERS: UsersFiltersState = {
-    search: "",
-    ordering: "date_joined",
-    sort: "desc",
-    isActive: "all",
-};
+import { UsersHeader, UsersPagination, UsersTable } from "@/components/shared/users";
+import { defaultUsersFilters, type UsersFiltersState } from "@/components/shared/users/UsersFilters";
 
 const UsersPage = () => {
-    const [filters, setFilters] = useState<UsersFiltersState>(DEFAULT_FILTERS);
+    const [filters, setFilters] = useState<UsersFiltersState>(defaultUsersFilters);
     const [page, setPage] = useState(1);
     const [results, setResults] = useState<AdminUser[]>([]);
     const [count, setCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
-    const [searchInput, setSearchInput] = useState("");
+
+    // Debounce only the API search term (NOT the input)
+    const [debouncedSearch, setDebouncedSearch] = useState(filters.search);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setFilters((prev) => ({ ...prev, search: searchInput }));
-            setPage(1);
+            setDebouncedSearch(filters.search);
         }, 350);
 
         return () => clearTimeout(timer);
-    }, [searchInput]);
+    }, [filters.search]);
 
     useEffect(() => {
         const tokens = authStorage.getTokens();
@@ -52,10 +40,11 @@ const UsersPage = () => {
         }
 
         setIsLoading(true);
+
         listUsers({
             apiBaseUrl,
             accessToken: tokens.access,
-            search: filters.search || undefined,
+            search: debouncedSearch ? debouncedSearch : undefined,
             ordering: filters.ordering,
             sort: filters.sort,
             is_active: filters.isActive === "all" ? undefined : filters.isActive === "true",
@@ -80,27 +69,27 @@ const UsersPage = () => {
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [apiBaseUrl, filters, page]);
+    }, [apiBaseUrl, debouncedSearch, filters.ordering, filters.sort, filters.isActive, page]);
 
     const totalPages = Math.max(Math.ceil(count / 10), 1);
+
+    const handleFiltersChange = (next: UsersFiltersState) => {
+        setFilters(next);
+        setPage(1);
+    };
+
+    const handleReset = () => {
+        setFilters(defaultUsersFilters);
+        setPage(1);
+    };
 
     return (
         <div className="space-y-6">
             <UsersHeader
                 filters={filters}
                 isLoading={isLoading}
-                onFiltersChange={setFilters}
-                onReset={() => setFilters(defaultUsersFilters)}
-            />
-
-            <UsersFilters
-                filters={{ ...filters, search: searchInput }}
-                isLoading={isLoading}
-                onFiltersChange={(next) => {
-                    setFilters(next);
-                    setSearchInput(next.search);
-                    setPage(1);
-                }}
+                onFiltersChange={handleFiltersChange}
+                onReset={handleReset}
             />
 
             <UsersTable users={results} isLoading={isLoading} />
