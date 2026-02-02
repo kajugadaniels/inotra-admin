@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
 import { toast } from "sonner";
 
 import { authStorage } from "@/api/auth";
@@ -35,7 +35,7 @@ const AdPlacementsDataProvider = ({ children }: AdPlacementsDataProviderProps) =
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
-    const refresh = async () => {
+    const refresh = useCallback(async () => {
         const tokens = authStorage.getTokens();
         if (!tokens?.access) {
             toast.error("Session missing", {
@@ -69,15 +69,15 @@ const AdPlacementsDataProvider = ({ children }: AdPlacementsDataProviderProps) =
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [apiBaseUrl]);
 
     useEffect(() => {
         void refresh();
-    }, [apiBaseUrl]);
+    }, [apiBaseUrl, refresh]);
 
     const value = useMemo(
         () => ({ placements, setPlacements, isLoading, refresh }),
-        [placements, isLoading]
+        [placements, isLoading, refresh]
     );
 
     return (
