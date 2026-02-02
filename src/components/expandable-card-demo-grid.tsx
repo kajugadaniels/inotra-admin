@@ -1,7 +1,8 @@
 "use client";
+/* eslint-disable @next/next/no-img-element, @typescript-eslint/no-unused-vars */
 
 import React, { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
 export default function ExpandableCardDemo() {
