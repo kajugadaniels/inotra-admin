@@ -16,7 +16,6 @@ import {
 } from "@/components/shared/users";
 import UserDeleteDialog from "@/components/shared/users/UserDeleteDialog";
 import UserDetailsSheet from "@/components/shared/users/UserDetailsSheet";
-import { defaultUsersFilters, type UsersFiltersState } from "@/components/shared/users/UsersFilters";
 
 const UsersPage = () => {
     const [filters, setFilters] = useState<UsersFiltersState>(defaultUsersFilters);
