@@ -31,7 +31,8 @@ const ListingOperationsDetails = ({
                     {listing?.opening_hours ? (
                         Object.entries(listing.opening_hours).map(([day, value]) => {
                             const label = dayLabels[day] ?? day;
-                            const isClosed = Boolean((value as any)?.closed);
+                            const entry = value as { open?: string; close?: string; closed?: boolean } | null;
+                            const isClosed = Boolean(entry?.closed);
                             return (
                                 <div
                                     key={day}
@@ -43,7 +44,7 @@ const ListingOperationsDetails = ({
                                     <span className="text-xs text-muted-foreground">
                                         {isClosed
                                             ? "Closed"
-                                            : `${(value as any)?.open ?? "--"} - ${(value as any)?.close ?? "--"}`}
+                                            : `${entry?.open ?? "--"} - ${entry?.close ?? "--"}`}
                                     </span>
                                 </div>
                             );
