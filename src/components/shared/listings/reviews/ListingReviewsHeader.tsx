@@ -1,6 +1,6 @@
 "use client";
 
-import { Filter, RefreshCw, Search } from "lucide-react";
+import { Filter, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,6 @@ type ListingReviewsHeaderProps = {
     filters: ReviewFiltersState;
     onFiltersChange: (next: ReviewFiltersState) => void;
     onApplyFilters: () => void;
-    onRefresh: () => void;
     onReset: () => void;
 };
 
@@ -22,7 +21,6 @@ const ListingReviewsHeader = ({
     filters,
     onFiltersChange,
     onApplyFilters,
-    onRefresh,
     onReset,
 }: ListingReviewsHeaderProps) => {
     return (
@@ -60,17 +58,6 @@ const ListingReviewsHeader = ({
                                 </Button>
                             }
                         />
-
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className="h-11 rounded-full text-xs"
-                            onClick={onRefresh}
-                            disabled={isLoading}
-                        >
-                            <RefreshCw className={isLoading ? "mr-2 h-4 w-4 animate-spin" : "mr-2 h-4 w-4"} />
-                            Refresh
-                        </Button>
 
                         <Button
                             type="button"

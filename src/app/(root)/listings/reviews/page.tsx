@@ -9,30 +9,30 @@ import type { Review } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
 import ListingReviewsHeader from "@/components/shared/listings/reviews/ListingReviewsHeader";
-import ReviewsFilters, { type ReviewFiltersState } from "@/components/shared/listings/reviews/ReviewsFilters";
+import type { ReviewFiltersState } from "@/components/shared/listings/reviews/ReviewsFilters";
+import { defaultReviewFilters } from "@/components/shared/listings/reviews/ReviewsFilters";
 import ReviewsTable from "@/components/shared/listings/reviews/ReviewsTable";
-
-const DEFAULT_FILTERS: ReviewFiltersState = {
-    search: "",
-    is_reported: "all",
-    published: "all",
-    rating: "all",
-    sort: "desc",
-    ordering: "created_at",
-};
 
 const PAGE_SIZE = 20;
 
 const ListingReviewsPage = () => {
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
-    const [filters, setFilters] = useState<ReviewFiltersState>(DEFAULT_FILTERS);
-    const [searchInput, setSearchInput] = useState("");
+
+    const [filters, setFilters] = useState<ReviewFiltersState>(defaultReviewFilters);
     const [reviews, setReviews] = useState<Review[]>([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [busyId, setBusyId] = useState<string | undefined>();
     const [refreshTick, setRefreshTick] = useState(0);
+
+    // Debounce only the API search term (typing remains instant)
+    const [debouncedSearch, setDebouncedSearch] = useState(filters.search);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setDebouncedSearch(filters.search), 350);
+        return () => clearTimeout(timer);
+    }, [filters.search]);
 
     const totalPages = Math.max(Math.ceil(total / PAGE_SIZE), 1);
 
@@ -44,17 +44,17 @@ const ListingReviewsPage = () => {
         }
 
         let cancelled = false;
+
         const run = async () => {
             setIsLoading(true);
             try {
                 const result = await listReviews({
                     apiBaseUrl,
                     accessToken: tokens.access,
-                    search: filters.search.trim() || undefined,
+                    search: debouncedSearch.trim() || undefined,
                     is_reported:
                         filters.is_reported === "all" ? undefined : filters.is_reported === "true",
-                    published:
-                        filters.published === "all" ? undefined : filters.published === "true",
+                    published: filters.published === "all" ? undefined : filters.published === "true",
                     rating: filters.rating === "all" ? undefined : Number(filters.rating),
                     ordering: filters.ordering,
                     sort: filters.sort,
@@ -83,11 +83,22 @@ const ListingReviewsPage = () => {
                 if (!cancelled) setIsLoading(false);
             }
         };
+
         run();
         return () => {
             cancelled = true;
         };
-    }, [apiBaseUrl, filters, page, refreshTick]);
+    }, [
+        apiBaseUrl,
+        debouncedSearch,
+        filters.is_reported,
+        filters.published,
+        filters.rating,
+        filters.ordering,
+        filters.sort,
+        page,
+        refreshTick,
+    ]);
 
     const handleTogglePublish = async (review: Review) => {
         const tokens = authStorage.getTokens();
@@ -95,6 +106,7 @@ const ListingReviewsPage = () => {
             toast.error("Session missing", { description: "Sign in again to update reviews." });
             return;
         }
+
         setBusyId(review.id);
         try {
             const result = await toggleReviewPublish({
@@ -102,11 +114,13 @@ const ListingReviewsPage = () => {
                 accessToken: tokens.access,
                 reviewId: review.id,
             });
+
             if (!result.ok || !result.body?.review) {
                 const detail = extractErrorDetail(result.body);
                 toast.error("Update failed", { description: detail });
                 return;
             }
+
             const updated = result.body.review;
             setReviews((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
             toast.success("Publish state toggled");
@@ -119,31 +133,32 @@ const ListingReviewsPage = () => {
         }
     };
 
+    const handleFiltersChange = (next: ReviewFiltersState) => {
+        setFilters(next);
+        setPage(1);
+    };
+
+    const handleApplyFilters = () => {
+        setPage(1);
+        setRefreshTick((x) => x + 1);
+    };
+
+    const handleReset = () => {
+        setFilters(defaultReviewFilters);
+        setPage(1);
+        setRefreshTick((x) => x + 1);
+    };
+
     return (
         <div className="space-y-6">
             <ListingReviewsHeader
                 total={total}
                 isLoading={isLoading}
-                searchValue={searchInput}
-                onSearchChange={setSearchInput}
-                onSearchSubmit={() => {
-                    setFilters((prev) => ({ ...prev, search: searchInput.trim() }));
-                    setPage(1);
-                    setRefreshTick((x) => x + 1);
-                }}
-                onRefresh={() => setRefreshTick((x) => x + 1)}
-                onReset={() => {
-                    setFilters(DEFAULT_FILTERS);
-                    setSearchInput("");
-                    setPage(1);
-                    setRefreshTick((x) => x + 1);
-                }}
                 filters={filters}
-                onFiltersChange={setFilters}
-                onApplyFilters={() => {
-                    setPage(1);
-                    setRefreshTick((x) => x + 1);
-                }}
+                onFiltersChange={handleFiltersChange}
+                onApplyFilters={handleApplyFilters}
+                onRefresh={() => setRefreshTick((x) => x + 1)}
+                onReset={handleReset}
             />
 
             <ReviewsTable

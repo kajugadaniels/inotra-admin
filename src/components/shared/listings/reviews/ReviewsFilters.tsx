@@ -48,7 +48,7 @@ type Props = {
     trigger?: ReactElement;
 };
 
-const ReviewsFilters = ({ filters, isLoading, onFiltersChange, onApply, onReset, trigger }: Props) => {
+const ReviewsFilters = ({ filters, isLoading, onFiltersChange, onApply, trigger }: Props) => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [draft, setDraft] = useState<ReviewFiltersState>(filters);
 
@@ -61,7 +61,7 @@ const ReviewsFilters = ({ filters, isLoading, onFiltersChange, onApply, onReset,
         <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
             {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
 
-            <DialogContent className="max-w-xl rounded-3xl border-border/60 bg-background/80 backdrop-blur-xl">
+            <DialogContent className="max-w-xl rounded-3xl border-border/60 bg-background backdrop-blur-xl">
                 <DialogHeader>
                     <DialogTitle>Filter reviews</DialogTitle>
                     <DialogDescription className="text-xs">
@@ -198,7 +198,7 @@ const ReviewsFilters = ({ filters, isLoading, onFiltersChange, onApply, onReset,
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs mr-5"
                         onClick={() => setDialogOpen(false)}
                         disabled={isLoading}
                     >
@@ -218,19 +218,6 @@ const ReviewsFilters = ({ filters, isLoading, onFiltersChange, onApply, onReset,
                     >
                         <Filter className="mr-2 h-4 w-4" />
                         Apply filters
-                    </Button>
-
-                    <Button
-                        type="button"
-                        variant="ghost"
-                        className="h-11 rounded-full text-xs"
-                        onClick={() => {
-                            onReset();
-                            setDialogOpen(false);
-                        }}
-                        disabled={isLoading}
-                    >
-                        Reset
                     </Button>
                 </DialogFooter>
             </DialogContent>
