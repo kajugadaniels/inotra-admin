@@ -23,6 +23,7 @@ export {
     resendAdminPasswordResetOtp,
     confirmAdminPasswordReset,
     updateAdminProfile,
+    extractErrorDetail,
 } from "./auth";
 export { listUsers } from "./users";
 export {
