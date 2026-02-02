@@ -8,7 +8,7 @@ type Args = {
 };
 
 export function getUser({ apiBaseUrl, accessToken, userId }: Args) {
-    const path = `/users/${userId}/`;
+    const path = `/user/${userId}/`;
     return requestJson<AdminUser | BasicMessageResponse>({
         apiBaseUrl,
         path,

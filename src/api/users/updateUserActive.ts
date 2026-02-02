@@ -9,7 +9,7 @@ type Args = {
 };
 
 export function updateUserActive({ apiBaseUrl, accessToken, userId, is_active }: Args) {
-    const path = `/users/${userId}/active/`;
+    const path = `/user/${userId}/active/`;
     const body = typeof is_active === "boolean" ? { is_active } : {};
 
     return requestJson<{ user: AdminUser } | BasicMessageResponse>({
