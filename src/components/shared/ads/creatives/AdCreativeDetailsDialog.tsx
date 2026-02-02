@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { authStorage } from "@/api/auth";
+import { authStorage, extractErrorDetail } from "@/api/auth";
 import { getAdCreative } from "@/api/ads";
 import type { AdCreative } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
@@ -48,7 +48,7 @@ const AdCreativeDetailsDialog = ({
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
-    const loadCreative = async () => {
+    const loadCreative = useCallback(async () => {
         if (!creativeId) return;
         const tokens = authStorage.getTokens();
         if (!tokens?.access) {
@@ -68,7 +68,7 @@ const AdCreativeDetailsDialog = ({
 
             if (!result.ok || !result.body) {
                 toast.error("Unable to load creative details", {
-                    description: result.body?.message ?? "Please try again.",
+                    description: extractErrorDetail(result.body) || "Please try again.",
                 });
                 return;
             }
@@ -84,13 +84,13 @@ const AdCreativeDetailsDialog = ({
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [apiBaseUrl, creativeId]);
 
     useEffect(() => {
         if (open) {
             void loadCreative();
         }
-    }, [open, creativeId]);
+    }, [open, loadCreative]);
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
