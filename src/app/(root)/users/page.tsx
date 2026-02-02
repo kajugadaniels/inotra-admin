@@ -14,6 +14,7 @@ import {
     UsersPagination,
     UsersTable,
 } from "@/components/shared/users";
+import { defaultUsersFilters } from "@/components/shared/users/UsersFilters";
 
 const DEFAULT_FILTERS: UsersFiltersState = {
     search: "",
@@ -85,7 +86,12 @@ const UsersPage = () => {
 
     return (
         <div className="space-y-6">
-            <UsersHeader />
+            <UsersHeader
+                filters={filters}
+                isLoading={isLoading}
+                onFiltersChange={setFilters}
+                onReset={() => setFilters(defaultUsersFilters)}
+            />
 
             <UsersFilters
                 filters={{ ...filters, search: searchInput }}
@@ -93,11 +99,6 @@ const UsersPage = () => {
                 onFiltersChange={(next) => {
                     setFilters(next);
                     setSearchInput(next.search);
-                    setPage(1);
-                }}
-                onReset={() => {
-                    setFilters(DEFAULT_FILTERS);
-                    setSearchInput("");
                     setPage(1);
                 }}
             />
