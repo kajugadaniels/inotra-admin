@@ -29,7 +29,7 @@ type ListingOverviewProps = {
 };
 
 const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
-    const images = listing?.images ?? [];
+    const images = useMemo(() => listing?.images ?? [], [listing?.images]);
     const heroImage = images?.[0]?.image_url ?? null;
     const logoUrl = listing?.logo_url ?? null;
 
@@ -138,7 +138,10 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                                         {/* Landscape container; portrait images will show with dark bars left/right via object-contain */}
                                         <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] overflow-hidden rounded-2xl border border-border/60 bg-black/80">
                                             <Image
-                                                src={image.image_url}
+                                                src={
+                                                    image.image_url ||
+                                                    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                                }
                                                 alt={image.caption || listing?.name || "Listing image"}
                                                 fill
                                                 priority={image.image_url === heroImage}
@@ -192,7 +195,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                                         >
                                             <button
                                                 type="button"
-                                                onClick={() => handleThumbnailClick(image.image_url)}
+                                                onClick={() => handleThumbnailClick(image.image_url || "")}
                                                 className={[
                                                     "relative h-16 w-full overflow-hidden rounded-xl border bg-background/70 transition",
                                                     "hover:shadow-md hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/40",
@@ -206,7 +209,10 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                                                 aria-current={isSelected ? "true" : "false"}
                                             >
                                                 <Image
-                                                    src={image.image_url}
+                                                    src={
+                                                        image.image_url ||
+                                                        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                                    }
                                                     alt={image.caption || "Thumbnail"}
                                                     fill
                                                     sizes="96px"
