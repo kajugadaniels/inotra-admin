@@ -5,7 +5,7 @@ import { toast } from "sonner";
 
 import { authStorage } from "@/api/auth";
 import { extractErrorDetail } from "@/api";
-import { deleteUser, listUsers, updateUserActive } from "@/api/users";
+import { deleteUser, getUser, listUsers, updateUserActive } from "@/api/users";
 import type { AdminUser } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
@@ -97,10 +97,24 @@ const UsersPage = () => {
 
     const tokens = authStorage.getTokens();
 
-    const handleView = (user?: AdminUser) => {
-        if (!user) return;
-        setSelectedUser(user);
-        setDetailsOpen(true);
+    const handleView = async (user?: AdminUser) => {
+        if (!user?.id || !tokens?.access) return;
+        setBusyId(user.id);
+        try {
+            const res = await getUser({ apiBaseUrl, accessToken: tokens.access, userId: user.id });
+            if (!res.ok || !res.body || (res.status && res.status >= 400)) {
+                toast.error("Unable to load user", { description: extractErrorDetail(res.body) });
+                return;
+            }
+            setSelectedUser(res.body as AdminUser);
+            setDetailsOpen(true);
+        } catch (error) {
+            toast.error("Unable to load user", {
+                description: error instanceof Error ? error.message : "Check API connectivity.",
+            });
+        } finally {
+            setBusyId(null);
+        }
     };
 
     const handleToggleActive = async (user: AdminUser) => {
