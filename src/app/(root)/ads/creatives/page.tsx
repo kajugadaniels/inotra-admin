@@ -12,29 +12,21 @@ import {
     AdCreativeDeleteDialog,
     AdCreativeDetailsDialog,
     AdCreativeEditDialog,
-    AdCreativesFilters,
     type AdCreativesFiltersState,
     AdCreativesHeader,
     AdCreativesPagination,
     AdCreativesTable,
 } from "@/components/shared/ads/creatives";
+import { defaultAdCreativesFilters } from "@/components/shared/ads/creatives/AdCreativesFilters";
 
 const PAGE_SIZE = 10;
-
-const DEFAULT_FILTERS: AdCreativesFiltersState = {
-    search: "",
-    sort: "desc",
-    isActive: "all",
-    placement: "all",
-};
 
 const AdCreativesPage = () => {
     const [creatives, setCreatives] = useState<AdCreative[]>([]);
     const [placements, setPlacements] = useState<AdPlacement[]>([]);
-    const [filters, setFilters] = useState<AdCreativesFiltersState>(DEFAULT_FILTERS);
+    const [filters, setFilters] = useState<AdCreativesFiltersState>(defaultAdCreativesFilters);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [searchInput, setSearchInput] = useState("");
 
     const [createOpen, setCreateOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
@@ -43,15 +35,6 @@ const AdCreativesPage = () => {
     const [selectedCreative, setSelectedCreative] = useState<AdCreative | null>(null);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setFilters((prev) => ({ ...prev, search: searchInput }));
-            setPage(1);
-        }, 300);
-
-        return () => clearTimeout(timer);
-    }, [searchInput]);
 
     useEffect(() => {
         const tokens = authStorage.getTokens();
@@ -98,12 +81,12 @@ const AdCreativesPage = () => {
                 !search ||
                 creative.title?.toLowerCase().includes(search) ||
                 creative.placement_key?.toLowerCase().includes(search);
+
             const matchesStatus =
-                filters.isActive === "all" ||
-                creative.is_active === (filters.isActive === "true");
+                filters.isActive === "all" || creative.is_active === (filters.isActive === "true");
+
             const matchesPlacement =
-                filters.placement === "all" ||
-                creative.placement_key === filters.placement;
+                filters.placement === "all" || creative.placement_key === filters.placement;
 
             return matchesSearch && matchesStatus && matchesPlacement;
         });
@@ -116,20 +99,23 @@ const AdCreativesPage = () => {
     }, [creatives, filters]);
 
     const totalPages = Math.max(Math.ceil(filteredCreatives.length / PAGE_SIZE), 1);
+
     const pagedCreatives = useMemo(() => {
         const start = (page - 1) * PAGE_SIZE;
         return filteredCreatives.slice(start, start + PAGE_SIZE);
     }, [filteredCreatives, page]);
 
     useEffect(() => {
-        if (page > totalPages) {
-            setPage(totalPages);
-        }
+        if (page > totalPages) setPage(totalPages);
     }, [page, totalPages]);
 
     const resetFilters = () => {
-        setFilters(DEFAULT_FILTERS);
-        setSearchInput("");
+        setFilters(defaultAdCreativesFilters);
+        setPage(1);
+    };
+
+    const handleFiltersChange = (next: AdCreativesFiltersState) => {
+        setFilters(next);
         setPage(1);
     };
 
@@ -138,6 +124,7 @@ const AdCreativesPage = () => {
             setSelectedCreative(creative);
             return creative;
         }
+
         const tokens = authStorage.getTokens();
         if (!tokens?.access) return creative;
 
@@ -147,6 +134,7 @@ const AdCreativesPage = () => {
                 accessToken: tokens.access,
                 creativeId: creative.id,
             });
+
             if (result.ok && result.body) {
                 setSelectedCreative(result.body);
                 return result.body;
@@ -154,20 +142,24 @@ const AdCreativesPage = () => {
         } catch {
             // ignore and fall back
         }
+
         setSelectedCreative(creative);
         return creative;
     };
 
     const openCreateDialog = () => setCreateOpen(true);
+
     const openEditDialog = async (creative: AdCreative) => {
         const detailed = await loadCreativeDetails(creative);
         setSelectedCreative(detailed);
         setEditOpen(true);
     };
+
     const openDeleteDialog = (creative: AdCreative) => {
         setSelectedCreative(creative);
         setDeleteOpen(true);
     };
+
     const openDetailsDialog = async (creative: AdCreative) => {
         const detailed = await loadCreativeDetails(creative);
         setSelectedCreative(detailed);
@@ -176,17 +168,12 @@ const AdCreativesPage = () => {
 
     return (
         <div className="space-y-6">
-            <AdCreativesHeader isLoading={isLoading} onCreate={openCreateDialog} />
-
-            <AdCreativesFilters
-                filters={{ ...filters, search: searchInput }}
-                placements={placements}
+            <AdCreativesHeader
                 isLoading={isLoading}
-                onFiltersChange={(next) => {
-                    setFilters(next);
-                    setSearchInput(next.search);
-                    setPage(1);
-                }}
+                onCreate={openCreateDialog}
+                filters={filters}
+                placements={placements}
+                onFiltersChange={handleFiltersChange}
                 onReset={resetFilters}
             />
 
