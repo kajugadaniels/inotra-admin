@@ -16,7 +16,7 @@ import {
     type LucideIcon,
     VanIcon,
     UserStar,
-    StarHalfIcon,
+    StarsIcon,
 } from "lucide-react";
 
 export type SidebarLink = {
@@ -96,7 +96,7 @@ export const adminSidebarLinks: SidebarLink[] = [
             {
                 label: "Listings Reviews",
                 href: "/listings/reviews",
-                icon: StarHalfIcon,
+                icon: StarsIcon,
             },
             {
                 label: "Listing Requests",
