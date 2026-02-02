@@ -9,44 +9,33 @@ import type { PlaceCategory, PlaceListItem } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
     ListingDeleteDialog,
-    ListingFilters,
     type ListingFiltersState,
     ListingHeader,
     ListingPagination,
     ListingTable,
 } from "@/components/shared/listings";
-
-const DEFAULT_FILTERS: ListingFiltersState = {
-    search: "",
-    ordering: "created_at",
-    sort: "desc",
-    isActive: "all",
-    isVerified: "all",
-    category: "all",
-};
+import { defaultListingFilters } from "@/components/shared/listings/ListingFilters";
 
 const ListingsPage = () => {
-    const [filters, setFilters] = useState<ListingFiltersState>(DEFAULT_FILTERS);
+    const [filters, setFilters] = useState<ListingFiltersState>(defaultListingFilters);
     const [page, setPage] = useState(1);
     const [results, setResults] = useState<PlaceListItem[]>([]);
     const [count, setCount] = useState(0);
     const [categories, setCategories] = useState<PlaceCategory[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [searchInput, setSearchInput] = useState("");
 
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [selectedListing, setSelectedListing] = useState<PlaceListItem | null>(null);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setFilters((prev) => ({ ...prev, search: searchInput }));
-            setPage(1);
-        }, 350);
+    // Debounce only API search term, not input typing
+    const [debouncedSearch, setDebouncedSearch] = useState(filters.search);
 
+    useEffect(() => {
+        const timer = setTimeout(() => setDebouncedSearch(filters.search), 350);
         return () => clearTimeout(timer);
-    }, [searchInput]);
+    }, [filters.search]);
 
     useEffect(() => {
         const tokens = authStorage.getTokens();
@@ -58,17 +47,17 @@ const ListingsPage = () => {
         }
 
         setIsLoading(true);
+
         Promise.all([
             listPlaces({
                 apiBaseUrl,
                 accessToken: tokens.access,
-                search: filters.search || undefined,
+                search: debouncedSearch || undefined,
                 ordering: filters.ordering,
                 sort: filters.sort,
                 category: filters.category === "all" ? undefined : filters.category,
                 is_active: filters.isActive === "all" ? undefined : filters.isActive === "true",
-                is_verified:
-                    filters.isVerified === "all" ? undefined : filters.isVerified === "true",
+                is_verified: filters.isVerified === "all" ? undefined : filters.isVerified === "true",
                 page,
             }),
             listPlaceCategories({ apiBaseUrl, accessToken: tokens.access }),
@@ -95,13 +84,17 @@ const ListingsPage = () => {
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [apiBaseUrl, filters, page]);
+    }, [apiBaseUrl, debouncedSearch, filters.ordering, filters.sort, filters.category, filters.isActive, filters.isVerified, page]);
 
     const totalPages = Math.max(Math.ceil(count / 10), 1);
 
     const resetFilters = () => {
-        setFilters(DEFAULT_FILTERS);
-        setSearchInput("");
+        setFilters(defaultListingFilters);
+        setPage(1);
+    };
+
+    const handleFiltersChange = (next: ListingFiltersState) => {
+        setFilters(next);
         setPage(1);
     };
 
@@ -112,25 +105,15 @@ const ListingsPage = () => {
 
     return (
         <div className="space-y-6">
-            <ListingHeader isLoading={isLoading} />
-
-            <ListingFilters
-                filters={{ ...filters, search: searchInput }}
+            <ListingHeader
+                filters={filters}
                 categories={categories}
                 isLoading={isLoading}
-                onFiltersChange={(next) => {
-                    setFilters(next);
-                    setSearchInput(next.search);
-                    setPage(1);
-                }}
+                onFiltersChange={handleFiltersChange}
                 onReset={resetFilters}
             />
 
-            <ListingTable
-                listings={results}
-                isLoading={isLoading}
-                onDelete={openDeleteDialog}
-            />
+            <ListingTable listings={results} isLoading={isLoading} onDelete={openDeleteDialog} />
 
             <ListingPagination
                 page={page}
@@ -147,7 +130,6 @@ const ListingsPage = () => {
                     setResults((prev) => prev.filter((item) => item.id !== listingId))
                 }
             />
-
         </div>
     );
 };

@@ -65,7 +65,7 @@ const UsersFilters = ({ filters, isLoading, onFiltersChange, trigger }: UsersFil
         <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
             {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
 
-            <DialogContent className="max-w-xl rounded-3xl border-border/60 bg-background/80 backdrop-blur-xl">
+            <DialogContent className="max-w-xl rounded-3xl border-border/60 bg-background backdrop-blur-xl">
                 <DialogHeader>
                     <DialogTitle>Filter users</DialogTitle>
                     <DialogDescription>

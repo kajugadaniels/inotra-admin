@@ -61,7 +61,7 @@ const ListingFilters = ({ filters, categories, isLoading, onFiltersChange, trigg
         <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
             {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
 
-            <DialogContent className="max-w-xl rounded-3xl border-border/60 bg-background/80 backdrop-blur-xl">
+            <DialogContent className="max-w-xl rounded-3xl border-border/60 bg-background backdrop-blur-xl">
                 <DialogHeader>
                     <DialogTitle>Filter listings</DialogTitle>
                     <DialogDescription className="text-xs">
@@ -202,7 +202,7 @@ const ListingFilters = ({ filters, categories, isLoading, onFiltersChange, trigg
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs mr-5"
                         onClick={() => setDialogOpen(false)}
                     >
                         <XIcon className="mr-2 h-4 w-4" />
