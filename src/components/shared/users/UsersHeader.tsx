@@ -1,21 +1,24 @@
+"use client";
+
 import { Filter, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import UsersFilters, { type UsersFiltersState } from "./UsersFilters";
+import UsersFilters, { defaultUsersFilters, type UsersFiltersState } from "./UsersFilters";
 
 type UsersHeaderProps = {
-    filters: UsersFiltersState;
+    filters?: UsersFiltersState; // <-- allow undefined safely
     isLoading: boolean;
     onFiltersChange: (next: UsersFiltersState) => void;
     onReset: () => void;
 };
 
 const UsersHeader = ({ filters, isLoading, onFiltersChange, onReset }: UsersHeaderProps) => {
+    const safeFilters = filters ?? defaultUsersFilters;
+
     return (
         <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl sm:p-8">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                {/* Title + description */}
                 <div className="min-w-0">
                     <p className="text-xs font-semibold uppercase text-muted-foreground">
                         Users
@@ -28,11 +31,10 @@ const UsersHeader = ({ filters, isLoading, onFiltersChange, onReset }: UsersHead
                     </p>
                 </div>
 
-                {/* Actions + search */}
                 <div className="flex w-full flex-col gap-3 lg:w-auto lg:items-end">
                     <div className="flex flex-wrap items-center gap-2">
                         <UsersFilters
-                            filters={filters}
+                            filters={safeFilters}
                             isLoading={isLoading}
                             onFiltersChange={onFiltersChange}
                             trigger={
@@ -62,9 +64,12 @@ const UsersHeader = ({ filters, isLoading, onFiltersChange, onReset }: UsersHead
                     <div className="relative w-full sm:w-[340px]">
                         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
-                            value={filters.search}
+                            value={safeFilters.search}
                             onChange={(event) =>
-                                onFiltersChange({ ...filters, search: event.target.value })
+                                onFiltersChange({
+                                    ...safeFilters,
+                                    search: event.target.value,
+                                })
                             }
                             placeholder="Search name, email, username, phone"
                             className="admin-field h-11 rounded-2xl border-border/60 bg-background/60 pl-10 text-xs"
