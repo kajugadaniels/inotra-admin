@@ -1,4 +1,4 @@
-import { Eye, Mail, MoreHorizontal, Phone, Power, Trash2, UserCheck, UserX } from "lucide-react";
+import { Eye, Mail, Phone, Trash2, UserCheck, UserX } from "lucide-react";
 
 import type { AdminUser } from "@/api/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
