@@ -1,6 +1,6 @@
 "use client";
 
-import { Filter } from "lucide-react";
+import { Filter, XIcon } from "lucide-react";
 import { useState, type ReactElement } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -53,7 +53,7 @@ const AdPlacementsFilters = ({ filters, isLoading, onFiltersChange, trigger }: A
         <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
             {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
 
-            <DialogContent className="max-w-xl rounded-3xl border-border/60 bg-background/80 backdrop-blur-xl">
+            <DialogContent className="max-w-xl rounded-3xl border-border/60 bg-background backdrop-blur-xl">
                 <DialogHeader>
                     <DialogTitle>Filter placements</DialogTitle>
                     <DialogDescription>
@@ -117,15 +117,16 @@ const AdPlacementsFilters = ({ filters, isLoading, onFiltersChange, trigger }: A
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs mr-5"
                         onClick={() => setDialogOpen(false)}
                         disabled={isLoading}
                     >
+                        <XIcon className="mr-2 h-4 w-4" />
                         Cancel
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs"
                         onClick={() => {
                             onFiltersChange(draftFilters);
                             setDialogOpen(false);
