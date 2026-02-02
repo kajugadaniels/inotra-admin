@@ -5,8 +5,6 @@ import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
@@ -36,10 +34,22 @@ const UserDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading = false, us
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction disabled={isLoading} onClick={onConfirm} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                        Delete user
-                    </AlertDialogAction>
+                    <Button
+                        disabled={isLoading}
+                        onClick={() => onOpenChange(false)}
+                        variant="outline"
+                        className="h-11 rounded-full text-xs"
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        disabled={isLoading}
+                        onClick={onConfirm}
+                        variant="destructive"
+                        className="h-11 rounded-full text-xs"
+                    >
+                        Delete User
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

@@ -1,14 +1,9 @@
-import { Eye, Mail, MoreHorizontal, Phone, UserCheck, UserX } from "lucide-react";
+import { Eye, Mail, MoreHorizontal, Phone, Power, Trash2, UserCheck, UserX } from "lucide-react";
 
 import type { AdminUser } from "@/api/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
 import {
     Table,
     TableBody,
@@ -47,8 +42,9 @@ const UsersTable = ({ users, isLoading, busyId, onView, onToggleActive, onDelete
                         <TableHead>User</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Phone</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Joined</TableHead>
+        <TableHead>Status</TableHead>
+        <TableHead>Joined</TableHead>
+        <TableHead className="w-20 text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -103,48 +99,44 @@ const UsersTable = ({ users, isLoading, busyId, onView, onToggleActive, onDelete
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs text-muted-foreground">
-                                            {active ? (
-                                                <UserCheck className="h-3.5 w-3.5 text-primary" />
-                                            ) : (
-                                                <UserX className="h-3.5 w-3.5 text-muted-foreground" />
-                                            )}
-                                            {active ? "Active" : "Inactive"}
+                                        <div className="flex items-center gap-2">
+                                            <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs text-muted-foreground">
+                                                {active ? (
+                                                    <UserCheck className="h-3.5 w-3.5 text-primary" />
+                                                ) : (
+                                                    <UserX className="h-3.5 w-3.5 text-muted-foreground" />
+                                                )}
+                                                {active ? "Active" : "Inactive"}
+                                            </div>
+                                            <Switch
+                                                checked={!!active}
+                                                disabled={busyId === user.id}
+                                                onCheckedChange={() => onToggleActive?.(user)}
+                                                className="data-[state=checked]:bg-primary"
+                                            />
                                         </div>
                                     </TableCell>
                                     <TableCell className="text-xs text-muted-foreground">
                                         {formatDate(user.date_joined)}
                                     </TableCell>
-                                    <TableCell className="text-right">
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                                                    <MoreHorizontal className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end" className="w-44">
-                                                <DropdownMenuItem
-                                                    onClick={() => onView?.(user)}
-                                                    className="text-sm"
-                                                >
-                                                    <Eye className="mr-2 h-4 w-4" /> View details
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem
-                                                    onClick={() => onToggleActive?.(user)}
-                                                    className="text-sm"
-                                                    disabled={busyId === user.id}
-                                                >
-                                                    {user.is_active ? "Deactivate" : "Activate"}
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem
-                                                    onClick={() => onDelete?.(user)}
-                                                    className="text-sm text-destructive focus:text-destructive"
-                                                    disabled={busyId === user.id}
-                                                >
-                                                    Delete
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
+                                    <TableCell className="text-right space-x-2">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8 rounded-full"
+                                            onClick={() => onView?.(user)}
+                                        >
+                                            <Eye className="h-4 w-4" />
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8 rounded-full text-destructive"
+                                            onClick={() => onDelete?.(user)}
+                                            disabled={busyId === user.id}
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             );

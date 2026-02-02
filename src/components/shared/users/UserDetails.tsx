@@ -25,7 +25,7 @@ const field = (label: string, value?: string | null) => (
     </div>
 );
 
-export const UserDetailsSheet = ({ user, open, onOpenChange }: Props) => {
+export const UserDetails = ({ user, open, onOpenChange }: Props) => {
     const label = user?.name || user?.username || user?.email || "User";
     const initial = label.slice(0, 1).toUpperCase();
     const active = user?.is_active ?? true;
@@ -87,4 +87,4 @@ export const UserDetailsSheet = ({ user, open, onOpenChange }: Props) => {
     );
 };
 
-export default UserDetailsSheet;
+export default UserDetails;

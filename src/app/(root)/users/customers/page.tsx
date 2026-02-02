@@ -16,7 +16,7 @@ import {
     type UsersFiltersState,
 } from "@/components/shared/users";
 import UserDeleteDialog from "@/components/shared/users/UserDeleteDialog";
-import UserDetailsSheet from "@/components/shared/users/UserDetailsSheet";
+import UserDetails from "@/components/shared/users/UserDetails";
 
 const UsersPage = () => {
     const [filters, setFilters] = useState<UsersFiltersState>({ ...defaultUsersFilters });
@@ -187,7 +187,7 @@ const UsersPage = () => {
                 onPageChange={setPage}
             />
 
-            <UserDetailsSheet user={selectedUser} open={detailsOpen} onOpenChange={setDetailsOpen} />
+            <UserDetails user={selectedUser} open={detailsOpen} onOpenChange={setDetailsOpen} />
             <UserDeleteDialog
                 open={deleteOpen}
                 onOpenChange={setDeleteOpen}
