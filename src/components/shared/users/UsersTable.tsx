@@ -1,7 +1,14 @@
-import { Mail, Phone, UserCheck, UserX } from "lucide-react";
+import { Eye, Mail, MoreHorizontal, Phone, UserCheck, UserX } from "lucide-react";
 
 import type { AdminUser } from "@/api/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
     Table,
     TableBody,
@@ -25,9 +32,13 @@ const formatDate = (value?: string | null) => {
 type UsersTableProps = {
     users: AdminUser[];
     isLoading: boolean;
+    busyId?: string | null;
+    onView?: (user: AdminUser) => void;
+    onToggleActive?: (user: AdminUser) => void;
+    onDelete?: (user: AdminUser) => void;
 };
 
-const UsersTable = ({ users, isLoading }: UsersTableProps) => {
+const UsersTable = ({ users, isLoading, busyId, onView, onToggleActive, onDelete }: UsersTableProps) => {
     return (
         <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <Table>
@@ -48,12 +59,12 @@ const UsersTable = ({ users, isLoading }: UsersTableProps) => {
                             </TableCell>
                         </TableRow>
                     ) : users.length === 0 ? (
-                        <TableRow>
-                            <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
-                                No users found for the selected filters.
-                            </TableCell>
-                        </TableRow>
-                    ) : (
+                    <TableRow>
+                        <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
+                            No users found for the selected filters.
+                        </TableCell>
+                    </TableRow>
+                ) : (
                         users.map((user) => {
                             const label = user.name || user.username || user.email || "User";
                             const initial = label.slice(0, 1).toUpperCase();
@@ -103,6 +114,37 @@ const UsersTable = ({ users, isLoading }: UsersTableProps) => {
                                     </TableCell>
                                     <TableCell className="text-xs text-muted-foreground">
                                         {formatDate(user.date_joined)}
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+                                                    <MoreHorizontal className="h-4 w-4" />
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end" className="w-44">
+                                                <DropdownMenuItem
+                                                    onClick={() => onView?.(user)}
+                                                    className="text-sm"
+                                                >
+                                                    <Eye className="mr-2 h-4 w-4" /> View details
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem
+                                                    onClick={() => onToggleActive?.(user)}
+                                                    className="text-sm"
+                                                    disabled={busyId === user.id}
+                                                >
+                                                    {user.is_active ? "Deactivate" : "Activate"}
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem
+                                                    onClick={() => onDelete?.(user)}
+                                                    className="text-sm text-destructive focus:text-destructive"
+                                                    disabled={busyId === user.id}
+                                                >
+                                                    Delete
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
                                     </TableCell>
                                 </TableRow>
                             );
