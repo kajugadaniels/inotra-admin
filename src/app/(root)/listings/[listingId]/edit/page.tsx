@@ -91,9 +91,6 @@ const EditListingPage = () => {
                         openingHours: parseOpeningHours(listing.opening_hours),
                         is_verified: listing.is_verified ?? false,
                         is_active: listing.is_active ?? true,
-                        logo: null,
-                        logoPreview: listing.logo_url ?? null,
-                        removeLogo: false,
                         images: [],
                         removeImageIds: [],
                         services:
@@ -105,7 +102,7 @@ const EditListingPage = () => {
                     setExistingImages(listing.images ?? []);
                 } else {
                     toast.error("Unable to load listing", {
-                        description: placeResult.body?.message ?? "Please try again.",
+                        description: extractErrorDetail(placeResult.body) || "Please try again.",
                     });
                 }
 
