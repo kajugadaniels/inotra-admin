@@ -12,27 +12,20 @@ import {
     AdPlacementDeleteDialog,
     AdPlacementDetailsDialog,
     AdPlacementEditDialog,
-    AdPlacementsFilters,
     type AdPlacementsFiltersState,
     AdPlacementsHeader,
     AdPlacementsPagination,
     AdPlacementsTable,
 } from "@/components/shared/ads/placements";
+import { defaultAdPlacementsFilters } from "@/components/shared/ads/placements/AdPlacementsFilters";
 
 const PAGE_SIZE = 10;
 
-const DEFAULT_FILTERS: AdPlacementsFiltersState = {
-    search: "",
-    sort: "desc",
-    isActive: "all",
-};
-
 const AdPlacementsPage = () => {
     const [placements, setPlacements] = useState<AdPlacement[]>([]);
-    const [filters, setFilters] = useState<AdPlacementsFiltersState>(DEFAULT_FILTERS);
+    const [filters, setFilters] = useState<AdPlacementsFiltersState>(defaultAdPlacementsFilters);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [searchInput, setSearchInput] = useState("");
 
     const [createOpen, setCreateOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
@@ -41,15 +34,6 @@ const AdPlacementsPage = () => {
     const [selectedPlacement, setSelectedPlacement] = useState<AdPlacement | null>(null);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setFilters((prev) => ({ ...prev, search: searchInput }));
-            setPage(1);
-        }, 300);
-
-        return () => clearTimeout(timer);
-    }, [searchInput]);
 
     useEffect(() => {
         const tokens = authStorage.getTokens();
@@ -89,9 +73,9 @@ const AdPlacementsPage = () => {
                 !search ||
                 placement.key?.toLowerCase().includes(search) ||
                 placement.title?.toLowerCase().includes(search);
+
             const matchesStatus =
-                filters.isActive === "all" ||
-                placement.is_active === (filters.isActive === "true");
+                filters.isActive === "all" || placement.is_active === (filters.isActive === "true");
 
             return matchesSearch && matchesStatus;
         });
@@ -104,20 +88,23 @@ const AdPlacementsPage = () => {
     }, [filters, placements]);
 
     const totalPages = Math.max(Math.ceil(filteredPlacements.length / PAGE_SIZE), 1);
+
     const pagedPlacements = useMemo(() => {
         const start = (page - 1) * PAGE_SIZE;
         return filteredPlacements.slice(start, start + PAGE_SIZE);
     }, [filteredPlacements, page]);
 
     useEffect(() => {
-        if (page > totalPages) {
-            setPage(totalPages);
-        }
+        if (page > totalPages) setPage(totalPages);
     }, [page, totalPages]);
 
     const resetFilters = () => {
-        setFilters(DEFAULT_FILTERS);
-        setSearchInput("");
+        setFilters(defaultAdPlacementsFilters);
+        setPage(1);
+    };
+
+    const handleFiltersChange = (next: AdPlacementsFiltersState) => {
+        setFilters(next);
         setPage(1);
     };
 
@@ -137,16 +124,11 @@ const AdPlacementsPage = () => {
 
     return (
         <div className="space-y-6">
-            <AdPlacementsHeader isLoading={isLoading} onCreate={openCreateDialog} />
-
-            <AdPlacementsFilters
-                filters={{ ...filters, search: searchInput }}
+            <AdPlacementsHeader
                 isLoading={isLoading}
-                onFiltersChange={(next) => {
-                    setFilters(next);
-                    setSearchInput(next.search);
-                    setPage(1);
-                }}
+                onCreate={openCreateDialog}
+                filters={filters}
+                onFiltersChange={handleFiltersChange}
                 onReset={resetFilters}
             />
 
