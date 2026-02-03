@@ -207,58 +207,58 @@ const HighlightsPage = () => {
                         <p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground">
                             Browse and manage highlights. Each highlight can include multiple images and videos.
                         </p>
-                        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
-                            <span className="font-semibold text-foreground">{count}</span> total posts
-                        </div>
                     </div>
 
                     <div className="flex items-center gap-2">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
+                            <span className="font-semibold text-foreground">{count}</span> posts
+                        </div>
                         <Button asChild className="h-11 rounded-full text-xs font-semibold">
                             <Link href="/highlights/new">
                                 <PlusIcon className="mr-2 h-4 w-4" />
                                 New highlight
                             </Link>
                         </Button>
-                    </div>
-                </div>
 
-                {/* Tabs */}
-                <div className="mt-6 flex w-full items-center justify-between gap-3">
-                    <div className="inline-flex rounded-full border border-border/60 bg-background/50 p-1">
-                        <button
-                            type="button"
-                            onClick={() => setView("preview")}
-                            className={cn(
-                                "inline-flex h-10 items-center gap-2 rounded-full px-4 text-xs font-semibold transition",
-                                view === "preview"
-                                    ? "bg-foreground text-background"
-                                    : "text-muted-foreground hover:text-foreground"
-                            )}
-                        >
-                            <LayoutGrid className="h-4 w-4" />
-                            Preview
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setView("reels")}
-                            className={cn(
-                                "inline-flex h-10 items-center gap-2 rounded-full px-4 text-xs font-semibold transition",
-                                view === "reels"
-                                    ? "bg-foreground text-background"
-                                    : "text-muted-foreground hover:text-foreground"
-                            )}
-                        >
-                            <PlaySquare className="h-4 w-4" />
-                            Reels
-                        </button>
-                    </div>
+                        {/* Tabs */}
+                        <div className="flex w-full items-center justify-between gap-3">
+                            <div className="inline-flex rounded-full border border-border/60 bg-background/50 p-1">
+                                <button
+                                    type="button"
+                                    onClick={() => setView("preview")}
+                                    className={cn(
+                                        "inline-flex h-10 items-center gap-2 rounded-full px-4 text-xs font-semibold transition",
+                                        view === "preview"
+                                            ? "bg-foreground text-background"
+                                            : "text-muted-foreground hover:text-foreground"
+                                    )}
+                                >
+                                    <LayoutGrid className="h-4 w-4" />
+                                    Preview
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setView("reels")}
+                                    className={cn(
+                                        "inline-flex h-10 items-center gap-2 rounded-full px-4 text-xs font-semibold transition",
+                                        view === "reels"
+                                            ? "bg-foreground text-background"
+                                            : "text-muted-foreground hover:text-foreground"
+                                    )}
+                                >
+                                    <PlaySquare className="h-4 w-4" />
+                                    Reels
+                                </button>
+                            </div>
 
-                    {(isLoading || isLoadingMore) && (
-                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-2 text-xs text-muted-foreground">
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            Loading
+                            {(isLoading || isLoadingMore) && (
+                                <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-2 text-xs text-muted-foreground">
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                    Loading
+                                </div>
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
 
