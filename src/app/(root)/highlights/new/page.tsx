@@ -8,6 +8,8 @@ import { authStorage, extractErrorDetail } from "@/api/auth";
 import { createHighlight } from "@/api/highlights";
 import { getApiBaseUrl } from "@/config/api";
 import HighlightForm, { defaultHighlightForm, type HighlightFormState } from "@/components/highlights/HighlightForm";
+import { Button } from "@/components/ui/button";
+import { ArrowBigLeft } from "lucide-react";
 
 const NewHighlightPage = () => {
     const router = useRouter();
@@ -55,10 +57,25 @@ const NewHighlightPage = () => {
     return (
         <div className="space-y-6">
             <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
-                <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Create highlight</h1>
-                <p className="mt-2 text-sm text-muted-foreground">
-                    Upload one or more images or videos. Caption is optional.
-                </p>
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Create highlight</h1>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                            Upload one or more images or videos. Caption is optional.
+                        </p>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                        <Button
+                            type="button"
+                            className="rounded-full text-xs h-11 font-bold uppercase"
+                            variant="outline"
+                            onClick={() => router.push("/highlights")}
+                        >
+                            <ArrowBigLeft className="mr-2 h-4 w-4" />
+                            Go Back
+                        </Button>
+                    </div>
+                </div>
             </div>
 
             <HighlightForm form={form} setForm={setForm} isSubmitting={submitting} onSubmit={handleSubmit} />

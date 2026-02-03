@@ -99,7 +99,7 @@ const HighlightsPage = () => {
                             Browse and manage highlights. Each highlight can include multiple images and videos.
                         </p>
                     </div>
-                    <Button asChild className="h-11 rounded-full text-xs">
+                    <Button asChild className="h-11 rounded-full text-xs uppercase font-bold">
                         <Link href="/highlights/new">
                             <PlusIcon className="mr-2 h-4 w-4" />
                             New highlight

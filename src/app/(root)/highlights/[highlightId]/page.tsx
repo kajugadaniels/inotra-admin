@@ -73,7 +73,7 @@ const HighlightDetailPage = () => {
                     <div className="flex flex-wrap gap-2">
                         <Button
                             variant="outline"
-                            className="rounded-full text-xs h-11 uppercase"
+                            className="rounded-full text-xs h-11 uppercase font-bold"
                             onClick={() => router.push("/highlights")}
                         >
                             <ArrowBigLeft className="mr-2 h-4 w-4" />

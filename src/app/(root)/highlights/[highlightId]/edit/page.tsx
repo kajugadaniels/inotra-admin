@@ -121,7 +121,7 @@ const EditHighlightPage = () => {
                     <div className="mt-4 flex flex-wrap gap-2">
                         <Button
                             type="button"
-                            className="rounded-full text-xs h-11"
+                            className="rounded-full text-xs h-11 text-bold uppercase"
                             variant="outline"
                             onClick={() => router.push("/highlights")}
                         >
