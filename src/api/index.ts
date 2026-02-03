@@ -27,6 +27,13 @@ export {
 } from "./auth";
 export { listUsers } from "./users/customers";
 export {
+    listCustomerReps,
+    createCustomerRep,
+    activateCustomerRep,
+    toggleCustomerRepActive,
+    deleteCustomerRep,
+} from "./users/customer-reps";
+export {
     listAdPlacements,
     createAdPlacement,
     updateAdPlacement,
