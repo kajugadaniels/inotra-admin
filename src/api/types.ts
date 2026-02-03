@@ -14,6 +14,7 @@ export type AdminUser = {
     preferred_language?: string | null;
     preferred_languages?: string[];
     is_active?: boolean | null;
+    is_current_user?: boolean | null;
     is_premium?: boolean | null;
     country?: string | null;
     city?: string | null;
