@@ -4,3 +4,4 @@ export type { EventFiltersState } from "./EventFilters";
 export { default as EventGrid } from "./EventGrid";
 export { default as EventCard } from "./EventCard";
 export { default as EventPagination } from "./EventPagination";
+export { default as EventDeleteDialog } from "./EventDeleteDialog";
