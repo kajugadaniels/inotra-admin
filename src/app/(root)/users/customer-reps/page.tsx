@@ -171,11 +171,12 @@ const CustomerRepsPage = () => {
                 last_name: data.last_name?.trim() || undefined,
                 phone: data.phone?.trim() || undefined,
             });
-            if (!res.ok || !res.body || !(res.body as any).user) {
+            const body = res.body as { user?: AdminUser } | null;
+            if (!res.ok || !body?.user) {
                 toast.error("Creation failed", { description: extractErrorDetail(res.body) });
                 return;
             }
-            const created = (res.body as any).user as AdminUser;
+            const created = body.user;
             setResults((prev) => [created, ...prev]);
             setCount((c) => c + 1);
             toast.success("Customer rep created", { description: "Verification email sent." });
