@@ -25,7 +25,9 @@ import {
 } from "@/components/customer-reps";
 
 const CustomerRepsPage = () => {
-    const [filters, setFilters] = useState<CustomerRepFiltersState>({ ...defaultCustomerRepFilters });
+    const [filters, setFilters] = useState<CustomerRepFiltersState>({
+        ...defaultCustomerRepFilters,
+    });
     const [page, setPage] = useState(1);
     const [results, setResults] = useState<AdminUser[]>([]);
     const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
@@ -112,7 +114,11 @@ const CustomerRepsPage = () => {
         if (!user.id || !tokens?.access) return;
         setBusyId(user.id);
         try {
-            const res = await toggleCustomerRepActive({ apiBaseUrl, accessToken: tokens.access, userId: user.id });
+            const res = await toggleCustomerRepActive({
+                apiBaseUrl,
+                accessToken: tokens.access,
+                userId: user.id,
+            });
             const body = res.body as { user?: AdminUser } | null;
             if (!res.ok || !body?.user) {
                 toast.error("Update failed", { description: extractErrorDetail(res.body) });
@@ -133,7 +139,11 @@ const CustomerRepsPage = () => {
         if (!selectedUser?.id || !tokens?.access) return;
         setBusyId(selectedUser.id);
         try {
-            const res = await deleteCustomerRep({ apiBaseUrl, accessToken: tokens.access, userId: selectedUser.id });
+            const res = await deleteCustomerRep({
+                apiBaseUrl,
+                accessToken: tokens.access,
+                userId: selectedUser.id,
+            });
             if (!res.ok) {
                 toast.error("Delete failed", { description: extractErrorDetail(res.body) });
                 return;
@@ -154,7 +164,9 @@ const CustomerRepsPage = () => {
     const handleCreate = async (data: CustomerRepForm, close: () => void, reset: () => void) => {
         const tokens = authStorage.getTokens();
         if (!tokens?.access) {
-            toast.error("Session missing", { description: "Sign in again to create customer reps." });
+            toast.error("Session missing", {
+                description: "Sign in again to create customer reps.",
+            });
             return;
         }
         setBusyId("create");
@@ -193,14 +205,15 @@ const CustomerRepsPage = () => {
                 isLoading={isLoading}
                 onFiltersChange={handleFiltersChange}
                 onReset={handleReset}
+                onCreate={() => setCreateOpen(true)}
             />
 
-            <div className="flex justify-end">
-                <CustomerRepCreateDialog
-                    isLoading={busyId === "create"}
-                    onCreate={handleCreate}
-                />
-            </div>
+            <CustomerRepCreateDialog
+                open={createOpen}
+                onOpenChange={setCreateOpen}
+                isLoading={busyId === "create"}
+                onCreate={handleCreate}
+            />
 
             <CustomerRepTable
                 reps={results}
@@ -221,7 +234,12 @@ const CustomerRepsPage = () => {
                 onPageChange={setPage}
             />
 
-            <CustomerRepDetailsSheet user={selectedUser} open={detailsOpen} onOpenChange={setDetailsOpen} />
+            <CustomerRepDetailsSheet
+                user={selectedUser}
+                open={detailsOpen}
+                onOpenChange={setDetailsOpen}
+            />
+
             <CustomerRepDeleteDialog
                 open={deleteOpen}
                 onOpenChange={setDeleteOpen}
