@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "sonner";
-import { Play } from "lucide-react";
+import { ArrowBigLeft, Play } from "lucide-react";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";
 import { getHighlight } from "@/api/highlights";
@@ -61,20 +61,25 @@ const HighlightDetailPage = () => {
     return (
         <div className="space-y-6">
             <div className="flex flex-col gap-3 rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
-                <p className="text-xs font-semibold uppercase text-muted-foreground">Highlight</p>
-                <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Highlight detail</h1>
-                <p className="text-sm text-muted-foreground">{highlight.caption || "No caption"}</p>
-                <div className="text-xs text-muted-foreground">
-                    Created: {new Date(highlight.created_at ?? "").toLocaleString() || "--"}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                    <Button
-                        variant="outline"
-                        className="rounded-full"
-                        onClick={() => router.push("/highlights")}
-                    >
-                        Back to highlights
-                    </Button>
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                        <p className="text-xs font-semibold uppercase text-muted-foreground">Highlight</p>
+                        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Highlight detail</h1>
+                        <p className="text-sm text-muted-foreground">{highlight.caption || "No caption"}</p>
+                        <div className="text-xs text-muted-foreground">
+                            Created: {new Date(highlight.created_at ?? "").toLocaleString() || "--"}
+                        </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                        <Button
+                            variant="outline"
+                            className="rounded-full text-xs h-11 uppercase"
+                            onClick={() => router.push("/highlights")}
+                        >
+                            <ArrowBigLeft className="mr-2 h-4 w-4" />
+                            Go Back
+                        </Button>
+                    </div>
                 </div>
             </div>
 
@@ -124,10 +129,6 @@ const HighlightDetailPage = () => {
                     </div>
                 ))}
             </div>
-
-            <Button variant="outline" className="rounded-full" onClick={() => router.back()}>
-                Back
-            </Button>
         </div>
     );
 };

@@ -140,8 +140,8 @@ const HighlightForm = ({
                                 onClick={goNext}
                                 disabled={!canNext || isSubmitting}
                             >
-                                <ArrowBigRight className="mr-2 h-4 w-4" />
                                 Next
+                                <ArrowBigRight className="mr-2 h-4 w-4" />
                             </Button>
                         ) : (
                             <Button

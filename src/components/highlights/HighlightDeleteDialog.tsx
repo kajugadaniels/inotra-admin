@@ -1,4 +1,4 @@
-import { Loader2, Trash2 } from "lucide-react";
+import { Loader2, Trash2, XIcon } from "lucide-react";
 
 import {
     AlertDialog,
@@ -30,11 +30,17 @@ const HighlightDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading, label
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="gap-2">
-                <Button variant="outline" className="rounded-full" onClick={() => onOpenChange(false)}>
+                <Button
+                    variant="outline"
+                    className="rounded-full text-xs h-11"
+                    onClick={() => onOpenChange(false)}
+                >
+                    <XIcon className="mr-2 h-4 w-4" />
                     Cancel
                 </Button>
                 <Button
-                    className="rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    className="rounded-full text-xs h-11"
+                    variant={"destructive"}
                     onClick={onConfirm}
                     disabled={isLoading}
                 >
