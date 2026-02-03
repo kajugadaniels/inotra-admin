@@ -4,13 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";
-import { listEvents } from "@/api/events";
+import { listEvents, deleteEvent } from "@/api/events";
 import type { EventListItem } from "@/api/events/listEvents";
 import { getApiBaseUrl } from "@/config/api";
 import {
     EventGrid,
     EventHeader,
     EventPagination,
+    EventDeleteDialog,
     defaultEventFilters,
     type EventFiltersState,
 } from "@/components/events";
@@ -22,6 +23,9 @@ const EventsPage = () => {
     const [count, setCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [debouncedSearch, setDebouncedSearch] = useState(filters.search);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState<EventListItem | null>(null);
+    const [busyId, setBusyId] = useState<string | null>(null);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
@@ -83,6 +87,38 @@ const EventsPage = () => {
         page,
     ]);
 
+    const handleDelete = async () => {
+        if (!selectedEvent?.id) return;
+        const tokens = authStorage.getTokens();
+        if (!tokens?.access) {
+            toast.error("Session missing", { description: "Sign in again to delete events." });
+            return;
+        }
+        setBusyId(selectedEvent.id);
+        try {
+            const res = await deleteEvent({
+                apiBaseUrl,
+                accessToken: tokens.access,
+                eventId: selectedEvent.id as string,
+            });
+            if (!res.ok) {
+                toast.error("Delete failed", { description: extractErrorDetail(res.body) });
+                return;
+            }
+            setResults((prev) => prev.filter((e) => e.id !== selectedEvent.id));
+            setCount((c) => Math.max(0, c - 1));
+            toast.success("Event deleted");
+            setDeleteOpen(false);
+            setSelectedEvent(null);
+        } catch (error) {
+            toast.error("Delete failed", {
+                description: error instanceof Error ? error.message : "Check API connectivity.",
+            });
+        } finally {
+            setBusyId(null);
+        }
+    };
+
     const totalPages = Math.max(Math.ceil(count / 10), 1);
 
     const handleFiltersChange = (next: EventFiltersState) => {
@@ -104,13 +140,28 @@ const EventsPage = () => {
                 onReset={handleReset}
             />
 
-            <EventGrid events={results} isLoading={isLoading} />
+            <EventGrid
+                events={results}
+                isLoading={isLoading}
+                onDelete={(ev) => {
+                    setSelectedEvent(ev);
+                    setDeleteOpen(true);
+                }}
+            />
 
             <EventPagination
                 page={page}
                 totalPages={totalPages}
                 isLoading={isLoading}
                 onPageChange={setPage}
+            />
+
+            <EventDeleteDialog
+                open={deleteOpen}
+                onOpenChange={setDeleteOpen}
+                onConfirm={handleDelete}
+                isLoading={busyId === selectedEvent?.id}
+                eventLabel={selectedEvent?.title ?? "event"}
             />
         </div>
     );
