@@ -14,7 +14,6 @@ import type { AdminUser } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
     CustomerRepDeleteDialog,
-    CustomerRepDetailsSheet,
     CustomerRepHeader,
     CustomerRepPagination,
     CustomerRepTable,
@@ -31,7 +30,6 @@ const CustomerRepsPage = () => {
     const [page, setPage] = useState(1);
     const [results, setResults] = useState<AdminUser[]>([]);
     const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
-    const [detailsOpen, setDetailsOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
     const [busyId, setBusyId] = useState<string | null>(null);
@@ -103,12 +101,6 @@ const CustomerRepsPage = () => {
     };
 
     const tokens = authStorage.getTokens();
-
-    const handleView = (user?: AdminUser) => {
-        if (!user) return;
-        setSelectedUser(user);
-        setDetailsOpen(true);
-    };
 
     const handleToggleActive = async (user: AdminUser) => {
         if (!user.id || !tokens?.access) return;
@@ -219,7 +211,6 @@ const CustomerRepsPage = () => {
                 reps={results}
                 isLoading={isLoading}
                 busyId={busyId}
-                onView={handleView}
                 onToggleActive={handleToggleActive}
                 onDelete={(user) => {
                     setSelectedUser(user);
@@ -232,12 +223,6 @@ const CustomerRepsPage = () => {
                 totalPages={totalPages}
                 isLoading={isLoading}
                 onPageChange={setPage}
-            />
-
-            <CustomerRepDetailsSheet
-                user={selectedUser}
-                open={detailsOpen}
-                onOpenChange={setDetailsOpen}
             />
 
             <CustomerRepDeleteDialog
