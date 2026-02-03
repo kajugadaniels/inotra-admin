@@ -14,6 +14,7 @@ import {
 } from "@/components/highlights";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { PlusIcon } from "lucide-react";
 
 const HighlightsPage = () => {
     const [page, setPage] = useState(1);
@@ -99,7 +100,10 @@ const HighlightsPage = () => {
                         </p>
                     </div>
                     <Button asChild className="h-11 rounded-full text-xs">
-                        <Link href="/highlights/new">New highlight</Link>
+                        <Link href="/highlights/new">
+                            <PlusIcon className="mr-2 h-4 w-4" />
+                            New highlight
+                        </Link>
                     </Button>
                 </div>
             </div>

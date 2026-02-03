@@ -17,6 +17,7 @@ import {
     UserStar,
     StarsIcon,
     UserCheck,
+    VideotapeIcon,
 } from "lucide-react";
 
 export type SidebarLink = {
@@ -151,5 +152,10 @@ export const adminSidebarLinks: SidebarLink[] = [
                 icon: Image,
             },
         ],
+    },
+    {
+        label: "Highlights",
+        href: "/highlights",
+        icon: VideotapeIcon,
     },
 ];
