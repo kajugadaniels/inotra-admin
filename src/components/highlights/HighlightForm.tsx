@@ -10,6 +10,8 @@ import HighlightFormSidebar from "./HighlightFormSidebar";
 import HighlightFormContent from "./HighlightFormContent";
 import HighlightFormLinks from "./HighlightFormLinks";
 import HighlightFormMedia from "./HighlightFormMedia";
+import { Button } from "../ui/button";
+import { ArrowBigLeft, ArrowBigRight, UploadCloud } from "lucide-react";
 
 export type HighlightFormState = {
     caption: string;
@@ -40,6 +42,8 @@ type Props = {
     setForm: (next: HighlightFormState) => void;
     isSubmitting: boolean;
     onSubmit: () => Promise<void>;
+    initialPlaceTitle?: string | null;
+    initialEventTitle?: string | null;
     existingMedia?: {
         id?: string;
         caption?: string | null;
@@ -49,11 +53,19 @@ type Props = {
     }[];
 };
 
-const HighlightForm = ({ form, setForm, isSubmitting, onSubmit, existingMedia = [] }: Props) => {
+const HighlightForm = ({
+    form,
+    setForm,
+    isSubmitting,
+    onSubmit,
+    initialPlaceTitle = null,
+    initialEventTitle = null,
+    existingMedia = [],
+}: Props) => {
     const [step, setStep] = useState(0);
     const [mediaMarked, setMediaMarked] = useState<string[]>([]);
-    const [placeLabel, setPlaceLabel] = useState<string | null>(null);
-    const [eventLabel, setEventLabel] = useState<string | null>(null);
+    const [placeLabel, setPlaceLabel] = useState<string | null>(initialPlaceTitle);
+    const [eventLabel, setEventLabel] = useState<string | null>(initialEventTitle);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
     const tokens = authStorage.getTokens();
@@ -111,32 +123,36 @@ const HighlightForm = ({ form, setForm, isSubmitting, onSubmit, existingMedia = 
 
                 <div className="flex justify-end">
                     <div className="flex w-full flex-col gap-3 border-t border-border/60 pt-4 sm:flex-row sm:items-center sm:justify-between">
-                        <button
+                        <Button
                             type="button"
-                            className="rounded-full border border-border/60 px-4 py-2 text-sm font-semibold text-muted-foreground hover:border-primary/60 hover:text-foreground disabled:opacity-60"
+                            className="rounded-full text-xs h-11"
+                            variant={"outline"}
                             onClick={goBack}
                             disabled={step === 0 || isSubmitting}
                         >
+                            <ArrowBigLeft className="mr-2 h-4 w-4" />
                             Back
-                        </button>
+                        </Button>
                         {step < steps.length - 1 ? (
-                            <button
+                            <Button
                                 type="button"
-                                className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 disabled:opacity-60"
+                                className="rounded-full text-xs h-11"
                                 onClick={goNext}
                                 disabled={!canNext || isSubmitting}
                             >
+                                <ArrowBigRight className="mr-2 h-4 w-4" />
                                 Next
-                            </button>
+                            </Button>
                         ) : (
-                            <button
+                            <Button
                                 type="button"
-                                className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 disabled:opacity-60"
+                                className="rounded-full text-xs h-11"
                                 onClick={onSubmit}
                                 disabled={isSubmitting || !canNext}
                             >
+                                <UploadCloud className="mr-2 h-4 w-4" />
                                 {isSubmitting ? "Saving..." : "Save highlight"}
-                            </button>
+                            </Button>
                         )}
                     </div>
                 </div>
