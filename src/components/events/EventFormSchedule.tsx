@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import ListingMap from "@/components/shared/listings/ListingMap";
 import type { EventFormState } from "./EventForm";
 
 type Props = {
@@ -75,6 +76,36 @@ const EventFormSchedule = ({ form, setForm }: Props) => (
                     placeholder="Rwanda"
                 />
             </div>
+        </div>
+
+        <div className="space-y-2">
+            <div className="flex items-center justify-between">
+                <div>
+                    <p className="text-sm font-semibold text-foreground">Event location</p>
+                    <p className="text-xs text-muted-foreground">
+                        Click on the map to set coordinates (Rwanda only).
+                    </p>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+                    <Input
+                        value={form.latitude}
+                        placeholder="Lat"
+                        readOnly
+                        className="h-8 text-xs"
+                    />
+                    <Input
+                        value={form.longitude}
+                        placeholder="Lng"
+                        readOnly
+                        className="h-8 text-xs"
+                    />
+                </div>
+            </div>
+            <ListingMap
+                latitude={form.latitude}
+                longitude={form.longitude}
+                onLocationSelect={(lat, lng) => setForm({ ...form, latitude: lat, longitude: lng })}
+            />
         </div>
     </div>
 );
