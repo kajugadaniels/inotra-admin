@@ -18,6 +18,8 @@ const EditHighlightPage = () => {
 
     const [form, setForm] = useState<HighlightFormState>({ ...defaultHighlightForm });
     const [existingMedia, setExistingMedia] = useState<Highlight["media"]>([]);
+    const [placeTitle, setPlaceTitle] = useState<string | null>(null);
+    const [eventTitle, setEventTitle] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
 
@@ -44,6 +46,8 @@ const EditHighlightPage = () => {
                     videos: [],
                     remove_media_ids: [],
                 });
+                setPlaceTitle((data as Highlight & { place_title?: string | null }).place_title ?? null);
+                setEventTitle((data as Highlight & { event_title?: string | null }).event_title ?? null);
                 setExistingMedia(data.media ?? []);
             })
             .catch((error: Error) => {
@@ -116,6 +120,8 @@ const EditHighlightPage = () => {
                 setForm={setForm}
                 isSubmitting={submitting}
                 onSubmit={handleSubmit}
+                initialPlaceTitle={placeTitle ?? undefined}
+                initialEventTitle={eventTitle ?? undefined}
                 existingMedia={existingMedia}
             />
         </div>
