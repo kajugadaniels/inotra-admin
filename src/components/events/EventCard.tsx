@@ -2,10 +2,16 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CalendarRange, MapPin, ShieldCheck, ShieldX } from "lucide-react";
 
+import Link from "next/link";
 import type { EventListItem } from "@/api/events/listEvents";
+import { Button } from "@/components/ui/button";
+import { Eye, Edit3, Trash2 } from "lucide-react";
 
 type Props = {
     event: EventListItem;
+    onView?: (event: EventListItem) => void;
+    onEdit?: (event: EventListItem) => void;
+    onDelete?: (event: EventListItem) => void;
 };
 
 const formatDateTime = (value?: string | null) => {
@@ -21,7 +27,7 @@ const formatDateTime = (value?: string | null) => {
     }).format(dt);
 };
 
-const EventCard = ({ event }: Props) => {
+const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
     const priceLabel =
         event.price === null || event.price === undefined
             ? "Free"
@@ -92,6 +98,52 @@ const EventCard = ({ event }: Props) => {
                         <MapPin className="h-4 w-4" />
                         <span>{event.venue_name ?? "Venue TBA"}</span>
                     </div>
+                </div>
+            </div>
+
+            <div className="flex items-center justify-between border-t border-border/60 bg-background/60 px-4 py-3">
+                <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                    {event.is_active ? "Active" : "Inactive"}
+                </div>
+                <div className="flex items-center gap-2">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-full"
+                        onClick={() => onView?.(event)}
+                        asChild={!onView && !!event.id}
+                    >
+                        {onView ? (
+                            <Eye className="h-4 w-4" />
+                        ) : (
+                            <Link href={`/events/${event.id ?? ""}`}>
+                                <Eye className="h-4 w-4" />
+                            </Link>
+                        )}
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-full"
+                        onClick={() => onEdit?.(event)}
+                        asChild={!onEdit && !!event.id}
+                    >
+                        {onEdit ? (
+                            <Edit3 className="h-4 w-4" />
+                        ) : (
+                            <Link href={`/events/${event.id ?? ""}/edit`}>
+                                <Edit3 className="h-4 w-4" />
+                            </Link>
+                        )}
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-full text-destructive"
+                        onClick={() => onDelete?.(event)}
+                    >
+                        <Trash2 className="h-4 w-4" />
+                    </Button>
                 </div>
             </div>
         </div>
