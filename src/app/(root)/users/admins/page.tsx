@@ -10,7 +10,6 @@ import { getApiBaseUrl } from "@/config/api";
 import {
     AdminCreateDialog,
     AdminDeleteDialog,
-    AdminFilters,
     AdminHeader,
     AdminPagination,
     AdminTable,
