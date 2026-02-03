@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Play, Trash2, Eye, Edit3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Highlight, HighlightMedia } from "@/api/highlights/listHighlights";
@@ -72,14 +73,27 @@ const HighlightCard = ({ highlight, onView, onDelete, onEdit }: Props) => {
                         >
                             <Eye className="h-4 w-4" />
                         </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-9 w-9 rounded-full"
-                            onClick={() => onEdit?.(highlight)}
-                        >
-                            <Edit3 className="h-4 w-4" />
-                        </Button>
+                        {highlight.id ? (
+                            <Button
+                                asChild
+                                variant="ghost"
+                                size="icon"
+                                className="h-9 w-9 rounded-full"
+                            >
+                                <Link href={`/highlights/${highlight.id}/edit`}>
+                                    <Edit3 className="h-4 w-4" />
+                                </Link>
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-9 w-9 rounded-full"
+                                onClick={() => onEdit?.(highlight)}
+                            >
+                                <Edit3 className="h-4 w-4" />
+                            </Button>
+                        )}
                         <Button
                             variant="ghost"
                             size="icon"
