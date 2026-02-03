@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";
-import { deleteUser, getUser, listUsers, updateUserActive } from "@/api/users/customers";
+import { deleteUser, listUsers, updateUserActive } from "@/api/users/customers";
 import type { AdminUser } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
@@ -15,14 +15,12 @@ import {
     type UsersFiltersState,
 } from "@/components/shared/users";
 import UserDeleteDialog from "@/components/shared/users/UserDeleteDialog";
-import UserDetails from "@/components/shared/users/UserDetails";
 
 const UsersPage = () => {
     const [filters, setFilters] = useState<UsersFiltersState>({ ...defaultUsersFilters });
     const [page, setPage] = useState(1);
     const [results, setResults] = useState<AdminUser[]>([]);
     const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
-    const [detailsOpen, setDetailsOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [busyId, setBusyId] = useState<string | null>(null);
     const [count, setCount] = useState(0);
@@ -96,26 +94,6 @@ const UsersPage = () => {
 
     const tokens = authStorage.getTokens();
 
-    const handleView = async (user?: AdminUser) => {
-        if (!user?.id || !tokens?.access) return;
-        setBusyId(user.id);
-        try {
-            const res = await getUser({ apiBaseUrl, accessToken: tokens.access, userId: user.id });
-            if (!res.ok || !res.body || (res.status && res.status >= 400)) {
-                toast.error("Unable to load user", { description: extractErrorDetail(res.body) });
-                return;
-            }
-            setSelectedUser(res.body as AdminUser);
-            setDetailsOpen(true);
-        } catch (error) {
-            toast.error("Unable to load user", {
-                description: error instanceof Error ? error.message : "Check API connectivity.",
-            });
-        } finally {
-            setBusyId(null);
-        }
-    };
-
     const handleToggleActive = async (user: AdminUser) => {
         if (!user.id || !tokens?.access) return;
         setBusyId(user.id);
@@ -172,7 +150,6 @@ const UsersPage = () => {
                 users={results}
                 isLoading={isLoading}
                 busyId={busyId}
-                onView={handleView}
                 onToggleActive={handleToggleActive}
                 onDelete={(user) => {
                     setSelectedUser(user);
@@ -186,8 +163,6 @@ const UsersPage = () => {
                 isLoading={isLoading}
                 onPageChange={setPage}
             />
-
-            <UserDetails user={selectedUser} open={detailsOpen} onOpenChange={setDetailsOpen} />
             <UserDeleteDialog
                 open={deleteOpen}
                 onOpenChange={setDeleteOpen}
