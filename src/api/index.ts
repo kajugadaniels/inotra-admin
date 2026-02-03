@@ -77,3 +77,10 @@ export {
     updateEvent,
     deleteEvent,
 } from "./events";
+export {
+    listHighlights,
+    getHighlight,
+    createHighlight,
+    updateHighlight,
+    deleteHighlight,
+} from "./highlights";
