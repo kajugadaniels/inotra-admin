@@ -1,4 +1,4 @@
-import { Loader2, Trash2 } from "lucide-react";
+import { Loader2, Trash2, XIcon } from "lucide-react";
 
 import {
     AlertDialog,
@@ -10,6 +10,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "../ui/button";
 
 type Props = {
     open: boolean;
@@ -32,15 +33,22 @@ const AdminDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading, userLabel
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-                <AlertDialogCancel className="rounded-full">Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                    className="rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                <Button
+                    className="rounded-full text-xs h-11"
+                    onClick={() => onOpenChange(false)}
+                >
+                    <XIcon className="mr-2 h-4 w-4" />
+                    Cancel
+                </Button>
+                <Button
+                    className="rounded-full text-xs h-11"
+                    variant="destructive"
                     onClick={onConfirm}
                     disabled={isLoading || disabled}
                 >
                     {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash2 className="mr-2 h-4 w-4" />}
                     Delete admin
-                </AlertDialogAction>
+                </Button>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
