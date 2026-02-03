@@ -34,6 +34,13 @@ export {
     deleteCustomerRep,
 } from "./users/customer-reps";
 export {
+    listAdmins,
+    createAdmin,
+    activateAdmin,
+    toggleAdminActive,
+    deleteAdmin,
+} from "./users/admins";
+export {
     listAdPlacements,
     createAdPlacement,
     updateAdPlacement,
