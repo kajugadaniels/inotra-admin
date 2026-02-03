@@ -187,16 +187,32 @@ const HighlightFormLinks = ({
 
             <div className="flex flex-wrap gap-2">
                 {form.place_id ? (
-                    <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setForm({ ...form, place_id: "" });
+                            setPlaceLabel(null);
+                        }}
+                        className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition hover:bg-primary/15"
+                    >
                         <MapPin className="h-4 w-4" />
                         {placeLabel ?? "Linked place"}
-                    </span>
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-primary/80">Remove</span>
+                    </button>
                 ) : null}
                 {form.event_id ? (
-                    <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setForm({ ...form, event_id: "" });
+                            setEventLabel(null);
+                        }}
+                        className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition hover:bg-primary/15"
+                    >
                         <PlaySquare className="h-4 w-4" />
                         {eventLabel ?? "Linked event"}
-                    </span>
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-primary/80">Remove</span>
+                    </button>
                 ) : null}
             </div>
         </div>
