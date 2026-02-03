@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";
-import { deleteUser, getUser, listUsers, updateUserActive } from "@/api/users";
+import { deleteUser, getUser, listUsers, updateUserActive } from "@/api/users/customers";
 import type { AdminUser } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {

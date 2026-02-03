@@ -1,5 +1,5 @@
-import { requestJson } from "../http";
-import type { AdminUser, BasicMessageResponse } from "../types";
+import { requestJson } from "../../http";
+import type { AdminUser, BasicMessageResponse } from "../../types";
 
 type Args = {
     apiBaseUrl: string;

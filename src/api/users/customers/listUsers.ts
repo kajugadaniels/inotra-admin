@@ -1,5 +1,5 @@
-import { requestJson } from "../http";
-import type { AdminUser, PaginatedResponse } from "../types";
+import { requestJson } from "../../http";
+import type { AdminUser, PaginatedResponse } from "../../types";
 
 type Args = {
     apiBaseUrl: string;

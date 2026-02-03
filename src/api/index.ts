@@ -25,7 +25,7 @@ export {
     updateAdminProfile,
     extractErrorDetail,
 } from "./auth";
-export { listUsers } from "./users";
+export { listUsers } from "./users/customers";
 export {
     listAdPlacements,
     createAdPlacement,
