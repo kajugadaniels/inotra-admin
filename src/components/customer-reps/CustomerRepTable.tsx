@@ -1,4 +1,4 @@
-import { Eye, Mail, Phone, Trash2, UserCheck, UserX } from "lucide-react";
+import { Mail, Phone, Trash2, UserCheck, UserX } from "lucide-react";
 
 import type { AdminUser } from "@/api/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -28,12 +28,11 @@ type Props = {
     reps: AdminUser[];
     isLoading: boolean;
     busyId?: string | null;
-    onView?: (user: AdminUser) => void;
     onToggleActive?: (user: AdminUser) => void;
     onDelete?: (user: AdminUser) => void;
 };
 
-const CustomerRepTable = ({ reps, isLoading, busyId, onView, onToggleActive, onDelete }: Props) => {
+const CustomerRepTable = ({ reps, isLoading, busyId, onToggleActive, onDelete }: Props) => {
     return (
         <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <Table>
@@ -44,7 +43,7 @@ const CustomerRepTable = ({ reps, isLoading, busyId, onView, onToggleActive, onD
                         <TableHead>Phone</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Joined</TableHead>
-                        <TableHead className="w-20 text-right">Actions</TableHead>
+                        <TableHead className="w-16 text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -120,14 +119,6 @@ const CustomerRepTable = ({ reps, isLoading, busyId, onView, onToggleActive, onD
                                         {formatDate(user.date_joined)}
                                     </TableCell>
                                     <TableCell className="text-right space-x-2">
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="h-8 w-8 rounded-full"
-                                            onClick={() => onView?.(user)}
-                                        >
-                                            <Eye className="h-4 w-4" />
-                                        </Button>
                                         <Button
                                             variant="ghost"
                                             size="icon"
