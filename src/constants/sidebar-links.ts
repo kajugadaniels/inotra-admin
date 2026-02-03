@@ -11,12 +11,12 @@ import {
     PartyPopper,
     TicketCheck,
     MessageCircle,
-    UserCog,
     Users,
     type LucideIcon,
     VanIcon,
     UserStar,
     StarsIcon,
+    UserCheck,
 } from "lucide-react";
 
 export type SidebarLink = {
@@ -54,7 +54,7 @@ export const adminSidebarLinks: SidebarLink[] = [
             {
                 label: "Customer Representatives",
                 href: "/users/customer-representatives",
-                icon: UserCog,
+                icon: UserCheck,
             },
         ],
     },
