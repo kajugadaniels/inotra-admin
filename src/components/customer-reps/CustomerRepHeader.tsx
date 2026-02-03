@@ -1,28 +1,30 @@
 "use client";
 
-import { Filter } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import CustomerRepFilters, {
-    defaultCustomerRepFilters,
-    type CustomerRepFiltersState,
-} from "./CustomerRepFilters";
+import CustomerRepFilters, { type CustomerRepFiltersState } from "./CustomerRepFilters";
 
 type Props = {
     filters: CustomerRepFiltersState;
     isLoading: boolean;
     onFiltersChange: (next: CustomerRepFiltersState) => void;
     onReset: () => void;
+    onCreate: () => void;
 };
 
-const CustomerRepHeader = ({ filters, isLoading, onFiltersChange, onReset }: Props) => {
+const CustomerRepHeader = ({
+    filters,
+    isLoading,
+    onFiltersChange,
+    onReset,
+    onCreate,
+}: Props) => {
     return (
         <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="min-w-0">
-                    <p className="text-xs font-semibold uppercase text-muted-foreground">
-                        Users
-                    </p>
+                    <p className="text-xs font-semibold uppercase text-muted-foreground">Users</p>
                     <h1 className="mt-2 text-2xl font-semibold text-foreground sm:text-3xl">
                         Customer representatives
                     </h1>
@@ -33,6 +35,16 @@ const CustomerRepHeader = ({ filters, isLoading, onFiltersChange, onReset }: Pro
 
                 <div className="flex w-full flex-col gap-3 lg:w-auto lg:items-end">
                     <div className="flex flex-wrap items-center gap-2">
+                        <Button
+                            type="button"
+                            className="h-11 rounded-full text-xs"
+                            onClick={onCreate}
+                            disabled={isLoading}
+                        >
+                            <Plus className="mr-2 h-4 w-4" />
+                            New customer rep
+                        </Button>
+
                         <CustomerRepFilters
                             filters={filters}
                             isLoading={isLoading}
