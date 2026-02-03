@@ -53,7 +53,7 @@ export const adminSidebarLinks: SidebarLink[] = [
             },
             {
                 label: "Customer Representatives",
-                href: "/users/customer-representatives",
+                href: "/users/customer-reps",
                 icon: UserCheck,
             },
         ],
