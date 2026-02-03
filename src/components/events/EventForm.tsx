@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, Loader2, UploadCloud } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import EventFormSidebar from "./EventFormSidebar";
@@ -19,6 +19,8 @@ export type EventFormState = {
     address: string;
     city: string;
     country: string;
+    latitude: string;
+    longitude: string;
     price: string;
     discount_price: string;
     is_active: boolean;
@@ -36,6 +38,8 @@ export const defaultEventForm: EventFormState = {
     address: "",
     city: "",
     country: "Rwanda",
+    latitude: "",
+    longitude: "",
     price: "",
     discount_price: "",
     is_active: true,
@@ -85,29 +89,31 @@ const EventForm = ({ form, setForm, onSubmit, isSubmitting }: Props) => {
                     <Button
                         type="button"
                         variant="outline"
-                        className="rounded-full"
+                        className="rounded-full text-xs h-11"
                         onClick={back}
                         disabled={step === 0 || isSubmitting}
                     >
+                        <ArrowBigLeft className="mr-2 h-4 w-4" />
                         Back
                     </Button>
                     {step < steps.length - 1 ? (
                         <Button
                             type="button"
-                            className="rounded-full"
+                            className="rounded-full text-xs h-11"
                             onClick={next}
                             disabled={!canNext || isSubmitting}
                         >
                             Next
+                            <ArrowBigRight className="mr-2 h-4 w-4" />
                         </Button>
                     ) : (
                         <Button
                             type="button"
-                            className="rounded-full"
+                            className="rounded-full text-xs h-11"
                             onClick={onSubmit}
                             disabled={isSubmitting || !form.title.trim()}
                         >
-                            {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                            {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <UploadCloud className="mr-2 h-4 w-4" />}
                             Save event
                         </Button>
                     )}
