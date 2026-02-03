@@ -1,14 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Play, Trash2, Eye, Edit3 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import type { Highlight, HighlightMedia } from "@/api/highlights/listHighlights";
+"use client";
 
-const pickCover = (media?: HighlightMedia[]): HighlightMedia | undefined => {
-    if (!media || media.length === 0) return undefined;
-    const image = media.find((m) => m.media_type === "IMAGE" && m.image_url);
-    return image ?? media[0];
-};
+import Image from "next/image";
+import { Layers, Play, Heart, MessageCircle, Send } from "lucide-react";
+
+import type { Highlight } from "@/api/highlights/listHighlights";
+import { cn } from "@/lib/utils";
+import HighlightActionsMenu from "./HighlightActionsMenu";
+import { formatShortDate, pickCover, getMediaUrl } from "./highlight-utils";
 
 type Props = {
     highlight: Highlight;
@@ -19,89 +17,83 @@ type Props = {
 
 const HighlightCard = ({ highlight, onView, onDelete, onEdit }: Props) => {
     const cover = pickCover(highlight.media);
+    const coverUrl = getMediaUrl(cover);
     const isVideo = cover?.media_type === "VIDEO";
-    const coverUrl = cover?.image_url ?? cover?.video_url ?? "";
+    const mediaCount = highlight.media?.length ?? 0;
 
     return (
-        <div className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-2xl shadow-black/5 transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/10">
-            <div className="relative h-44 w-full bg-muted/40">
-                {coverUrl ? (
-                    <Image
-                        src={coverUrl}
-                        alt="Highlight cover"
-                        fill
-                        className="object-cover"
-                        sizes="(max-width:768px) 100vw, 320px"
-                    />
-                ) : (
-                    <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
-                        No media
-                    </div>
-                )}
-                {isVideo ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                        <div className="grid h-12 w-12 place-items-center rounded-full bg-white/90 text-black shadow-lg">
-                            <Play className="h-5 w-5" />
-                        </div>
-                    </div>
-                ) : null}
-            </div>
+        <div
+            role="button"
+            tabIndex={0}
+            onClick={() => onView?.(highlight)}
+            onKeyDown={(e) => {
+                if (e.key === "Enter") onView?.(highlight);
+            }}
+            className={cn(
+                "group relative aspect-square overflow-hidden rounded-2xl border border-border/50 bg-black shadow-sm",
+                "transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/10"
+            )}
+        >
+            {coverUrl ? (
+                <Image
+                    src={coverUrl}
+                    alt="Highlight cover"
+                    fill
+                    sizes="(max-width:768px) 33vw, 20vw"
+                    className="object-cover"
+                />
+            ) : (
+                <div className="flex h-full items-center justify-center text-xs text-white/70">
+                    No media
+                </div>
+            )}
 
-            <div className="flex flex-1 flex-col gap-3 p-5">
-                <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                        <p className="text-sm font-semibold text-foreground">Highlight</p>
-                        <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
-                            {highlight.caption || "No caption"}
-                        </p>
-                    </div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
-                        {highlight.media?.length ?? 0} media
-                    </div>
+            {/* Top overlays */}
+            <div className="absolute inset-x-0 top-0 flex items-center justify-between p-2">
+                <div className="inline-flex items-center gap-2 rounded-full bg-black/40 px-2.5 py-1 text-[11px] text-white">
+                    {isVideo ? <Play className="h-3.5 w-3.5" /> : null}
+                    {mediaCount > 1 ? (
+                        <span className="inline-flex items-center gap-1">
+                            <Layers className="h-3.5 w-3.5" />
+                            {mediaCount}
+                        </span>
+                    ) : (
+                        <span className="opacity-90">Highlight</span>
+                    )}
                 </div>
 
-                <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-3">
-                    <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-                        {new Date(highlight.created_at ?? "").toLocaleDateString() || "--"}
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-9 w-9 rounded-full"
-                            onClick={() => onView?.(highlight)}
-                        >
-                            <Eye className="h-4 w-4" />
-                        </Button>
-                        {highlight.id ? (
-                            <Button
-                                asChild
-                                variant="ghost"
-                                size="icon"
-                                className="h-9 w-9 rounded-full"
-                            >
-                                <Link href={`/highlights/${highlight.id}/edit`}>
-                                    <Edit3 className="h-4 w-4" />
-                                </Link>
-                            </Button>
-                        ) : (
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-9 w-9 rounded-full"
-                                onClick={() => onEdit?.(highlight)}
-                            >
-                                <Edit3 className="h-4 w-4" />
-                            </Button>
-                        )}
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-9 w-9 rounded-full text-destructive"
-                            onClick={() => onDelete?.(highlight)}
-                        >
-                            <Trash2 className="h-4 w-4" />
-                        </Button>
+                <HighlightActionsMenu
+                    onView={() => onView?.(highlight)}
+                    onEdit={() => onEdit?.(highlight)}
+                    onDelete={() => onDelete?.(highlight)}
+                />
+            </div>
+
+            {/* Bottom gradient info */}
+            <div className="absolute inset-x-0 bottom-0">
+                <div className="h-20 bg-gradient-to-t from-black/75 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-3">
+                    <p className="line-clamp-2 text-xs font-semibold text-white">
+                        {highlight.caption || "No caption"}
+                    </p>
+
+                    <div className="mt-2 flex items-center justify-between text-[11px] text-white/80">
+                        <div className="inline-flex items-center gap-3">
+                            <span className="inline-flex items-center gap-1">
+                                <Heart className="h-3.5 w-3.5" />
+                                {highlight.likes_count ?? 0}
+                            </span>
+                            <span className="inline-flex items-center gap-1">
+                                <MessageCircle className="h-3.5 w-3.5" />
+                                {highlight.comments_count ?? 0}
+                            </span>
+                            <span className="inline-flex items-center gap-1">
+                                <Send className="h-3.5 w-3.5" />
+                                {highlight.shares_count ?? 0}
+                            </span>
+                        </div>
+
+                        <span className="opacity-80">{formatShortDate(highlight.created_at)}</span>
                     </div>
                 </div>
             </div>
