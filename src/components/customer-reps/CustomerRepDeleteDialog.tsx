@@ -1,12 +1,10 @@
 "use client";
 
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, TrashIcon, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
@@ -36,14 +34,23 @@ const CustomerRepDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading = fa
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
+                    <Button
+                        variant="outline"
+                        disabled={isLoading} onClick={() => onOpenChange(false)}
+                        className="rounded-full text-xs h-11"
+                    >
+                        <XIcon className="h-4 w-4" />
+                        Cancel
+                    </Button>
+                    <Button
                         disabled={isLoading}
                         onClick={onConfirm}
-                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        variant="destructive"
+                        className="rounded-full text-xs h-11"
                     >
+                        <TrashIcon className="h-4 w-4" />
                         Delete user
-                    </AlertDialogAction>
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
