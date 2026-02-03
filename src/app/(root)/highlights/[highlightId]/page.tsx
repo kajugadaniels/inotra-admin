@@ -67,6 +67,15 @@ const HighlightDetailPage = () => {
                 <div className="text-xs text-muted-foreground">
                     Created: {new Date(highlight.created_at ?? "").toLocaleString() || "--"}
                 </div>
+                <div className="flex flex-wrap gap-2">
+                    <Button
+                        variant="outline"
+                        className="rounded-full"
+                        onClick={() => router.push("/highlights")}
+                    >
+                        Back to highlights
+                    </Button>
+                </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
