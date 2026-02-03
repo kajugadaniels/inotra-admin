@@ -69,9 +69,9 @@ const EditHighlightPage = () => {
         setSubmitting(true);
         try {
             const body = new FormData();
-            if (form.caption) body.append("caption", form.caption);
-            if (form.place_id) body.append("place_id", form.place_id);
-            if (form.event_id) body.append("event_id", form.event_id);
+            if (form.caption !== undefined) body.append("caption", form.caption ?? "");
+            body.append("place_id", form.place_id ?? "");
+            body.append("event_id", form.event_id ?? "");
             form.images.forEach((file) => body.append("images", file));
             form.videos.forEach((file) => body.append("videos", file));
             form.remove_media_ids.forEach((id) => body.append("remove_media_ids", id));
