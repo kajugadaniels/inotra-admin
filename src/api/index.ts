@@ -70,3 +70,10 @@ export {
     listReviewReports,
     updateReviewReportStatus,
 } from "./listings/reviews";
+export {
+    listEvents,
+    getEvent,
+    createEvent,
+    updateEvent,
+    deleteEvent,
+} from "./events";
