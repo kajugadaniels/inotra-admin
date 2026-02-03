@@ -113,6 +113,15 @@ const EditHighlightPage = () => {
                 <p className="mt-2 text-sm text-muted-foreground">
                     Update caption, link to place or event, and manage media.
                 </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                    <button
+                        type="button"
+                        className="rounded-full border border-border/60 px-4 py-2 text-xs font-semibold text-muted-foreground hover:border-primary/60 hover:text-foreground"
+                        onClick={() => router.push("/highlights")}
+                    >
+                        Back to highlights
+                    </button>
+                </div>
             </div>
 
             <HighlightForm
