@@ -42,7 +42,7 @@ const NewHighlightPage = () => {
                 return;
             }
             toast.success("Highlight created");
-            router.replace("/highlights");
+            router.push("/highlights");
         } catch (error) {
             toast.error("Creation failed", {
                 description: error instanceof Error ? error.message : "Check API connectivity.",
