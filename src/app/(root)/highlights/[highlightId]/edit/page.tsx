@@ -88,7 +88,7 @@ const EditHighlightPage = () => {
                 return;
             }
             toast.success("Highlight updated");
-            router.replace("/highlights");
+            router.push("/highlights");
         } catch (error) {
             toast.error("Update failed", {
                 description: error instanceof Error ? error.message : "Check API connectivity.",
