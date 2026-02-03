@@ -5,8 +5,6 @@ import { toast } from "sonner";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";
 import {
-    activateCustomerRep,
-    createCustomerRep,
     deleteCustomerRep,
     listCustomerReps,
     toggleCustomerRepActive,
@@ -14,17 +12,17 @@ import {
 import type { AdminUser } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import {
-    UsersHeader,
-    UsersPagination,
-    UsersTable,
-    defaultUsersFilters,
-    type UsersFiltersState,
-} from "@/components/shared/users";
-import UserDeleteDialog from "@/components/shared/users/UserDeleteDialog";
-import UserDetailsSheet from "@/components/shared/users/UserDetailsSheet";
+    CustomerRepDeleteDialog,
+    CustomerRepDetailsSheet,
+    CustomerRepHeader,
+    CustomerRepPagination,
+    CustomerRepTable,
+    defaultCustomerRepFilters,
+    type CustomerRepFiltersState,
+} from "@/components/customer-reps";
 
 const CustomerRepsPage = () => {
-    const [filters, setFilters] = useState<UsersFiltersState>({ ...defaultUsersFilters });
+    const [filters, setFilters] = useState<CustomerRepFiltersState>({ ...defaultCustomerRepFilters });
     const [page, setPage] = useState(1);
     const [results, setResults] = useState<AdminUser[]>([]);
     const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
@@ -33,7 +31,7 @@ const CustomerRepsPage = () => {
     const [busyId, setBusyId] = useState<string | null>(null);
     const [count, setCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
-    const [debouncedSearch, setDebouncedSearch] = useState(defaultUsersFilters.search);
+    const [debouncedSearch, setDebouncedSearch] = useState(defaultCustomerRepFilters.search);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
@@ -88,13 +86,13 @@ const CustomerRepsPage = () => {
 
     const totalPages = Math.max(Math.ceil(count / 10), 1);
 
-    const handleFiltersChange = (next: UsersFiltersState) => {
+    const handleFiltersChange = (next: CustomerRepFiltersState) => {
         setFilters(next);
         setPage(1);
     };
 
     const handleReset = () => {
-        setFilters({ ...defaultUsersFilters });
+        setFilters({ ...defaultCustomerRepFilters });
         setPage(1);
     };
 
@@ -151,17 +149,15 @@ const CustomerRepsPage = () => {
 
     return (
         <div className="space-y-6">
-            <UsersHeader
+            <CustomerRepHeader
                 filters={filters}
                 isLoading={isLoading}
                 onFiltersChange={handleFiltersChange}
                 onReset={handleReset}
-                title="Customer representatives"
-                description="Manage customer support representatives and their access."
             />
 
-            <UsersTable
-                users={results}
+            <CustomerRepTable
+                reps={results}
                 isLoading={isLoading}
                 busyId={busyId}
                 onView={handleView}
@@ -172,15 +168,15 @@ const CustomerRepsPage = () => {
                 }}
             />
 
-            <UsersPagination
+            <CustomerRepPagination
                 page={page}
                 totalPages={totalPages}
                 isLoading={isLoading}
                 onPageChange={setPage}
             />
 
-            <UserDetailsSheet user={selectedUser} open={detailsOpen} onOpenChange={setDetailsOpen} />
-            <UserDeleteDialog
+            <CustomerRepDetailsSheet user={selectedUser} open={detailsOpen} onOpenChange={setDetailsOpen} />
+            <CustomerRepDeleteDialog
                 open={deleteOpen}
                 onOpenChange={setDeleteOpen}
                 onConfirm={handleDelete}
