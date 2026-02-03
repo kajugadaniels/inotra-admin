@@ -1,6 +1,7 @@
 "use client";
 
-import { Filter } from "lucide-react";
+import Link from "next/link";
+import { Filter, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import EventFilters, { type EventFiltersState } from "./EventFilters";
@@ -26,6 +27,18 @@ const EventHeader = ({ filters, isLoading, onFiltersChange, onReset }: Props) =>
 
                 <div className="flex w-full flex-col gap-3 lg:w-auto lg:items-end">
                     <div className="flex flex-wrap items-center gap-2">
+                        <Button
+                            type="button"
+                            className="h-11 rounded-full text-xs"
+                            asChild
+                            disabled={isLoading}
+                        >
+                            <Link href="/events/new">
+                                <Plus className="mr-2 h-4 w-4" />
+                                New event
+                            </Link>
+                        </Button>
+
                         <EventFilters
                             filters={filters}
                             isLoading={isLoading}
