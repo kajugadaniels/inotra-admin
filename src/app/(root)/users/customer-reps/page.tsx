@@ -5,6 +5,7 @@ import { toast } from "sonner";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";
 import {
+    createCustomerRep,
     deleteCustomerRep,
     listCustomerReps,
     toggleCustomerRepActive,
@@ -18,6 +19,8 @@ import {
     CustomerRepPagination,
     CustomerRepTable,
     defaultCustomerRepFilters,
+    CustomerRepCreateDialog,
+    type CustomerRepForm,
     type CustomerRepFiltersState,
 } from "@/components/customer-reps";
 
@@ -28,6 +31,7 @@ const CustomerRepsPage = () => {
     const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
     const [detailsOpen, setDetailsOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
+    const [createOpen, setCreateOpen] = useState(false);
     const [busyId, setBusyId] = useState<string | null>(null);
     const [count, setCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -147,6 +151,41 @@ const CustomerRepsPage = () => {
         }
     };
 
+    const handleCreate = async (data: CustomerRepForm, close: () => void, reset: () => void) => {
+        const tokens = authStorage.getTokens();
+        if (!tokens?.access) {
+            toast.error("Session missing", { description: "Sign in again to create customer reps." });
+            return;
+        }
+        setBusyId("create");
+        try {
+            const res = await createCustomerRep({
+                apiBaseUrl,
+                accessToken: tokens.access,
+                email: data.email.trim(),
+                first_name: data.first_name?.trim() || undefined,
+                last_name: data.last_name?.trim() || undefined,
+                phone: data.phone?.trim() || undefined,
+            });
+            if (!res.ok || !res.body || !(res.body as any).user) {
+                toast.error("Creation failed", { description: extractErrorDetail(res.body) });
+                return;
+            }
+            const created = (res.body as any).user as AdminUser;
+            setResults((prev) => [created, ...prev]);
+            setCount((c) => c + 1);
+            toast.success("Customer rep created", { description: "Verification email sent." });
+            close();
+            reset();
+        } catch (error) {
+            toast.error("Creation failed", {
+                description: error instanceof Error ? error.message : "Check API connectivity.",
+            });
+        } finally {
+            setBusyId(null);
+        }
+    };
+
     return (
         <div className="space-y-6">
             <CustomerRepHeader
@@ -155,6 +194,13 @@ const CustomerRepsPage = () => {
                 onFiltersChange={handleFiltersChange}
                 onReset={handleReset}
             />
+
+            <div className="flex justify-end">
+                <CustomerRepCreateDialog
+                    isLoading={busyId === "create"}
+                    onCreate={handleCreate}
+                />
+            </div>
 
             <CustomerRepTable
                 reps={results}
