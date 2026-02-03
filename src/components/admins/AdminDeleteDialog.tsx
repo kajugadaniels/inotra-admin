@@ -2,8 +2,6 @@ import { Loader2, Trash2, XIcon } from "lucide-react";
 
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
