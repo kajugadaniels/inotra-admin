@@ -37,7 +37,7 @@ const CustomerRepDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading = fa
                     <Button
                         variant="outline"
                         disabled={isLoading} onClick={() => onOpenChange(false)}
-                        className="rounded-full text-xs h-11"
+                        className="rounded-full text-xs h-11 uppercase font-bold"
                     >
                         <XIcon className="h-4 w-4" />
                         Cancel
@@ -46,7 +46,7 @@ const CustomerRepDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading = fa
                         disabled={isLoading}
                         onClick={onConfirm}
                         variant="destructive"
-                        className="rounded-full text-xs h-11"
+                        className="rounded-full text-xs h-11 uppercase font-bold"
                     >
                         <TrashIcon className="h-4 w-4" />
                         Delete user
