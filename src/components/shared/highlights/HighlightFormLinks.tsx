@@ -6,22 +6,27 @@ import { MapPin, PlaySquare } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { HighlightFormState } from "./HighlightForm";
-import type { PlaceListItem } from "@/api/types";
+import type { ApiResponse } from "@/api/http";
+import type { PaginatedResponse, PlaceListItem } from "@/api/types";
 import type { EventListItem } from "@/api/events/listEvents";
 
 type Props = {
     form: HighlightFormState;
-    setForm: (next: HighlightFormState) => void;
+    setForm: React.Dispatch<React.SetStateAction<HighlightFormState>>;
     apiBaseUrl: string;
     accessToken?: string | null;
-    listPlaces: (args: { apiBaseUrl: string; accessToken: string; search?: string; page?: number }) => Promise<{
-        ok: boolean;
-        body?: { results?: PlaceListItem[] };
-    }>;
-    listEvents: (args: { apiBaseUrl: string; accessToken: string; search?: string; page?: number }) => Promise<{
-        ok: boolean;
-        body?: { results?: EventListItem[] };
-    }>;
+    listPlaces: (args: {
+        apiBaseUrl: string;
+        accessToken: string;
+        search?: string;
+        page?: number;
+    }) => Promise<ApiResponse<PaginatedResponse<PlaceListItem>>>;
+    listEvents: (args: {
+        apiBaseUrl: string;
+        accessToken: string;
+        search?: string;
+        page?: number;
+    }) => Promise<ApiResponse<PaginatedResponse<EventListItem>>>;
     placeLabel: string | null;
     setPlaceLabel: (label: string | null) => void;
     eventLabel: string | null;
