@@ -107,7 +107,7 @@ const AdminCreateDialog = ({ open, onOpenChange, isLoading, onCreate }: Props) =
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={close}
                         disabled={isLoading}
                     >
@@ -117,7 +117,7 @@ const AdminCreateDialog = ({ open, onOpenChange, isLoading, onCreate }: Props) =
 
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         disabled={isLoading || !form.email.trim()}
                         onClick={() => onCreate(form, close, reset)}
                     >

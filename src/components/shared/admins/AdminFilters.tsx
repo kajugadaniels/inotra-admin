@@ -159,7 +159,7 @@ const AdminFilters = ({ filters, isLoading, onFiltersChange, trigger }: Props) =
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={() => setDialogOpen(false)}
                     >
                         <XIcon className="mr-2 h-4 w-4" />
@@ -167,7 +167,7 @@ const AdminFilters = ({ filters, isLoading, onFiltersChange, trigger }: Props) =
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={() => {
                             onFiltersChange(draftFilters);
                             setDialogOpen(false);

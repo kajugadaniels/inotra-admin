@@ -31,7 +31,7 @@ const AdminHeader = ({ filters, isLoading, onFiltersChange, onReset, onCreate }:
                     <div className="flex flex-wrap items-center gap-2">
                         <Button
                             type="button"
-                            className="h-11 rounded-full text-xs"
+                            className="h-11 rounded-full text-xs uppercase font-bold"
                             onClick={onCreate}
                             disabled={isLoading}
                         >
