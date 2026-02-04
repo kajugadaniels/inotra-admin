@@ -5,7 +5,7 @@ import type { HighlightFormState } from "./HighlightForm";
 
 type Props = {
     form: HighlightFormState;
-    setForm: (next: HighlightFormState) => void;
+    setForm: React.Dispatch<React.SetStateAction<HighlightFormState>>;
 };
 
 const HighlightFormContent = ({ form, setForm }: Props) => {
