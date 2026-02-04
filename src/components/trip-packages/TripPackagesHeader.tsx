@@ -1,6 +1,7 @@
 "use client";
 
-import { Filter, Search } from "lucide-react";
+import Link from "next/link";
+import { Filter, Plus, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,6 +33,18 @@ const TripPackagesHeader = ({ filters, count, isLoading, onFiltersChange, onRese
 
                 <div className="flex w-full flex-col gap-3 lg:w-auto lg:items-end">
                     <div className="flex flex-wrap items-center gap-2">
+                        <Button
+                            asChild
+                            type="button"
+                            className="h-11 rounded-full text-xs"
+                            disabled={isLoading}
+                        >
+                            <Link href="/trip-packages/new">
+                                <Plus className="mr-2 h-4 w-4" />
+                                New package
+                            </Link>
+                        </Button>
+
                         <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
                             <span className="font-semibold text-foreground">{count}</span> packages
                         </div>
@@ -83,4 +96,3 @@ const TripPackagesHeader = ({ filters, count, isLoading, onFiltersChange, onRese
 };
 
 export default TripPackagesHeader;
-
