@@ -116,7 +116,7 @@ const AdminProfileDetailsForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-11 rounded-full text-xs"
+                    className="h-11 rounded-full text-xs uppercase font-bold"
                 >
                     <span className="inline-flex items-center gap-2 text-xs">
                         {isBusy ? (

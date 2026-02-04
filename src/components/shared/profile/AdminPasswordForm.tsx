@@ -102,9 +102,8 @@ const AdminPasswordForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-11 rounded-full text-xs"
+                    className="h-11 rounded-full text-xs uppercase font-bold"
                 >
-                    <UploadCloudIcon className="mr-2 h-4 w-4" />
                     <span className="inline-flex items-center gap-2 text-xs">
                         {isBusy ? (
                             <>
@@ -112,7 +111,10 @@ const AdminPasswordForm = ({
                                 Updating...
                             </>
                         ) : (
-                            <>Update password</>
+                            <>
+                                <UploadCloudIcon className="mr-2 h-4 w-4" />
+                                Update password
+                            </>
                         )}
                     </span>
                 </Button>
