@@ -1,14 +1,21 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";
-import { listPackages, type PackageListItem } from "@/api/packages";
+import {
+    deletePackage,
+    listPackages,
+    togglePackageActive,
+    type PackageListItem,
+} from "@/api/packages";
 import { getApiBaseUrl } from "@/config/api";
 import TripPackagesHeader from "@/components/trip-packages/TripPackagesHeader";
-import TripPackagesGrid from "@/components/trip-packages/TripPackagesGrid";
 import type { TripPackagesFiltersState } from "@/components/trip-packages/TripPackagesFilters";
+import TripPackageDeleteDialog from "@/components/trip-packages/TripPackageDeleteDialog";
+import TripPackagesTable from "@/components/trip-packages/TripPackagesTable";
 
 const PAGE_SIZE = 10;
 
@@ -24,6 +31,7 @@ const uniqById = (prev: PackageListItem[], next: PackageListItem[]) => {
 };
 
 const TripPackagesPage = () => {
+    const router = useRouter();
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
     const [filters, setFilters] = useState<TripPackagesFiltersState>({
@@ -44,6 +52,9 @@ const TripPackagesPage = () => {
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
+    const [selected, setSelected] = useState<PackageListItem | null>(null);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [busyId, setBusyId] = useState<string | null>(null);
 
     useEffect(() => {
         const t = setTimeout(() => setDebouncedSearch(filters.search.trim()), 350);
@@ -150,6 +161,75 @@ const TripPackagesPage = () => {
         });
     };
 
+    const handleToggleActive = useCallback(
+        async (pkg: PackageListItem) => {
+            const packageId = pkg.id;
+            if (!packageId) return;
+            const tokens = authStorage.getTokens();
+            if (!tokens?.access) {
+                toast.error("Session missing", { description: "Sign in again to update packages." });
+                return;
+            }
+            setBusyId(packageId);
+            try {
+                const res = await togglePackageActive({
+                    apiBaseUrl,
+                    accessToken: tokens.access,
+                    packageId,
+                });
+                const payload = res.body as { package?: PackageListItem; message?: string } | null;
+                if (!res.ok || !payload?.package) {
+                    toast.error("Update failed", { description: extractErrorDetail(res.body) });
+                    return;
+                }
+                setItems((prev) =>
+                    prev.map((item) => (item.id === packageId ? { ...item, ...payload.package } : item))
+                );
+                toast.success("Package updated", { description: payload.message ?? "Status updated." });
+            } catch (error) {
+                toast.error("Update failed", {
+                    description: error instanceof Error ? error.message : "Check API connectivity.",
+                });
+            } finally {
+                setBusyId(null);
+            }
+        },
+        [apiBaseUrl]
+    );
+
+    const handleDelete = useCallback(async () => {
+        const packageId = selected?.id;
+        if (!packageId) return;
+        const tokens = authStorage.getTokens();
+        if (!tokens?.access) {
+            toast.error("Session missing", { description: "Sign in again to delete packages." });
+            return;
+        }
+        setBusyId(packageId);
+        try {
+            const res = await deletePackage({
+                apiBaseUrl,
+                accessToken: tokens.access,
+                packageId,
+            });
+            if (!res.ok) {
+                toast.error("Delete failed", { description: extractErrorDetail(res.body) });
+                return;
+            }
+            setItems((prev) => prev.filter((item) => item.id !== packageId));
+            setCount((prev) => Math.max(prev - 1, 0));
+            setDeleteOpen(false);
+            setSelected(null);
+            toast.success("Package deleted");
+        } catch (error) {
+            toast.error("Delete failed", {
+                description: error instanceof Error ? error.message : "Check API connectivity.",
+            });
+        } finally {
+            setBusyId(null);
+        }
+    }, [apiBaseUrl, selected?.id]);
+
     return (
         <div className="space-y-6">
             <TripPackagesHeader
@@ -162,10 +242,23 @@ const TripPackagesPage = () => {
                 onReset={onReset}
             />
 
-            <TripPackagesGrid
+            <TripPackagesTable
                 packages={items}
                 isLoading={isLoading}
-                isLoadingMore={isLoadingMore}
+                busyId={busyId}
+                onView={(pkg) => {
+                    if (!pkg.id) return;
+                    router.push(`/trip-packages/${pkg.id}`);
+                }}
+                onEdit={(pkg) => {
+                    if (!pkg.id) return;
+                    router.push(`/trip-packages/${pkg.id}/edit`);
+                }}
+                onDelete={(pkg) => {
+                    setSelected(pkg);
+                    setDeleteOpen(true);
+                }}
+                onToggleActive={handleToggleActive}
             />
 
             {/* sentinel */}
@@ -176,9 +269,16 @@ const TripPackagesPage = () => {
                     You&apos;re all caught up.
                 </div>
             ) : null}
+
+            <TripPackageDeleteDialog
+                open={deleteOpen}
+                onOpenChange={setDeleteOpen}
+                onConfirm={handleDelete}
+                isLoading={busyId === selected?.id}
+                label={selected?.title ?? "package"}
+            />
         </div>
     );
 };
 
 export default TripPackagesPage;
-
