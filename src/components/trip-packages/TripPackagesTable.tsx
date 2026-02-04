@@ -73,12 +73,12 @@ const TripPackagesTable = ({
                                 <TableRow key={pkg.id ?? label}>
                                     <TableCell>
                                         <div className="flex items-center gap-3">
-                                            <div className="relative h-10 w-14 overflow-hidden rounded-2xl border border-border/60 bg-muted/40">
+                                            <div className="relative h-10 w-10 overflow-hidden rounded-full border border-border/60 bg-muted/40">
                                                 {pkg.cover_url ? (
                                                     <Image
                                                         src={pkg.cover_url}
                                                         alt={label}
-                                                        width={56}
+                                                        width={40}
                                                         height={40}
                                                         className="h-full w-full object-cover"
                                                     />
@@ -91,9 +91,6 @@ const TripPackagesTable = ({
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs font-semibold text-foreground">
                                                     {label}
-                                                </p>
-                                                <p className="text-xs text-muted-foreground">
-                                                    ID: {pkg.id ? pkg.id.slice(0, 8) : "--"}
                                                 </p>
                                             </div>
                                         </div>

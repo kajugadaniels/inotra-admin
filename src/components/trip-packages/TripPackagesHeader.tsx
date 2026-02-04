@@ -33,10 +33,13 @@ const TripPackagesHeader = ({ filters, count, isLoading, onFiltersChange, onRese
 
                 <div className="flex w-full flex-col gap-3 lg:w-auto lg:items-end">
                     <div className="flex flex-wrap items-center gap-2">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
+                            <span className="font-semibold text-foreground">{count}</span> packages
+                        </div>
                         <Button
                             asChild
                             type="button"
-                            className="h-11 rounded-full text-xs"
+                            className="h-11 rounded-full text-xs uppercase font-bold"
                             disabled={isLoading}
                         >
                             <Link href="/trip-packages/new">
@@ -44,10 +47,6 @@ const TripPackagesHeader = ({ filters, count, isLoading, onFiltersChange, onRese
                                 New package
                             </Link>
                         </Button>
-
-                        <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
-                            <span className="font-semibold text-foreground">{count}</span> packages
-                        </div>
 
                         <TripPackagesFilters
                             filters={filters}
@@ -57,7 +56,7 @@ const TripPackagesHeader = ({ filters, count, isLoading, onFiltersChange, onRese
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="h-11 rounded-full border-border/60 bg-background/70 text-xs shadow-sm hover:bg-background"
+                                    className="h-11 rounded-full text-xs uppercase font-bold"
                                     disabled={isLoading}
                                 >
                                     <Filter className="mr-2 h-4 w-4" />

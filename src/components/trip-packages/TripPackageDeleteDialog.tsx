@@ -2,14 +2,14 @@
 
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "../ui/button";
+import { Trash2Icon, XIcon } from "lucide-react";
 
 type Props = {
     open: boolean;
@@ -37,10 +37,24 @@ const TripPackageDeleteDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction disabled={isLoading} onClick={onConfirm}>
+                    <Button
+                        disabled={isLoading}
+                        onClick={() => onOpenChange(false)}
+                        variant="outline"
+                        className="rounded-full text-xs h-11 uppercase font-bold"
+                    >
+                        <XIcon className="mr-2 h-4 w-4" />
+                        Cancel
+                    </Button>
+                    <Button
+                        disabled={isLoading}
+                        onClick={onConfirm}
+                        className="rounded-full text-xs h-11 uppercase font-bold"
+                        variant="destructive"
+                    >
+                        <Trash2Icon className="mr-2 h-4 w-4" />
                         {isLoading ? "Deleting..." : "Delete"}
-                    </AlertDialogAction>
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
