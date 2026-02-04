@@ -85,11 +85,21 @@ const AdPlacementDeleteDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting} className="text-xs rounded-full h-11">
+                    <Button
+                        variant="outline"
+                        onClick={() => onOpenChange(false)}
+                        disabled={isSubmitting}
+                        className="text-xs rounded-full h-11 uppercase font-bold"
+                    >
                         <XIcon className="mr-2 h-4 w-4" />
                         Cancel
                     </Button>
-                    <Button variant="destructive" onClick={handleDelete} disabled={isSubmitting} className="text-xs rounded-full h-11">
+                    <Button
+                        variant="destructive"
+                        onClick={handleDelete}
+                        disabled={isSubmitting}
+                        className="text-xs rounded-full h-11 uppercase font-bold"
+                    >
                         <TrashIcon className="mr-2 h-4 w-4" />
                         Delete Placement
                     </Button>

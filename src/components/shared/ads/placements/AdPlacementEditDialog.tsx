@@ -124,7 +124,7 @@ const AdPlacementEditDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
@@ -133,7 +133,7 @@ const AdPlacementEditDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

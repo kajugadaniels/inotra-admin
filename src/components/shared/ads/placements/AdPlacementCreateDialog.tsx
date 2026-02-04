@@ -109,7 +109,7 @@ const AdPlacementCreateDialog = ({
                 <DialogFooter>
                     <Button
                         type="button"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         variant="outline"
                         onClick={handleClose}
                         disabled={isSubmitting}
@@ -118,7 +118,7 @@ const AdPlacementCreateDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                     >

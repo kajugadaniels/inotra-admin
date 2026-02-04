@@ -149,7 +149,12 @@ const AdPlacementDetailsDialog = ({
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => onOpenChange(false)}
+                        className="text-xs rounded-full h-11 uppercase font-bold"
+                    >
                         Close
                     </Button>
                 </DialogFooter>
