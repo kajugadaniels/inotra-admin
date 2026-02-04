@@ -179,7 +179,12 @@ const AdCreativeDetailsDialog = ({
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full h-11 text-xs">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => onOpenChange(false)}
+                        className="rounded-full h-11 text-xs uppercase font-bold"
+                    >
                         <XIcon className="mr-2 h-4 w-4" />
                         Close
                     </Button>

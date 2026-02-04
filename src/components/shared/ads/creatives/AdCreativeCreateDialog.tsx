@@ -144,7 +144,7 @@ const AdCreativeCreateDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
@@ -155,7 +155,7 @@ const AdCreativeCreateDialog = ({
                         type="button"
                         onClick={handleSubmit}
                         disabled={isSubmitting}
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                     >
                         <UploadCloudIcon className="mr-2 h-4 w-4" />
                         Create creative

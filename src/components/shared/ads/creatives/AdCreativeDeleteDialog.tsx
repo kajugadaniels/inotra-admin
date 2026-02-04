@@ -89,14 +89,14 @@ const AdCreativeDeleteDialog = ({
                         variant="outline"
                         onClick={() => onOpenChange(false)}
                         disabled={isSubmitting}
-                        className="rounded-full text-xs h-11"
+                        className="rounded-full text-xs h-11 uppercase font-bold"
                     >
                         <XIcon className="mr-2 h-4 w-4" />
                         Cancel
                     </Button>
                     <Button
                         variant="destructive"
-                        className="rounded-full text-xs h-11"
+                        className="rounded-full text-xs h-11 uppercase font-bold"
                         onClick={handleDelete}
                         disabled={isSubmitting}
                     >
