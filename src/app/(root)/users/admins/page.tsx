@@ -212,7 +212,7 @@ const AdminsPage = () => {
                 onConfirm={handleDelete}
                 isLoading={busyId === selectedUser?.id}
                 userLabel={selectedUser?.name || selectedUser?.email || selectedUser?.username || "user"}
-                disabled={selectedUser?.is_current_user}
+                disabled={selectedUser?.is_current_user ?? undefined}
             />
         </div>
     );
