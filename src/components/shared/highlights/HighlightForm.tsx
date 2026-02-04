@@ -39,7 +39,7 @@ const steps = [
 
 type Props = {
     form: HighlightFormState;
-    setForm: (next: HighlightFormState) => void;
+    setForm: React.Dispatch<React.SetStateAction<HighlightFormState>>;
     isSubmitting: boolean;
     onSubmit: () => Promise<void>;
     initialPlaceTitle?: string | null;
