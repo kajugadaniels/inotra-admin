@@ -5,6 +5,32 @@ export type ApiResponse<T> = {
     headers: Headers;
 };
 
+const ADMIN_TOKENS_KEY = "inotra.admin.tokens";
+const ADMIN_SESSION_EXPIRED_KEY = "inotra.admin.session.expired";
+let didForceLogout = false;
+
+function forceAdminLogout(): void {
+    if (typeof window === "undefined") return;
+    if (didForceLogout) return;
+    didForceLogout = true;
+
+    try {
+        // Used by the login page to show a "Session expired" toast.
+        window.sessionStorage.setItem(ADMIN_SESSION_EXPIRED_KEY, "1");
+    } catch {
+        // ignore
+    }
+
+    try {
+        window.localStorage.clear();
+    } catch {
+        // ignore
+    }
+
+    // Hard navigation ensures all client state is reset.
+    window.location.assign("/");
+}
+
 type RequestArgs = {
     apiBaseUrl: string;
     path: string;
@@ -46,6 +72,16 @@ export async function requestJson<T>({
         headers: requestHeaders,
         body: payload,
     });
+
+    // If the stored access token becomes invalid, force logout and reset local storage.
+    // Only do this when an admin session is present to avoid breaking login/forgot flows.
+    if (
+        typeof window !== "undefined" &&
+        response.status === 401 &&
+        window.localStorage.getItem(ADMIN_TOKENS_KEY)
+    ) {
+        forceAdminLogout();
+    }
 
     const rawText = await response.text();
     let parsed: unknown = null;
