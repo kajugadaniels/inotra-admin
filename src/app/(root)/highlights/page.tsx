@@ -11,9 +11,9 @@ import { deleteHighlight, listHighlights } from "@/api/highlights";
 import type { Highlight } from "@/api/highlights/listHighlights";
 import { getApiBaseUrl } from "@/config/api";
 
-import HighlightGrid from "@/components/highlights/HighlightGrid";
-import HighlightReelsFeed from "@/components/highlights/HighlightReelsFeed";
-import HighlightDeleteDialog from "@/components/highlights/HighlightDeleteDialog";
+import HighlightGrid from "@/components/shared/highlights/HighlightGrid";
+import HighlightReelsFeed from "@/components/shared/highlights/HighlightReelsFeed";
+import HighlightDeleteDialog from "@/components/shared/highlights/HighlightDeleteDialog";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";

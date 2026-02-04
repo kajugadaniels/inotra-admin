@@ -21,7 +21,7 @@ import {
     CustomerRepCreateDialog,
     type CustomerRepForm,
     type CustomerRepFiltersState,
-} from "@/components/customer-reps";
+} from "@/components/shared/customer-reps";
 
 const CustomerRepsPage = () => {
     const [filters, setFilters] = useState<CustomerRepFiltersState>({

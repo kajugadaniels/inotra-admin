@@ -8,7 +8,7 @@ import { authStorage, extractErrorDetail } from "@/api/auth";
 import { getEvent, updateEvent } from "@/api/events";
 import type { EventDetail } from "@/api/events/getEvent";
 import { getApiBaseUrl } from "@/config/api";
-import EventForm, { defaultEventForm, type EventFormState } from "@/components/events/EventForm";
+import EventForm, { defaultEventForm, type EventFormState } from "@/components/shared/events/EventForm";
 
 const EditEventPage = () => {
     const router = useRouter();

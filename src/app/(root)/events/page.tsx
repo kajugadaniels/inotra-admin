@@ -14,7 +14,7 @@ import {
     EventDeleteDialog,
     defaultEventFilters,
     type EventFiltersState,
-} from "@/components/events";
+} from "@/components/shared/events";
 
 const EventsPage = () => {
     const [filters, setFilters] = useState<EventFiltersState>({ ...defaultEventFilters });

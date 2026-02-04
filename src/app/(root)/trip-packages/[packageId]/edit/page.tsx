@@ -13,7 +13,7 @@ import PackageForm, {
     defaultPackageForm,
     type ExistingPackageImage,
     type PackageFormState,
-} from "@/components/trip-packages/form/PackageForm";
+} from "@/components/shared/trip-packages/form/PackageForm";
 import { Button } from "@/components/ui/button";
 
 const EditPackagePage = () => {

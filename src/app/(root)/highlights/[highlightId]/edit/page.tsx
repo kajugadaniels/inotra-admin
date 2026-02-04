@@ -8,7 +8,7 @@ import { authStorage, extractErrorDetail } from "@/api/auth";
 import { getHighlight, updateHighlight } from "@/api/highlights";
 import type { Highlight } from "@/api/highlights/listHighlights";
 import { getApiBaseUrl } from "@/config/api";
-import HighlightForm, { defaultHighlightForm, type HighlightFormState } from "@/components/highlights/HighlightForm";
+import HighlightForm, { defaultHighlightForm, type HighlightFormState } from "@/components/shared/highlights/HighlightForm";
 import { Button } from "@/components/ui/button";
 import { ArrowBigLeft } from "lucide-react";
 

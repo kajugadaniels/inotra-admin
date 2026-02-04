@@ -12,10 +12,10 @@ import {
     type PackageListItem,
 } from "@/api/packages";
 import { getApiBaseUrl } from "@/config/api";
-import TripPackagesHeader from "@/components/trip-packages/TripPackagesHeader";
-import type { TripPackagesFiltersState } from "@/components/trip-packages/TripPackagesFilters";
-import TripPackageDeleteDialog from "@/components/trip-packages/TripPackageDeleteDialog";
-import TripPackagesTable from "@/components/trip-packages/TripPackagesTable";
+import TripPackagesHeader from "@/components/shared/trip-packages/TripPackagesHeader";
+import type { TripPackagesFiltersState } from "@/components/shared/trip-packages/TripPackagesFilters";
+import TripPackageDeleteDialog from "@/components/shared/trip-packages/TripPackageDeleteDialog";
+import TripPackagesTable from "@/components/shared/trip-packages/TripPackagesTable";
 
 const PAGE_SIZE = 10;
 

@@ -10,7 +10,7 @@ import HighlightFormSidebar from "./HighlightFormSidebar";
 import HighlightFormContent from "./HighlightFormContent";
 import HighlightFormLinks from "./HighlightFormLinks";
 import HighlightFormMedia from "./HighlightFormMedia";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { ArrowBigLeft, ArrowBigRight, UploadCloud } from "lucide-react";
 
 export type HighlightFormState = {

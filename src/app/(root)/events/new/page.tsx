@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { authStorage, extractErrorDetail } from "@/api/auth";
 import { createEvent } from "@/api/events";
 import { getApiBaseUrl } from "@/config/api";
-import EventForm, { defaultEventForm, type EventFormState } from "@/components/events/EventForm";
+import EventForm, { defaultEventForm, type EventFormState } from "@/components/shared/events/EventForm";
 
 const NewEventPage = () => {
     const router = useRouter();

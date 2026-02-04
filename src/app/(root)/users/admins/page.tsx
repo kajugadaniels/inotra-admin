@@ -16,7 +16,7 @@ import {
     defaultAdminFilters,
     type AdminFiltersState,
     type AdminForm,
-} from "@/components/admins";
+} from "@/components/shared/admins";
 
 const AdminsPage = () => {
     const [filters, setFilters] = useState<AdminFiltersState>({ ...defaultAdminFilters });

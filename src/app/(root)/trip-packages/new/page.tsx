@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { authStorage, extractErrorDetail } from "@/api/auth";
 import { createPackage } from "@/api/packages";
 import { getApiBaseUrl } from "@/config/api";
-import PackageForm, { defaultPackageForm, type PackageFormState } from "@/components/trip-packages/form/PackageForm";
+import PackageForm, { defaultPackageForm, type PackageFormState } from "@/components/shared/trip-packages/form/PackageForm";
 import { Button } from "@/components/ui/button";
 
 const NewPackagePage = () => {

@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { authStorage, extractErrorDetail } from "@/api/auth";
 import { createHighlight } from "@/api/highlights";
 import { getApiBaseUrl } from "@/config/api";
-import HighlightForm, { defaultHighlightForm, type HighlightFormState } from "@/components/highlights/HighlightForm";
+import HighlightForm, { defaultHighlightForm, type HighlightFormState } from "@/components/shared/highlights/HighlightForm";
 import { Button } from "@/components/ui/button";
 import { ArrowBigLeft } from "lucide-react";
 

@@ -8,7 +8,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { Trash2Icon, XIcon } from "lucide-react";
 
 type Props = {
