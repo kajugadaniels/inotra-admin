@@ -313,7 +313,7 @@ const ReviewsTable = ({ reviews, isLoading, busyId, onTogglePublish }: Props) =>
                                     <Button
                                         type="button"
                                         variant="outline"
-                                        className="h-11 rounded-full text-xs"
+                                        className="h-11 rounded-full text-xs uppercase font-bold"
                                         onClick={() => setActive(null)}
                                     >
                                         Close

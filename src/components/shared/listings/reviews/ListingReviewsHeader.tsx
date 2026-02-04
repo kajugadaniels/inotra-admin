@@ -50,7 +50,7 @@ const ListingReviewsHeader = ({
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="h-11 rounded-full border-border/60 bg-background/70 text-xs shadow-sm hover:bg-background"
+                                    className="h-11 rounded-full text-xs uppercase font-bold"
                                     disabled={isLoading}
                                 >
                                     <Filter className="mr-2 h-4 w-4" />
