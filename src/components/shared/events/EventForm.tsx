@@ -89,7 +89,7 @@ const EventForm = ({ form, setForm, onSubmit, isSubmitting }: Props) => {
                     <Button
                         type="button"
                         variant="outline"
-                        className="rounded-full text-xs h-11"
+                        className="rounded-full text-xs h-11 uppercase font-bold"
                         onClick={back}
                         disabled={step === 0 || isSubmitting}
                     >
@@ -99,7 +99,7 @@ const EventForm = ({ form, setForm, onSubmit, isSubmitting }: Props) => {
                     {step < steps.length - 1 ? (
                         <Button
                             type="button"
-                            className="rounded-full text-xs h-11"
+                            className="rounded-full text-xs h-11 uppercase font-bold"
                             onClick={next}
                             disabled={!canNext || isSubmitting}
                         >
@@ -109,7 +109,7 @@ const EventForm = ({ form, setForm, onSubmit, isSubmitting }: Props) => {
                     ) : (
                         <Button
                             type="button"
-                            className="rounded-full text-xs h-11"
+                            className="rounded-full text-xs h-11 uppercase font-bold"
                             onClick={onSubmit}
                             disabled={isSubmitting || !form.title.trim()}
                         >

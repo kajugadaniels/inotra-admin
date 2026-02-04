@@ -29,11 +29,16 @@ const EventDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading, eventLabe
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="gap-2">
-                <Button variant="outline" className="rounded-full" onClick={() => onOpenChange(false)}>
+                <Button
+                    variant="outline"
+                    className="rounded-full text-xs uppercase font-bold"
+                    onClick={() => onOpenChange(false)}
+                    disabled={isLoading}
+                >
                     Cancel
                 </Button>
                 <Button
-                    className="rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    className="rounded-full text-xs h-11 uppercase font-bold"
                     onClick={onConfirm}
                     disabled={isLoading}
                 >

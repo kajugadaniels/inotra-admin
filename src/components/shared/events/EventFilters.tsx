@@ -235,7 +235,7 @@ const EventFilters = ({ filters, isLoading, onFiltersChange, trigger }: Props) =
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={() => setOpen(false)}
                         disabled={isLoading}
                     >
@@ -244,7 +244,7 @@ const EventFilters = ({ filters, isLoading, onFiltersChange, trigger }: Props) =
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={apply}
                         disabled={isLoading}
                     >

@@ -29,7 +29,7 @@ const EventHeader = ({ filters, isLoading, onFiltersChange, onReset }: Props) =>
                     <div className="flex flex-wrap items-center gap-2">
                         <Button
                             type="button"
-                            className="h-11 rounded-full text-xs"
+                            className="h-11 rounded-full text-xs uppercase font-bold"
                             asChild
                             disabled={isLoading}
                         >
