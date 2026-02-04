@@ -29,7 +29,7 @@ export default function RootLayout({
             >
                 <ThemeProvider>
                     <Toaster position="top-right" richColors closeButton />
-                    <div className="relative bg-[radial-gradient(circle_at_top,#f7f2ec_0%,#f6f7fb_45%,#eef1f6_100%)] text-foreground dark:bg-[radial-gradient(circle_at_top,#2a2520_0%,#121113_42%,#0b0b0c_100%)]">
+                    <div className="relative min-h-screen bg-[radial-gradient(circle_at_top,#f7f2ec_0%,#f6f7fb_45%,#eef1f6_100%)] text-foreground dark:bg-[radial-gradient(circle_at_top,#2a2520_0%,#121113_42%,#0b0b0c_100%)]">
                         <div className="pointer-events-none absolute left-1/2 top-[-200px] h-[360px] w-[360px] -translate-x-1/2 rounded-full bg-primary/20 blur-[140px]" />
                         <div className="pointer-events-none absolute right-[-120px] top-[160px] h-[220px] w-[220px] rounded-full bg-secondary/20 blur-[120px]" />
                         {children}
