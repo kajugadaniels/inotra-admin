@@ -110,7 +110,7 @@ const UserDeleteDialog = ({
                         disabled={isLoading}
                         onClick={() => onOpenChange(false)}
                         variant="outline"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                     >
                         <XIcon className="mr-2 h-4 w-4" />
                         Cancel
@@ -120,7 +120,7 @@ const UserDeleteDialog = ({
                         disabled={!canDelete}
                         onClick={onConfirm}
                         variant="destructive"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         title={
                             canDelete
                                 ? "Delete user"

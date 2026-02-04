@@ -41,8 +41,8 @@ const UsersTable = ({ users, isLoading, busyId, onToggleActive, onDelete }: User
                         <TableHead>User</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Phone</TableHead>
-        <TableHead>Status</TableHead>
-        <TableHead>Joined</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Joined</TableHead>
                         <TableHead className="w-16 text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -54,12 +54,12 @@ const UsersTable = ({ users, isLoading, busyId, onToggleActive, onDelete }: User
                             </TableCell>
                         </TableRow>
                     ) : users.length === 0 ? (
-                    <TableRow>
-                        <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
-                            No users found for the selected filters.
-                        </TableCell>
-                    </TableRow>
-                ) : (
+                        <TableRow>
+                            <TableCell colSpan={5} className="py-10 text-center text-xs text-muted-foreground">
+                                No users found for the selected filters.
+                            </TableCell>
+                        </TableRow>
+                    ) : (
                         users.map((user) => {
                             const label = user.name || user.username || user.email || "User";
                             const initial = label.slice(0, 1).toUpperCase();
