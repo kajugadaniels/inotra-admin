@@ -114,7 +114,7 @@ const ListingCategoryCreateDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs h-11"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
@@ -123,7 +123,7 @@ const ListingCategoryCreateDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full text-xs h-11"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={handleCreate}
                         disabled={isSubmitting}
                     >

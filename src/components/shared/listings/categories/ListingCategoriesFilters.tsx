@@ -120,7 +120,7 @@ const ListingCategoriesFilters = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs mr-5"
+                        className="h-11 rounded-full text-xs mr-5 uppercase font-bold"
                         onClick={() => setDialogOpen(false)}
                     >
                         <XIcon className="mr-2 h-4 w-4" />
@@ -128,7 +128,7 @@ const ListingCategoriesFilters = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={() => {
                             onFiltersChange(draftFilters);
                             setDialogOpen(false);

@@ -85,11 +85,21 @@ const ListingCategoryDeleteDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <Button disabled={isDeleting} variant={"outline"} className="text-xs rounded-full h-11" onClick={() => onOpenChange(false)}>
+                    <Button
+                        disabled={isDeleting}
+                        variant={"outline"}
+                        className="text-xs rounded-full h-11 uppercase font-bold"
+                        onClick={() => onOpenChange(false)}
+                    >
                         <XIcon className="mr-2 h-4 w-4" />
                         Cancel
                     </Button>
-                    <Button onClick={handleDelete} variant={"destructive"} disabled={isDeleting} className="text-xs rounded-full h-11">
+                    <Button
+                        onClick={handleDelete}
+                        variant={"destructive"}
+                        disabled={isDeleting}
+                        className="text-xs rounded-full h-11 uppercase font-bold"
+                    >
                         <TrashIcon className="mr-2 h-4 w-4" />
                         Delete category
                     </Button>

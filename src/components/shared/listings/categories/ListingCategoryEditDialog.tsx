@@ -127,7 +127,7 @@ const ListingCategoryEditDialog = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={handleClose}
                         disabled={isSubmitting}
                     >
@@ -136,7 +136,7 @@ const ListingCategoryEditDialog = ({
                     </Button>
                     <Button
                         type="button"
-                        className="h-11 rounded-full text-xs"
+                        className="h-11 rounded-full text-xs uppercase font-bold"
                         onClick={handleUpdate}
                         disabled={isSubmitting}
                     >
