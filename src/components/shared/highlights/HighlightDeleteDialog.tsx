@@ -32,14 +32,14 @@ const HighlightDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading, label
             <AlertDialogFooter className="gap-2">
                 <Button
                     variant="outline"
-                    className="rounded-full text-xs h-11"
+                    className="rounded-full text-xs h-11 uppercase font-bold"
                     onClick={() => onOpenChange(false)}
                 >
                     <XIcon className="mr-2 h-4 w-4" />
                     Cancel
                 </Button>
                 <Button
-                    className="rounded-full text-xs h-11"
+                    className="rounded-full text-xs h-11 uppercase font-bold"
                     variant={"destructive"}
                     onClick={onConfirm}
                     disabled={isLoading}

@@ -125,7 +125,7 @@ const HighlightForm = ({
                     <div className="flex w-full flex-col gap-3 border-t border-border/60 pt-4 sm:flex-row sm:items-center sm:justify-between">
                         <Button
                             type="button"
-                            className="rounded-full text-xs h-11"
+                            className="rounded-full text-xs h-11 uppercase font-bold"
                             variant={"outline"}
                             onClick={goBack}
                             disabled={step === 0 || isSubmitting}
@@ -136,7 +136,7 @@ const HighlightForm = ({
                         {step < steps.length - 1 ? (
                             <Button
                                 type="button"
-                                className="rounded-full text-xs h-11"
+                                className="rounded-full text-xs h-11 uppercase font-bold"
                                 onClick={goNext}
                                 disabled={!canNext || isSubmitting}
                             >
@@ -146,7 +146,7 @@ const HighlightForm = ({
                         ) : (
                             <Button
                                 type="button"
-                                className="rounded-full text-xs h-11"
+                                className="rounded-full text-xs h-11 uppercase font-bold"
                                 onClick={onSubmit}
                                 disabled={isSubmitting || !canNext}
                             >
