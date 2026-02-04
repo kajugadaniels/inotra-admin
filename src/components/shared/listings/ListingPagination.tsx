@@ -21,7 +21,7 @@ const ListingPagination = ({
             <Button
                 type="button"
                 variant="outline"
-                className="rounded-full text-xs h-11"
+                className="rounded-full text-xs h-11 uppercase font-bold"
                 disabled={isLoading || page <= 1}
                 onClick={() => onPageChange(page - 1)}
             >
@@ -30,7 +30,7 @@ const ListingPagination = ({
             <Button
                 type="button"
                 variant="outline"
-                className="rounded-full  text-xs h-11"
+                className="rounded-full text-xs h-11 uppercase font-bold"
                 disabled={isLoading || page >= totalPages}
                 onClick={() => onPageChange(page + 1)}
             >

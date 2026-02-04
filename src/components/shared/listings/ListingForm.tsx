@@ -256,7 +256,7 @@ const ListingForm = ({
                             variant="ghost"
                             onClick={() => setStepIndex((prev) => Math.max(prev - 1, 0))}
                             disabled={disabled || stepIndex === 0}
-                            className="rounded-full border border-border/60 text-xs h-11"
+                            className="rounded-full border border-border/60 text-xs h-11 uppercase font-bold"
                         >
                             <ArrowBigLeft className="mr-2 h-4 w-4" />
                             Back
@@ -271,7 +271,7 @@ const ListingForm = ({
                                 setStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
                             }}
                             disabled={disabled}
-                            className="rounded-full border border-border/60 text-xs h-11"
+                            className="rounded-full border border-border/60 text-xs h-11 uppercase font-bold"
                         >
                             {stepIndex === steps.length - 1 ? "Save changes" : "Next"}
                             <ArrowBigRight className="mr-2 h-4 w-4" />

@@ -40,7 +40,7 @@ const ListingHeader = ({
 
                 <div className="flex w-full flex-col gap-3 lg:w-auto lg:items-end">
                     <div className="flex flex-wrap items-center gap-2">
-                        <Button asChild className="h-11 rounded-full text-xs" disabled={isLoading}>
+                        <Button asChild className="h-11 rounded-full text-xs uppercase font-bold" disabled={isLoading}>
                             <Link href="/listings/new">
                                 <Plus className="mr-2 h-4 w-4" />
                                 New listing
@@ -56,7 +56,7 @@ const ListingHeader = ({
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="h-11 rounded-full border-border/60 bg-background/70 text-xs shadow-sm hover:bg-background"
+                                    className="h-11 rounded-full text-xs uppercase font-bold"
                                     disabled={isLoading}
                                 >
                                     <Filter className="mr-2 h-4 w-4" />

@@ -35,7 +35,7 @@ const ListingServices = ({
                 <Button
                     type="button"
                     variant="outline"
-                    className="rounded-full text-xs h-11"
+                    className="rounded-full text-xs h-11 uppercase font-bold"
                     onClick={() =>
                         onChange({
                             ...form,
@@ -111,7 +111,7 @@ const ListingServices = ({
                                 <Button
                                     type="button"
                                     variant="destructive"
-                                    className="w-full rounded-full text-xs uppercase tracking-[0.2em] text-white h-11"
+                                    className="w-full rounded-full text-xs uppercase h-11"
                                     onClick={() => {
                                         const next = form.services.filter(
                                             (_, idx) => idx !== index
