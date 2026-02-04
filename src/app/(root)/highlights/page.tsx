@@ -86,9 +86,7 @@ const HighlightsPage = () => {
 
                 // Determine if more pages exist
                 // If your API includes `next`, prefer it; otherwise fallback to count math.
-                const apiHasNext = typeof (res.body as any).next !== "undefined"
-                    ? Boolean((res.body as any).next)
-                    : targetPage * PAGE_SIZE < (res.body.count ?? 0);
+                const apiHasNext = Boolean(res.body.next) || targetPage * PAGE_SIZE < (res.body.count ?? 0);
 
                 setHasNext(apiHasNext);
 
