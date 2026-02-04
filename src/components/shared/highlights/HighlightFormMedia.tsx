@@ -15,7 +15,7 @@ type Media = {
 
 type Props = {
     form: HighlightFormState;
-    setForm: (next: HighlightFormState) => void;
+    setForm: React.Dispatch<React.SetStateAction<HighlightFormState>>;
     existingMedia: Media[];
     mediaMarked: string[];
     toggleRemove: (id?: string) => void;
