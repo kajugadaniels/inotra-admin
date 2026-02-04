@@ -84,3 +84,12 @@ export {
     updateHighlight,
     deleteHighlight,
 } from "./highlights";
+
+export {
+    listPackages,
+    getPackage,
+    createPackage,
+    updatePackage,
+    togglePackageActive,
+    deletePackage,
+} from "./packages";
