@@ -1,4 +1,4 @@
-import { ShieldCheck } from "lucide-react";
+import Image from "next/image";
 
 const AdminHeroPanel = () => {
     return (
@@ -20,8 +20,14 @@ const AdminHeroPanel = () => {
 
             <div className="relative flex h-full flex-col justify-between p-10">
                 <div className="flex items-center gap-3">
-                    <div className="grid h-11 w-11 place-items-center rounded-2xl bg-white/10 ring-1 ring-white/15 backdrop-blur">
-                        <ShieldCheck className="h-5 w-5 text-white/90" />
+                    <div className="grid h-12 w-12 place-items-center rounded-2xl bg-white/10 ring-1 ring-white/15 backdrop-blur">
+                        <Image
+                            src="/logo-color.png"
+                            alt="Inotra Logo"
+                            width={100}
+                            height={100}
+                            className="absolute h-full w-full text-white/90"
+                        />
                     </div>
                     <div className="leading-tight">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
