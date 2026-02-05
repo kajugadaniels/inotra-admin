@@ -1,11 +1,8 @@
 "use client";
 
-import React from "react";
-import { Construction, Mail, Sparkles, CheckCircle2, Loader2 } from "lucide-react";
+import { Construction, CheckCircle2, Loader2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 const UnderConstruction = () => {
