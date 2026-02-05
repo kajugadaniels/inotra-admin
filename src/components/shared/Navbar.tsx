@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogOut, Menu, ShieldCheck, User } from "lucide-react";
+import { LogOut, Menu, User } from "lucide-react";
 import { toast } from "sonner";
 import { authStorage, getGoogleIdentityClient } from "@/api/auth";
 import type { AdminUser } from "@/api/types";
@@ -18,6 +18,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 
 type NavbarProps = {
     onToggleSidebar: () => void;
@@ -72,8 +73,14 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                     <Menu className="h-5 w-5" />
                 </Button>
 
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 ring-1 ring-primary/50">
-                    <ShieldCheck className="h-5 w-5 text-primary" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 ring-1 ring-primary/50">
+                    <Image
+                        src="/logo-color.png"
+                        alt="Inotra Logo"
+                        width={40}
+                        height={40}
+                        className="absolute h-full w-full text-white/90"
+                    />
                 </div>
             </div>
 
