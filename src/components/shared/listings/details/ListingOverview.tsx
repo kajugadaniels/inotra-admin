@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/carousel";
 
 import Autoplay from "embla-carousel-autoplay";
+import RichTextRenderer from "./RichTextRenderer";
 
 type ListingOverviewProps = {
     listing: PlaceDetail | null;
@@ -294,7 +295,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                         </div>
                     ) : (
                         <p className="text-sm leading-relaxed text-foreground">
-                            {listing?.description || "No description available."}
+                            <RichTextRenderer html={listing?.description || "No description available."} />
                         </p>
                     )}
                 </div>
