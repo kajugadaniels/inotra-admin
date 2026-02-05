@@ -2,12 +2,21 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
+import type { ComponentType } from "react";
 import { cn } from "@/lib/utils";
+
+type CKEditorComponentProps = {
+    editor: unknown;
+    data?: string;
+    config?: Record<string, unknown>;
+    disabled?: boolean;
+    onChange?: (event: unknown, editor: unknown) => void;
+};
 
 const CKEditor = dynamic(
     () => import("@ckeditor/ckeditor5-react").then((m) => m.CKEditor),
     { ssr: false }
-);
+) as unknown as ComponentType<CKEditorComponentProps>;
 
 type RichTextEditorProps = {
     value: string;
@@ -17,6 +26,10 @@ type RichTextEditorProps = {
     className?: string;
 };
 
+type CkEditorInstance = {
+    getData?: () => unknown;
+};
+
 const RichTextEditor = ({
     value,
     onChange,
@@ -24,7 +37,7 @@ const RichTextEditor = ({
     placeholder = "Write something…",
     className,
 }: RichTextEditorProps) => {
-    const [editorCtor, setEditorCtor] = useState<any>(null);
+    const [editorCtor, setEditorCtor] = useState<unknown>(null);
 
     useEffect(() => {
         let alive = true;
@@ -32,7 +45,7 @@ const RichTextEditor = ({
         import("@ckeditor/ckeditor5-build-classic")
             .then((m) => {
                 if (!alive) return;
-                setEditorCtor(() => m.default);
+                setEditorCtor(m.default);
             })
             .catch(() => {
                 if (!alive) return;
@@ -91,9 +104,11 @@ const RichTextEditor = ({
                 data={value || ""}
                 config={config}
                 disabled={disabled}
-                onChange={(_: unknown, editor: any) => {
-                    const data = editor?.getData?.() ?? "";
-                    onChange(String(data));
+                onChange={(_: unknown, editor: unknown) => {
+                    const instance = editor as CkEditorInstance | null;
+                    const getData = instance?.getData;
+                    const data = typeof getData === "function" ? getData() : "";
+                    onChange(typeof data === "string" ? data : String(data ?? ""));
                 }}
             />
             <p className="mt-2 text-[11px] font-semibold text-muted-foreground">
