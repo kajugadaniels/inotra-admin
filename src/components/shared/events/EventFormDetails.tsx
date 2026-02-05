@@ -1,8 +1,8 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import type { EventFormState } from "./EventForm";
-import RichTextEditor from "@/components/shared/RichTextEditor";
 
 type Props = {
     form: EventFormState;
@@ -21,19 +21,21 @@ const EventFormDetails = ({ form, setForm }: Props) => (
                 placeholder="Summer Music Festival"
             />
         </div>
-
         <div>
             <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                 Description (optional)
             </label>
-
-            <div className="mt-2">
-                <RichTextEditor
-                    value={form.description || ""}
-                    onChange={(html) => setForm({ ...form, description: html })}
-                    placeholder="Describe the event experience..."
-                />
-            </div>
+            <Textarea
+                value={form.description}
+                onChange={(e) => setForm({ ...form, description: e.target.value })}
+                placeholder="Describe the event experience..."
+                className="min-h-[140px]"
+            />
+            {/* <RichTextEditor
+                value={form.description || ""}
+                onChange={(html) => setForm({ ...form, description: html })}
+                placeholder="Describe the event experience..."
+            /> */}
         </div>
     </div>
 );

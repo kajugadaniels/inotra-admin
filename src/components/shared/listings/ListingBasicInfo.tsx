@@ -12,7 +12,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import type { ListingFormState } from "./ListingForm";
-import RichTextEditor from "../RichTextEditor";
+import { Textarea } from "@/components/ui/textarea";
 
 type ListingBasicInfoProps = {
     form: ListingFormState;
@@ -80,11 +80,21 @@ const ListingBasicInfo = ({
                 </label>
 
                 <div className="mt-2">
-                    <RichTextEditor
+                    {/* <RichTextEditor
                         value={form.description ?? ""}
                         onChange={(html) => onChange({ ...form, description: html })}
                         disabled={disabled}
                         placeholder="Describe the listing experience in a premium way."
+                    /> */}
+                    <Textarea
+                        value={form.description}
+                        onChange={(event) =>
+                            onChange({ ...form, description: event.target.value })
+                        }
+                        placeholder="Describe the listing experience in a premium way."
+                        className="mt-2 h-[120px] rounded-2xl border-border/60 bg-background/60 text-xs"
+                        rows={7}
+                        disabled={disabled}
                     />
                 </div>
             </div>
