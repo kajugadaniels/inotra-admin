@@ -12,7 +12,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import type { ListingFormState } from "./ListingForm";
-import RichTextEditor from "./RichTextEditor";
+import RichTextEditor from "../RichTextEditor";
 
 type ListingBasicInfoProps = {
     form: ListingFormState;
