@@ -1,9 +1,10 @@
 import React from 'react'
+import UnderConstruction from '@/components/shared/UnderConstruction'
 
 const AdminDashboard = () => {
     return (
         <div>
-            Admin Dashboard Page
+            <UnderConstruction />
         </div>
     )
 }
