@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import type { PlaceCategory } from "@/api/types";
 import { Input } from "@/components/ui/input";
@@ -9,8 +11,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import type { ListingFormState } from "./ListingForm";
+import RichTextEditor from "./RichTextEditor";
 
 type ListingBasicInfoProps = {
     form: ListingFormState;
@@ -76,31 +78,32 @@ const ListingBasicInfo = ({
                 <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Description (optional)
                 </label>
-                <Textarea
-                    value={form.description}
-                    onChange={(event) =>
-                        onChange({ ...form, description: event.target.value })
-                    }
-                    placeholder="Describe the listing experience in a premium way."
-                    className="mt-2 h-[120px] rounded-2xl border-border/60 bg-background/60 text-xs"
-                    rows={7}
-                    disabled={disabled}
-                />
+
+                <div className="mt-2">
+                    <RichTextEditor
+                        value={form.description ?? ""}
+                        onChange={(html) => onChange({ ...form, description: html })}
+                        disabled={disabled}
+                        placeholder="Describe the listing experience in a premium way."
+                    />
+                </div>
             </div>
 
             <div className="space-y-3">
                 <label className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Listing logo (optional)
                 </label>
+
                 {form.logoPreview ? (
                     <div className="overflow-hidden rounded-2xl border border-border/60 bg-muted/40">
                         <img
                             src={form.logoPreview}
                             alt="Listing logo preview"
-                            className="h-32 w-full object-contain bg-white"
+                            className="h-32 w-full bg-white object-contain"
                         />
                     </div>
                 ) : null}
+
                 <FileUpload
                     accept="image/*"
                     disabled={disabled}
@@ -115,6 +118,7 @@ const ListingBasicInfo = ({
                         });
                     }}
                 />
+
                 {form.logoPreview ? (
                     <button
                         type="button"
