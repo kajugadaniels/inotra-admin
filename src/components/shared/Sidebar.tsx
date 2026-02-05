@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import { adminSidebarLinks } from "@/constants/sidebar-links";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type SidebarProps = {
     isOpen: boolean;
@@ -52,8 +53,15 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 <div className="relative px-6 pb-4 pt-8">
                     <div className="flex items-center gap-3">
                         <div className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-full bg-primary/10 ring-1 ring-primary/25">
-                            <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_30%,hsl(var(--primary))_0%,transparent_55%)] opacity-25" />
-                            <div className="h-6 w-6 rounded-full bg-primary/25 ring-1 ring-primary/30" />
+                            {/* <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_30%,hsl(var(--primary))_0%,transparent_55%)] opacity-25" />
+                            <div className="h-6 w-6 rounded-full bg-primary/25 ring-1 ring-primary/30" /> */}
+                            <Image
+                                src="/logo-color.png"
+                                alt="Inotra Logo"
+                                width={100}
+                                height={100}
+                                className="absolute h-full w-full text-white/90"
+                            />
                         </div>
 
                         <div className="leading-tight">

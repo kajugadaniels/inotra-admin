@@ -77,9 +77,9 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                     <Image
                         src="/logo-color.png"
                         alt="Inotra Logo"
-                        width={40}
-                        height={40}
-                        className="absolute h-full w-full text-white/90"
+                        width={100}
+                        height={100}
+                        className="absolute h-10 w-10 text-white/90"
                     />
                 </div>
             </div>
