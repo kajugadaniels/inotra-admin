@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import ThemeProvider from "@/components/shared/theme-provider";
 import "./globals.css";
-
-const dmSans = DM_Sans({
-    variable: "--font-dm-sans",
-    subsets: ["latin"],
-    display: "swap",
-});
 
 export const metadata: Metadata = {
     title: "INOTRA Admin Portal",
@@ -25,7 +18,7 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body
                 suppressHydrationWarning
-                className={`${dmSans.variable} antialiased`}
+                className="font-sans antialiased"
             >
                 <ThemeProvider>
                     <Toaster position="top-right" richColors closeButton />
