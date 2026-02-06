@@ -167,3 +167,47 @@ export type ReviewReport = {
     reported_by_id?: string | null;
     created_at?: string | null;
 };
+
+export type HighlightLike = {
+    id: string;
+    highlight_id?: string | null;
+    place_id?: string | null;
+    place_title?: string | null;
+    event_id?: string | null;
+    event_title?: string | null;
+    user_id?: string | null;
+    user_first_name?: string | null;
+    user_last_name?: string | null;
+    user_email?: string | null;
+    created_at?: string | null;
+};
+
+export type HighlightComment = {
+    id: string;
+    highlight_id?: string | null;
+    place_id?: string | null;
+    place_title?: string | null;
+    event_id?: string | null;
+    event_title?: string | null;
+    user_id?: string | null;
+    user_first_name?: string | null;
+    user_last_name?: string | null;
+    user_email?: string | null;
+    text?: string | null;
+    created_at?: string | null;
+};
+
+export type HighlightShare = {
+    id: string;
+    highlight_id?: string | null;
+    place_id?: string | null;
+    place_title?: string | null;
+    event_id?: string | null;
+    event_title?: string | null;
+    user_id?: string | null;
+    user_first_name?: string | null;
+    user_last_name?: string | null;
+    user_email?: string | null;
+    channel?: string | null;
+    created_at?: string | null;
+};
