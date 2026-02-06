@@ -142,14 +142,10 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
     const id = safeText(event.id) || "";
     const title = safeText(event.title) || "Untitled event";
 
-    const organizer =
-        safeText(event.organizer_name) ||
-        safeText(event.organizer_contact) ||
-        safeText(event.venue_name) ||
-        "Organizer";
+    const organizer = safeText(event.venue_name) || "Venue";
 
     const badge = formatEventBadge(event.start_at, event.end_at);
-    const priceLabel = formatRwfCompact(event.price);
+    const priceLabel = formatRwfCompact(event.min_ticket_price);
     const initials = initialsFrom(title);
 
     const badgeTone =
@@ -282,7 +278,9 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
                             ) : (
                                 <div className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-2 text-xs font-semibold text-white/70 backdrop-blur-md ring-1 ring-white/10">
                                     <Tag className="h-4 w-4 text-white/70" />
-                                    <span className="whitespace-nowrap">Free</span>
+                                    <span className="whitespace-nowrap">
+                                        {event.ticket_categories?.includes("FREE") ? "Free" : "Tickets"}
+                                    </span>
                                 </div>
                             )}
                         </div>
