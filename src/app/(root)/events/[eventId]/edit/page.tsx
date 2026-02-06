@@ -10,6 +10,16 @@ import type { EventDetail } from "@/api/events/getEvent";
 import { getApiBaseUrl } from "@/config/api";
 import EventForm, { defaultEventForm, type EventFormState } from "@/components/shared/events/EventForm";
 
+const toDateTimeLocalValue = (value?: string | null) => {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(
+        date.getHours()
+    )}:${pad(date.getMinutes())}`;
+};
+
 const EditEventPage = () => {
     const router = useRouter();
     const params = useParams();
@@ -37,8 +47,8 @@ const EditEventPage = () => {
                 setForm({
                     title: ev.title ?? "",
                     description: ev.description ?? "",
-                    start_at: ev.start_at ?? "",
-                    end_at: ev.end_at ?? "",
+                    start_at: toDateTimeLocalValue(ev.start_at),
+                    end_at: toDateTimeLocalValue(ev.end_at),
                     venue_name: ev.venue_name ?? "",
                     address: ev.address ?? "",
                     city: ev.city ?? "",
@@ -52,6 +62,7 @@ const EditEventPage = () => {
                         })) ?? [],
                     is_active: !!ev.is_active,
                     is_verified: !!ev.is_verified,
+                    banner_url: ev.banner_url ?? null,
                     banner: null,
                     remove_banner: false,
                 });
@@ -118,6 +129,7 @@ const EditEventPage = () => {
                 return;
             }
             toast.success("Event updated");
+            router.replace("/events");
         } catch (error) {
             toast.error("Update failed", {
                 description: error instanceof Error ? error.message : "Check API connectivity.",
