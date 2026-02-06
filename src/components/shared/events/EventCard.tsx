@@ -146,7 +146,6 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
 
     const badge = formatEventBadge(event.start_at, event.end_at);
     const priceLabel = formatRwfCompact(event.min_ticket_price);
-    const initials = initialsFrom(title);
 
     const badgeTone =
         badge === "ENDED"
