@@ -14,13 +14,14 @@ import { getApiBaseUrl } from "@/config/api";
 import HighlightGrid from "@/components/shared/highlights/HighlightGrid";
 import HighlightReelsFeed from "@/components/shared/highlights/HighlightReelsFeed";
 import HighlightDeleteDialog from "@/components/shared/highlights/HighlightDeleteDialog";
+import { HighlightEngagementPanel } from "@/components/shared/highlights/engagement";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const PAGE_SIZE = 20;
 
-type ViewMode = "preview" | "reels";
+type ViewMode = "preview" | "reels" | "engagement";
 
 const uniqById = (prev: Highlight[], next: Highlight[]) => {
     const map = new Map<string, Highlight>();
@@ -254,6 +255,19 @@ const HighlightsPage = () => {
                                     <PlaySquare className="h-4 w-4" />
                                     Reels
                                 </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => setView("engagement")}
+                                    className={cn(
+                                        "inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-full px-3 text-xs font-semibold transition sm:flex-none sm:px-4",
+                                        view === "engagement"
+                                            ? "bg-foreground text-background"
+                                            : "text-muted-foreground hover:text-foreground"
+                                    )}
+                                >
+                                    Engagement
+                                </button>
                             </div>
 
                             {(isLoading || isLoadingMore) && (
@@ -288,7 +302,7 @@ const HighlightsPage = () => {
                         </div>
                     ) : null}
                 </>
-            ) : (
+            ) : view === "reels" ? (
                 <HighlightReelsFeed
                     highlights={items}
                     isLoading={isLoading}
@@ -299,6 +313,8 @@ const HighlightsPage = () => {
                     onEdit={onEdit}
                     onDelete={onDelete}
                 />
+            ) : (
+                <HighlightEngagementPanel />
             )}
 
             <HighlightDeleteDialog
