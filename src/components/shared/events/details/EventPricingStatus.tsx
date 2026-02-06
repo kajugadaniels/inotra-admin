@@ -6,18 +6,18 @@ type Props = {
     isLoading: boolean;
 };
 
-const formatMoney = (value?: string | number | null) => {
-    if (value === null || value === undefined) return "--";
+const formatTicketPrice = (value?: string | number | null) => {
+    if (value === null || value === undefined || value === "") return "Free";
     const numeric = typeof value === "number" ? value : Number(value);
     if (!Number.isFinite(numeric)) return String(value);
-    return Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(numeric);
+    return Intl.NumberFormat(undefined, { style: "currency", currency: "RWF" }).format(numeric);
 };
 
 const EventPricingStatus = ({ event, isLoading }: Props) => {
     if (isLoading && !event) {
         return (
             <div className="rounded-3xl border border-border/60 bg-background/60 p-6 text-xs text-muted-foreground">
-                Loading pricing...
+                Loading tickets...
             </div>
         );
     }
@@ -34,20 +34,22 @@ const EventPricingStatus = ({ event, isLoading }: Props) => {
         <div className="grid gap-4 lg:grid-cols-2 w-[850px]">
             <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Pricing
+                    Tickets
                 </p>
-                <div className="mt-4 space-y-2 text-sm">
-                    <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Price</span>
-                        <span className="font-semibold text-foreground">{formatMoney(event.price)}</span>
+                {event.tickets && event.tickets.length > 0 ? (
+                    <div className="mt-4 space-y-2 text-sm">
+                        {event.tickets.map((ticket) => (
+                            <div key={ticket.id} className="flex items-center justify-between gap-3">
+                                <span className="text-muted-foreground">{ticket.category}</span>
+                                <span className="font-semibold text-foreground">
+                                    {formatTicketPrice(ticket.price ?? null)}
+                                </span>
+                            </div>
+                        ))}
                     </div>
-                    <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Discount</span>
-                        <span className="font-semibold text-foreground">
-                            {formatMoney(event.discount_price)}
-                        </span>
-                    </div>
-                </div>
+                ) : (
+                    <p className="mt-4 text-sm text-muted-foreground">No tickets configured.</p>
+                )}
             </div>
 
             <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
@@ -71,4 +73,3 @@ const EventPricingStatus = ({ event, isLoading }: Props) => {
 };
 
 export default EventPricingStatus;
-
