@@ -34,8 +34,17 @@ const NewEventPage = () => {
             if (form.country) body.append("country", form.country);
             if (form.latitude) body.append("latitude", form.latitude);
             if (form.longitude) body.append("longitude", form.longitude);
-            if (form.price) body.append("price", form.price);
-            if (form.discount_price) body.append("discount_price", form.discount_price);
+            if (form.tickets.length) {
+                const ticketsPayload = form.tickets.map((ticket) => ({
+                    category: ticket.category,
+                    ...(ticket.category === "FREE"
+                        ? {}
+                        : ticket.price.trim()
+                            ? { price: ticket.price.trim() }
+                            : {}),
+                }));
+                body.append("tickets", JSON.stringify(ticketsPayload));
+            }
             body.append("is_active", String(form.is_active));
             body.append("is_verified", String(form.is_verified));
             if (form.banner) body.append("banner", form.banner);
