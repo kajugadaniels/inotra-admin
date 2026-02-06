@@ -1,6 +1,13 @@
 import { requestJson } from "../http";
 import type { EventListItem } from "./listEvents";
 
+export type EventTicket = {
+    id: string;
+    category: "FREE" | "REGULAR" | "VIP" | "VVIP" | "TABLE";
+    price?: string | number | null;
+    created_at?: string | null;
+};
+
 export type EventDetail = EventListItem & {
     description?: string | null;
     address?: string | null;
@@ -10,7 +17,7 @@ export type EventDetail = EventListItem & {
     longitude?: string | number | null;
     organizer_name?: string | null;
     organizer_contact?: string | null;
-    discount_price?: string | number | null;
+    tickets?: EventTicket[];
 };
 
 type Args = {
