@@ -19,8 +19,7 @@ type Args = {
         longitude?: string | number;
         organizer_name?: string;
         organizer_contact?: string;
-        price?: string | number;
-        discount_price?: string | number;
+        tickets?: { category: string; price?: string | number | null }[];
         is_active?: boolean;
         is_verified?: boolean;
         remove_banner?: boolean;
