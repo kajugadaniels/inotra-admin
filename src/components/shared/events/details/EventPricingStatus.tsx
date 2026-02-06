@@ -31,7 +31,7 @@ const EventPricingStatus = ({ event, isLoading }: Props) => {
     }
 
     return (
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-2 w-[850px]">
             <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Pricing

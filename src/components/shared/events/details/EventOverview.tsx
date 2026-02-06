@@ -25,7 +25,7 @@ const EventOverview = ({ event, isLoading }: Props) => {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 w-[850px]">
             <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>

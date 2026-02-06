@@ -24,7 +24,7 @@ const EventMedia = ({ event, isLoading }: Props) => {
     }
 
     return (
-        <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
+        <div className="rounded-3xl border border-border/60 bg-background/60 p-6 w-[850px]">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                 Banner
             </p>
