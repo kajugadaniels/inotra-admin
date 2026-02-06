@@ -39,7 +39,9 @@ const PackageFormActivities = ({ form, disabled = false, onChange }: Props) => {
         <div className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                    <p className="text-sm font-semibold text-foreground">Package activities (optional)</p>
+                    <p className="text-sm font-semibold text-foreground">
+                        Package activities (optional)
+                    </p>
                     <p className="text-xs text-muted-foreground">
                         Define the itinerary by day. If you add activities, day number must be within the package duration.
                     </p>
@@ -70,7 +72,7 @@ const PackageFormActivities = ({ form, disabled = false, onChange }: Props) => {
                 <div className="space-y-3">
                     {form.activities.map((activity, index) => (
                         <div
-                            key={`${activity.activity_name}-${index}`}
+                            key={index} // ✅ stable key (prevents input remount while typing)
                             className="grid gap-3 rounded-2xl border border-border/60 bg-background/60 p-4 md:grid-cols-[1fr_220px_auto]"
                         >
                             <div>
@@ -79,7 +81,9 @@ const PackageFormActivities = ({ form, disabled = false, onChange }: Props) => {
                                 </label>
                                 <Input
                                     value={activity.activity_name}
-                                    onChange={(e) => updateActivity(index, { activity_name: e.target.value })}
+                                    onChange={(e) =>
+                                        updateActivity(index, { activity_name: e.target.value })
+                                    }
                                     placeholder="City tour"
                                     className="admin-field mt-2 rounded-2xl border-border/60 bg-background/70"
                                     disabled={disabled}
@@ -131,4 +135,3 @@ const PackageFormActivities = ({ form, disabled = false, onChange }: Props) => {
 };
 
 export default PackageFormActivities;
-

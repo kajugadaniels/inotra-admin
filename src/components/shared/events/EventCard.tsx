@@ -234,15 +234,6 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
                         </div>
                     </div>
 
-                    {/* Top-center tiny badge (initials) */}
-                    <div className="absolute top-3 left-1/2 z-10 -translate-x-1/2">
-                        <div className="grid h-10 w-10 place-items-center rounded-full bg-black/40 text-white ring-1 ring-white/20 backdrop-blur-md">
-                            <span className="text-[11px] font-bold tracking-wide">
-                                {initials}
-                            </span>
-                        </div>
-                    </div>
-
                     {/* Bottom readability overlay (same as app card) */}
                     <div className="absolute inset-0">
                         <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
