@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, Loader2, UploadCloudIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -137,6 +137,7 @@ const PackageForm = ({
                         onClick={() => setStep((prev) => Math.max(0, prev - 1))}
                         disabled={step === 0 || isSubmitting}
                     >
+                        <ArrowBigLeft className="h-4 w-4 mr-2" />
                         Back
                     </Button>
 
@@ -148,6 +149,7 @@ const PackageForm = ({
                             disabled={!canNext || isSubmitting}
                         >
                             Next
+                            <ArrowBigRight className="h-4 w-4" />
                         </Button>
                     ) : (
                         <Button
@@ -158,21 +160,10 @@ const PackageForm = ({
                         >
                             {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                             {submitLabel}
+                            <UploadCloudIcon className="h-4 w-4" />
                         </Button>
                     )}
                 </div>
-
-                {step === 0 && (!form.title.trim() || !durationDays) ? (
-                    <p className="mt-3 text-xs text-muted-foreground">
-                        Title and duration are required to continue.
-                    </p>
-                ) : null}
-
-                {step === 1 && !activitiesValid ? (
-                    <p className="mt-3 text-xs text-muted-foreground">
-                        Ensure each activity has a name and a valid day number within the package duration.
-                    </p>
-                ) : null}
             </div>
         </div>
     );

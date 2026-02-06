@@ -71,7 +71,7 @@ const PackageFormActivities = ({ form, disabled = false, onChange }: Props) => {
                     {form.activities.map((activity, index) => (
                         <div
                             key={`${activity.activity_name}-${index}`}
-                            className="grid gap-3 rounded-2xl border border-border/60 bg-background/60 p-4 md:grid-cols-[1fr_180px_auto]"
+                            className="grid gap-3 rounded-2xl border border-border/60 bg-background/60 p-4 md:grid-cols-[1fr_220px_auto]"
                         >
                             <div>
                                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
