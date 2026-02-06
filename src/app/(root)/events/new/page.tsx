@@ -62,11 +62,7 @@ const NewEventPage = () => {
             }
 
             toast.success("Event created");
-            if (payload.event.id) {
-                router.replace(`/events/${payload.event.id}/edit`);
-            } else {
-                router.replace("/events");
-            }
+            router.replace("/events");
         } catch (error) {
             toast.error("Creation failed", {
                 description: error instanceof Error ? error.message : "Check API connectivity.",
