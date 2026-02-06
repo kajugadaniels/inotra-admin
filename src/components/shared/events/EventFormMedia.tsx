@@ -16,6 +16,7 @@ type Props = {
 
 const EventFormMedia = ({ form, setForm }: Props) => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    const existingBannerUrl = form.banner_url ?? null;
 
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
@@ -63,6 +64,8 @@ const EventFormMedia = ({ form, setForm }: Props) => {
     const clearSelected = () => {
         setForm({ ...form, banner: null });
     };
+
+    const showExistingPreview = !!existingBannerUrl && !form.banner && !form.remove_banner;
 
     return (
         <div className="space-y-4">
@@ -130,11 +133,11 @@ const EventFormMedia = ({ form, setForm }: Props) => {
                         </div>
                     </div>
 
-                    {previewUrl ? (
+                    {previewUrl || showExistingPreview ? (
                         <div className="mt-4 overflow-hidden rounded-2xl border border-border/60 bg-background/40">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                src={previewUrl}
+                                src={previewUrl ?? existingBannerUrl ?? ""}
                                 alt="Banner preview"
                                 className="h-44 w-full object-cover"
                             />
