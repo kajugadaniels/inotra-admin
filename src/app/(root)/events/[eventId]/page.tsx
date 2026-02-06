@@ -72,7 +72,7 @@ const EventDetailsPage = () => {
     const tabs = [
         { key: "overview", label: "Overview", description: "Status & summary" },
         { key: "schedule", label: "Schedule", description: "Venue & map" },
-        { key: "pricing", label: "Pricing", description: "Price & visibility" },
+        { key: "pricing", label: "Tickets", description: "Tickets & visibility" },
         { key: "media", label: "Media", description: "Banner image" },
     ];
 
