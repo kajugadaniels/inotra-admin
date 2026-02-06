@@ -45,8 +45,11 @@ const EditEventPage = () => {
                     country: ev.country ?? "Rwanda",
                     latitude: ev.latitude?.toString() ?? "",
                     longitude: ev.longitude?.toString() ?? "",
-                    price: ev.price?.toString() ?? "",
-                    discount_price: ev.discount_price?.toString() ?? "",
+                    tickets:
+                        ev.tickets?.map((ticket) => ({
+                            category: ticket.category,
+                            price: ticket.price?.toString() ?? "",
+                        })) ?? [],
                     is_active: !!ev.is_active,
                     is_verified: !!ev.is_verified,
                     banner: null,
@@ -82,8 +85,19 @@ const EditEventPage = () => {
             if (form.country) body.append("country", form.country);
             if (form.latitude) body.append("latitude", form.latitude);
             if (form.longitude) body.append("longitude", form.longitude);
-            if (form.price) body.append("price", form.price);
-            if (form.discount_price) body.append("discount_price", form.discount_price);
+            if (form.tickets.length) {
+                const ticketsPayload = form.tickets.map((ticket) => ({
+                    category: ticket.category,
+                    ...(ticket.category === "FREE"
+                        ? {}
+                        : ticket.price.trim()
+                            ? { price: ticket.price.trim() }
+                            : {}),
+                }));
+                body.append("tickets", JSON.stringify(ticketsPayload));
+            } else {
+                body.append("tickets", "[]");
+            }
             body.append("is_active", String(form.is_active));
             body.append("is_verified", String(form.is_verified));
             if (form.banner) {
