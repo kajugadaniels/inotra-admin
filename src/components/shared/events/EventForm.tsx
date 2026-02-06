@@ -30,6 +30,7 @@ export type EventFormState = {
     tickets: EventTicketState[];
     is_active: boolean;
     is_verified: boolean;
+    banner_url?: string | null;
     banner?: File | null;
     remove_banner?: boolean;
 };
@@ -48,6 +49,7 @@ export const defaultEventForm: EventFormState = {
     tickets: [],
     is_active: true,
     is_verified: false,
+    banner_url: null,
     banner: null,
     remove_banner: false,
 };
