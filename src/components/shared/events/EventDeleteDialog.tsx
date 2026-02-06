@@ -1,4 +1,4 @@
-import { Loader2, Trash2 } from "lucide-react";
+import { Loader2, Trash2, XIcon } from "lucide-react";
 
 import {
     AlertDialog,
@@ -20,7 +20,7 @@ type Props = {
 
 const EventDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading, eventLabel }: Props) => (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-        <AlertDialogContent className="max-w-lg rounded-3xl border-border/60 bg-card/80 backdrop-blur-xl">
+        <AlertDialogContent className="max-w-lg rounded-3xl border-border/60 bg-card backdrop-blur-xl">
             <AlertDialogHeader>
                 <AlertDialogTitle>Delete event?</AlertDialogTitle>
                 <AlertDialogDescription>
@@ -31,10 +31,11 @@ const EventDeleteDialog = ({ open, onOpenChange, onConfirm, isLoading, eventLabe
             <AlertDialogFooter className="gap-2">
                 <Button
                     variant="outline"
-                    className="rounded-full text-xs uppercase font-bold"
+                    className="rounded-full text-xs uppercase font-bold h-11"
                     onClick={() => onOpenChange(false)}
                     disabled={isLoading}
                 >
+                    <XIcon className="h-4 w-4" />
                     Cancel
                 </Button>
                 <Button
