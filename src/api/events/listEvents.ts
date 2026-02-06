@@ -8,7 +8,9 @@ export type EventListItem = {
     start_at?: string | null;
     end_at?: string | null;
     venue_name?: string | null;
-    price?: string | number | null;
+    tickets_count?: number | null;
+    min_ticket_price?: string | number | null;
+    ticket_categories?: string[] | null;
     is_active?: boolean | null;
     is_verified?: boolean | null;
 };
