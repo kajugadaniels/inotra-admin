@@ -9,6 +9,12 @@ import EventFormDetails from "./EventFormDetails";
 import EventFormSchedule from "./EventFormSchedule";
 import EventFormPricing from "./EventFormPricing";
 import EventFormMedia from "./EventFormMedia";
+import EventFormTickets from "./EventFormTickets";
+
+export type EventTicketState = {
+    category: "FREE" | "REGULAR" | "VIP" | "VVIP" | "TABLE";
+    price: string;
+};
 
 export type EventFormState = {
     title: string;
@@ -21,8 +27,7 @@ export type EventFormState = {
     country: string;
     latitude: string;
     longitude: string;
-    price: string;
-    discount_price: string;
+    tickets: EventTicketState[];
     is_active: boolean;
     is_verified: boolean;
     banner?: File | null;
@@ -40,8 +45,7 @@ export const defaultEventForm: EventFormState = {
     country: "Rwanda",
     latitude: "",
     longitude: "",
-    price: "",
-    discount_price: "",
+    tickets: [],
     is_active: true,
     is_verified: false,
     banner: null,
@@ -51,7 +55,8 @@ export const defaultEventForm: EventFormState = {
 const steps = [
     { key: "details", label: "Event details" },
     { key: "schedule", label: "Schedule & venue" },
-    { key: "pricing", label: "Pricing & status" },
+    { key: "tickets", label: "Tickets" },
+    { key: "pricing", label: "Visibility" },
     { key: "media", label: "Media" },
 ];
 
@@ -82,8 +87,9 @@ const EventForm = ({ form, setForm, onSubmit, isSubmitting }: Props) => {
             <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5">
                 {step === 0 && <EventFormDetails form={form} setForm={setForm} />}
                 {step === 1 && <EventFormSchedule form={form} setForm={setForm} />}
-                {step === 2 && <EventFormPricing form={form} setForm={setForm} />}
-                {step === 3 && <EventFormMedia form={form} setForm={setForm} />}
+                {step === 2 && <EventFormTickets form={form} setForm={setForm} />}
+                {step === 3 && <EventFormPricing form={form} setForm={setForm} />}
+                {step === 4 && <EventFormMedia form={form} setForm={setForm} />}
 
                 <div className="mt-6 flex items-center justify-between gap-3 border-t border-border/60 pt-4">
                     <Button
