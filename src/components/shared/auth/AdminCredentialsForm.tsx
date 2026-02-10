@@ -43,14 +43,14 @@ const AdminCredentialsForm = ({
                 </label>
 
                 <div className="relative">
-                    <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Mail className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                         value={identifier}
                         onChange={(event) => onIdentifierChange(event.target.value)}
                         placeholder="admin@example.com"
                         autoComplete="username"
                         disabled={isBusy}
-                        className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                        className="h-11 rounded-full border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                     />
                     <div className="pointer-events-none absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
                 </div>
@@ -63,7 +63,7 @@ const AdminCredentialsForm = ({
                 </label>
 
                 <div className="relative">
-                    <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Lock className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                         type={showPassword ? "text" : "password"}
                         value={password}
@@ -71,7 +71,7 @@ const AdminCredentialsForm = ({
                         placeholder="••••••••"
                         autoComplete="current-password"
                         disabled={isBusy}
-                        className="h-12 rounded-2xl border-border/60 bg-background/60 pl-10 pr-12 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                        className="h-11 rounded-full border-border/60 bg-background/60 pl-10 pr-12 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                     />
 
                     <button
@@ -97,7 +97,7 @@ const AdminCredentialsForm = ({
                 <Button
                     type="submit"
                     disabled={isBusy}
-                    className="h-12 w-full rounded-full fw-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
+                    className="h-11 w-full rounded-full fw-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-xl hover:shadow-primary/25"
                 >
                     <span className="inline-flex items-center gap-2">
                         {authStatus === "signing-in" ? (
