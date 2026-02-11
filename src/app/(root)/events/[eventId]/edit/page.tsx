@@ -101,7 +101,7 @@ const EditEventPage = () => {
             if (form.tickets.length) {
                 const ticketsPayload = form.tickets.map((ticket) => ({
                     category: ticket.category,
-                    ...(ticket.category === "FREE"
+                    ...(ticket.category.trim().toUpperCase() === "FREE"
                         ? {}
                         : ticket.price.trim()
                             ? { price: ticket.price.trim() }
