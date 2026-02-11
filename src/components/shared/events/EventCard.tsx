@@ -147,9 +147,11 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
     const badge = formatEventBadge(event.start_at, event.end_at);
     const priceLabel = formatRwfCompact(event.min_ticket_price);
 
+    const isEnded = badge === "ENDED";
+
     const badgeTone =
         badge === "ENDED"
-            ? "bg-black/55 text-white/80"
+            ? "bg-black/70 text-white/80 ring-1 ring-white/15"
             : badge === "Happening Now"
             ? "bg-white/85 text-black"
             : "bg-black/45 text-white";
@@ -162,6 +164,7 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
             className={cn(
                 "group relative overflow-hidden rounded-[28px] border border-border/60 bg-card/60 shadow-sm transition",
                 "hover:-translate-y-0.5 hover:shadow-lg hover:border-border/80",
+                isEnded && "saturate-0",
                 "focus-within:ring-2 focus-within:ring-primary/50 focus-within:ring-offset-2 focus-within:ring-offset-background"
             )}
         >
@@ -176,14 +179,22 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
                 className="block"
             >
                 {/* Poster area */}
-                <div className="relative aspect-[3/4] w-full bg-muted/40">
+                <div
+                    className={cn(
+                        "relative aspect-[3/4] w-full bg-muted/40",
+                        isEnded && "grayscale contrast-[1.05]"
+                    )}
+                >
                     {event.banner_url ? (
                         <Image
                             src={event.banner_url}
                             alt={title}
                             fill
                             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                            className="object-cover transition duration-500 group-hover:scale-[1.02]"
+                            className={cn(
+                                "object-cover transition duration-500 group-hover:scale-[1.02]",
+                                isEnded && "group-hover:scale-100"
+                            )}
                             priority={false}
                         />
                     ) : (
@@ -235,21 +246,41 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
 
                     {/* Bottom readability overlay (same as app card) */}
                     <div className="absolute inset-0">
-                        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                        <div
+                            className={cn(
+                                "absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/80 via-black/30 to-transparent",
+                                isEnded && "from-black/70 via-black/40"
+                            )}
+                        />
                     </div>
 
                     {/* Bottom content (same as app card) */}
                     <div className="absolute bottom-0 left-0 right-0 z-10 p-4">
                         <div className="mt-2">
-                            <h3 className="line-clamp-1 text-[15px] font-semibold tracking-tight text-white">
+                            <h3
+                                className={cn(
+                                    "line-clamp-1 text-[15px] font-semibold tracking-tight text-white",
+                                    isEnded && "text-white/80"
+                                )}
+                            >
                                 {title}
                             </h3>
                         </div>
 
                         <div className="mt-4 flex items-center justify-between gap-3">
                             <div className="min-w-0 flex-1">
-                                <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-black/40 px-3 py-2 text-xs font-semibold text-white/85 backdrop-blur-md ring-1 ring-white/10">
-                                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-black/45 ring-1 ring-white/10">
+                                <div
+                                    className={cn(
+                                        "inline-flex max-w-full items-center gap-2 rounded-full bg-black/40 px-3 py-2 text-xs font-semibold text-white/85 backdrop-blur-md ring-1 ring-white/10",
+                                        isEnded && "bg-black/55 text-white/70 ring-white/15"
+                                    )}
+                                >
+                                    <span
+                                        className={cn(
+                                            "grid h-5 w-5 shrink-0 place-items-center rounded-full bg-black/45 ring-1 ring-white/10",
+                                            isEnded && "bg-black/60 ring-white/15"
+                                        )}
+                                    >
                                         <span className="text-[10px] font-bold">
                                             {initialsFrom(organizer)}
                                         </span>
@@ -259,15 +290,25 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
                             </div>
 
                             {priceLabel ? (
-                                <div className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-2 text-xs font-semibold text-white/85 backdrop-blur-md ring-1 ring-white/10">
-                                    <span className="text-white/75">Rwf</span>
+                                <div
+                                    className={cn(
+                                        "inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-2 text-xs font-semibold text-white/85 backdrop-blur-md ring-1 ring-white/10",
+                                        isEnded && "bg-black/55 text-white/70 ring-white/15"
+                                    )}
+                                >
+                                    <span className={cn("text-white/75", isEnded && "text-white/60")}>Rwf</span>
                                     <span className="whitespace-nowrap">
                                         {priceLabel.replace(/^Rwf\s*/i, "")}
                                     </span>
                                 </div>
                             ) : (
-                                <div className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-2 text-xs font-semibold text-white/70 backdrop-blur-md ring-1 ring-white/10">
-                                    <Tag className="h-4 w-4 text-white/70" />
+                                <div
+                                    className={cn(
+                                        "inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-2 text-xs font-semibold text-white/70 backdrop-blur-md ring-1 ring-white/10",
+                                        isEnded && "bg-black/55 text-white/60 ring-white/15"
+                                    )}
+                                >
+                                    <Tag className={cn("h-4 w-4 text-white/70", isEnded && "text-white/55")} />
                                     <span className="whitespace-nowrap">
                                         {event.ticket_categories?.includes("FREE") ? "Free" : "Tickets"}
                                     </span>
