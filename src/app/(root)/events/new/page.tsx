@@ -42,6 +42,10 @@ const NewEventPage = () => {
                         : ticket.price.trim()
                             ? { price: ticket.price.trim() }
                             : {}),
+                    consumable: ticket.consumable,
+                    ...(ticket.consumable && ticket.consumable_description.trim()
+                        ? { consumable_description: ticket.consumable_description.trim() }
+                        : {}),
                 }));
                 body.append("tickets", JSON.stringify(ticketsPayload));
             }
