@@ -36,6 +36,8 @@ const EventFormTickets = ({ form, setForm }: Props) => {
                 {
                     category: "REGULAR",
                     price: "",
+                    consumable: false,
+                    consumable_description: "",
                 },
             ],
         });
@@ -49,6 +51,9 @@ const EventFormTickets = ({ form, setForm }: Props) => {
         const merged: EventTicketState = { ...current, ...next };
         if (merged.category === "FREE") {
             merged.price = "";
+        }
+        if (!merged.consumable) {
+            merged.consumable_description = "";
         }
 
         tickets[index] = merged;
@@ -156,4 +161,3 @@ const EventFormTickets = ({ form, setForm }: Props) => {
 };
 
 export default EventFormTickets;
-
