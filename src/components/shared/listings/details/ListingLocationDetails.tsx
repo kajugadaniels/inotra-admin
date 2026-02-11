@@ -16,7 +16,7 @@ const ListingLocationDetails = ({
     mapsApiKey,
 }: ListingLocationDetailsProps) => {
     return (
-        <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 w-[850px] max-w-full backdrop-blur-xl">
+        <div className="w-full rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
                 <MapPin className="h-4 w-4" />
                 Location
@@ -28,14 +28,14 @@ const ListingLocationDetails = ({
                 {listing?.address || "No address provided."}
             </p>
 
-            <div className="mt-6">
+            <div className="mt-6 w-full">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Map preview (optional)
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground">
                     This map displays the stored coordinates for the listing.
                 </p>
-                <div className="mt-4">
+                <div className="mt-4 w-full">
                     {mapsApiKey ? (
                         <APIProvider apiKey={mapsApiKey}>
                             <ListingMap
@@ -56,7 +56,7 @@ const ListingLocationDetails = ({
                             />
                         </APIProvider>
                     ) : (
-                        <div className="flex h-64 items-center justify-center rounded-3xl border border-border/60 bg-background/60 text-sm text-muted-foreground">
+                        <div className="flex h-64 w-full items-center justify-center rounded-3xl border border-border/60 bg-background/60 text-sm text-muted-foreground">
                             Add NEXT_PUBLIC_GOOGLE_MAP_API_KEY in admin/.env to render the map preview.
                         </div>
                     )}

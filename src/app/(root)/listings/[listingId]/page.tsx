@@ -84,13 +84,6 @@ const ListingDetailsPage = () => {
         <div className="space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                    <Link
-                        href="/listings"
-                        className="inline-flex items-center gap-2 text-xs font-bold capitalize text-muted-foreground"
-                    >
-                        <ArrowLeft className="h-4 w-4" />
-                        Back to listings
-                    </Link>
                     <h1 className="mt-3 text-3xl font-semibold text-foreground">
                         {listing?.name ?? (isLoading ? "Loading listing..." : "Listing details")}
                     </h1>
@@ -99,6 +92,12 @@ const ListingDetailsPage = () => {
                     </p>
                 </div>
                 <div className="flex items-center gap-2">
+                    <Button asChild variant="outline" className="rounded-full h-11 text-xs">
+                        <Link href="/listings">
+                            <ArrowLeft className="h-4 w-4" />
+                            Back to listings
+                        </Link>
+                    </Button>
                     {listing?.id ? (
                         <Button asChild variant="outline" className="rounded-full h-11 text-xs">
                             <Link href={`/listings/${listing.id}/edit`}>

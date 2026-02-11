@@ -12,7 +12,7 @@ const ListingContactDetails = ({
     isLoading,
 }: ListingContactDetailsProps) => {
     return (
-        <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 w-[850px] max-w-full backdrop-blur-xl">
+        <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 max-w-full backdrop-blur-xl grid w-full grid-cols-1 gap-4">
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
                 <Phone className="h-4 w-4" />
                 Contact

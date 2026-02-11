@@ -102,7 +102,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
     const hasImages = images.length > 0;
 
     return (
-        <section className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl w-[850px] space-y-6">
+        <section className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl shadow-black/5 backdrop-blur-xl grid w-full grid-cols-1 gap-4">
             <div className="p-6 space-y-5">
                 {logoUrl ? (
                     <div className="flex justify-end">
@@ -137,7 +137,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                                 {images.map((image) => (
                                     <CarouselItem key={image.id}>
                                         {/* Landscape container; portrait images will show with dark bars left/right via object-contain */}
-                                        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] overflow-hidden rounded-2xl border border-border/60 bg-black/80">
+                                        <div className="relative w-full aspect-video sm:aspect-21/9 overflow-hidden rounded-2xl border border-border/60 bg-black/80">
                                             <Image
                                                 src={
                                                     image.image_url ||
@@ -159,7 +159,7 @@ const ListingOverview = ({ listing, isLoading }: ListingOverviewProps) => {
                             <CarouselNext className="right-3" />
                         </Carousel>
                     ) : (
-                        <div className="flex w-full aspect-[16/9] sm:aspect-[21/9] items-center justify-center rounded-2xl border border-border/60 bg-background/70 text-sm text-muted-foreground">
+                        <div className="flex w-full aspect-video sm:aspect-21/9 items-center justify-center rounded-2xl border border-border/60 bg-background/70 text-sm text-muted-foreground">
                             <div className="flex items-center gap-2">
                                 <ImageIcon className="h-4 w-4" />
                                 <span>{isLoading ? "Loading images..." : "No image available"}</span>
