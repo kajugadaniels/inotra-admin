@@ -59,6 +59,8 @@ const EditEventPage = () => {
                         ev.tickets?.map((ticket) => ({
                             category: ticket.category,
                             price: ticket.price?.toString() ?? "",
+                            consumable: !!ticket.consumable,
+                            consumable_description: ticket.consumable_description ?? "",
                         })) ?? [],
                     is_active: !!ev.is_active,
                     is_verified: !!ev.is_verified,
@@ -104,6 +106,10 @@ const EditEventPage = () => {
                         : ticket.price.trim()
                             ? { price: ticket.price.trim() }
                             : {}),
+                    consumable: ticket.consumable,
+                    ...(ticket.consumable && ticket.consumable_description.trim()
+                        ? { consumable_description: ticket.consumable_description.trim() }
+                        : {}),
                 }));
                 body.append("tickets", JSON.stringify(ticketsPayload));
             } else {
