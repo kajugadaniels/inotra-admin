@@ -181,7 +181,7 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
                 {/* Poster area */}
                 <div
                     className={cn(
-                        "relative aspect-[3/4] w-full bg-muted/40",
+                        "relative aspect-3/4 w-full bg-muted/40",
                         isEnded && "grayscale contrast-[1.05]"
                     )}
                 >
@@ -248,7 +248,7 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
                     <div className="absolute inset-0">
                         <div
                             className={cn(
-                                "absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/80 via-black/30 to-transparent",
+                                "absolute inset-x-0 bottom-0 h-56 bg-linear-to-t from-black/80 via-black/30 to-transparent",
                                 isEnded && "from-black/70 via-black/40"
                             )}
                         />
