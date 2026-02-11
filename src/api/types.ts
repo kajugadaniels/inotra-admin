@@ -138,6 +138,29 @@ export type PlaceDetail = {
     updated_at?: string | null;
 };
 
+export type ListingSubmissionListItem = {
+    id?: string;
+    name?: string | null;
+    category_id?: string | null;
+    category_name?: string | null;
+    description?: string | null;
+    city?: string | null;
+    country?: string | null;
+    status?: string | null;
+    submitted_by_id?: string | null;
+    submitted_by_name?: string | null;
+    submitted_by_email?: string | null;
+    submitted_by_phone?: string | null;
+    reviewer_id?: string | null;
+    reviewer_name?: string | null;
+    approved_place_id?: string | null;
+    images_count?: number | null;
+    services_count?: number | null;
+    first_image_url?: string | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+};
+
 export type Review = {
     id: string;
     place_id?: string | null;
