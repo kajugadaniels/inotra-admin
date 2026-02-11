@@ -1,4 +1,13 @@
+import { useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 import type { EventDetail } from "@/api/events";
 
 type Props = {
@@ -14,6 +23,11 @@ const formatTicketPrice = (value?: string | number | null) => {
 };
 
 const EventPricingStatus = ({ event, isLoading }: Props) => {
+    const [activeConsumable, setActiveConsumable] = useState<{
+        category: string;
+        description: string;
+    } | null>(null);
+
     if (isLoading && !event) {
         return (
             <div className="rounded-3xl border border-border/60 bg-background/60 p-6 text-xs text-muted-foreground">
@@ -31,7 +45,8 @@ const EventPricingStatus = ({ event, isLoading }: Props) => {
     }
 
     return (
-        <div className="grid gap-4 lg:grid-cols-2 w-[850px]">
+        <>
+            <div className="grid gap-4 lg:grid-cols-2 w-100">
             <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                     Tickets
@@ -40,7 +55,31 @@ const EventPricingStatus = ({ event, isLoading }: Props) => {
                     <div className="mt-4 space-y-2 text-sm">
                         {event.tickets.map((ticket) => (
                             <div key={ticket.id} className="flex items-center justify-between gap-3">
-                                <span className="text-muted-foreground">{ticket.category}</span>
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <span className="text-muted-foreground">{ticket.category}</span>
+                                    {ticket.consumable ? (
+                                        <Badge
+                                            asChild
+                                            variant="outline"
+                                            className="border-primary/40 text-primary"
+                                        >
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setActiveConsumable({
+                                                        category: ticket.category,
+                                                        description:
+                                                            ticket.consumable_description?.trim() ||
+                                                            "No description provided.",
+                                                    })
+                                                }
+                                                className="cursor-pointer"
+                                            >
+                                                Consumable
+                                            </button>
+                                        </Badge>
+                                    ) : null}
+                                </div>
                                 <span className="font-semibold text-foreground">
                                     {formatTicketPrice(ticket.price ?? null)}
                                 </span>
@@ -69,6 +108,25 @@ const EventPricingStatus = ({ event, isLoading }: Props) => {
                 </div>
             </div>
         </div>
+
+            <Dialog
+                open={!!activeConsumable}
+                onOpenChange={(open) => {
+                    if (!open) setActiveConsumable(null);
+                }}
+            >
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Consumable ticket</DialogTitle>
+                        <DialogDescription>
+                            {activeConsumable
+                                ? `${activeConsumable.category}: ${activeConsumable.description}`
+                                : "Ticket consumption details."}
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+        </>
     );
 };
 

@@ -53,7 +53,7 @@ const EventScheduleVenue = ({ event, isLoading, mapsApiKey }: Props) => {
     const longitude = toCoord(event.longitude);
 
     return (
-        <div className="space-y-6 w-[850px]">
+        <div className="space-y-6 w-100">
             <div className="grid gap-4 lg:grid-cols-2">
                 <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">

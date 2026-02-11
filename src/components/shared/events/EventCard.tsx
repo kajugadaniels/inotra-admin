@@ -117,6 +117,13 @@ const ActionIconButton = ({
     children: React.ReactNode;
     tone?: "default" | "danger";
 }) => {
+    const baseClassName = cn(
+        "grid h-10 w-10 place-items-center rounded-full",
+        "bg-black/35 backdrop-blur-md ring-1 ring-white/12",
+        "transition hover:bg-black/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
+        tone === "danger" ? "text-rose-200 hover:text-rose-100" : "text-white/90"
+    );
+
     return (
         <button
             type="button"
@@ -126,12 +133,7 @@ const ActionIconButton = ({
                 e.stopPropagation();
                 onClick?.();
             }}
-            className={cn(
-                "grid h-10 w-10 place-items-center rounded-full",
-                "bg-black/35 backdrop-blur-md ring-1 ring-white/12",
-                "transition hover:bg-black/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
-                tone === "danger" ? "text-rose-200 hover:text-rose-100" : "text-white/90"
-            )}
+            className={baseClassName}
         >
             {children}
         </button>
@@ -322,14 +324,32 @@ const EventCard = ({ event, onView, onEdit, onDelete }: Props) => {
             {/* Admin actions overlay (hidden by default so visual is identical) */}
             <div className="pointer-events-none absolute right-3 top-3 z-20 flex items-center gap-2 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
                 <div className="pointer-events-auto flex items-center gap-2">
-                    <ActionIconButton
-                        label="View"
-                        onClick={() => {
-                            if (onView) onView(event);
-                        }}
-                    >
-                        <Eye className="h-4 w-4" />
-                    </ActionIconButton>
+                    {onView ? (
+                        <ActionIconButton
+                            label="View"
+                            onClick={() => {
+                                onView(event);
+                            }}
+                        >
+                            <Eye className="h-4 w-4" />
+                        </ActionIconButton>
+                    ) : (
+                        <Link
+                            href={viewHref}
+                            aria-label="View"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            className={cn(
+                                "grid h-10 w-10 place-items-center rounded-full",
+                                "bg-black/35 backdrop-blur-md ring-1 ring-white/12",
+                                "transition hover:bg-black/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
+                                "text-white/90"
+                            )}
+                        >
+                            <Eye className="h-4 w-4" />
+                        </Link>
+                    )}
 
                     <ActionIconButton
                         label="Edit"

@@ -24,13 +24,13 @@ const EventMedia = ({ event, isLoading }: Props) => {
     }
 
     return (
-        <div className="rounded-3xl border border-border/60 bg-background/60 p-6 w-[850px]">
+        <div className="rounded-3xl border border-border/60 bg-background/60 p-6 w-100">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                 Banner
             </p>
             <div className="mt-4 overflow-hidden rounded-3xl border border-border/60 bg-muted/40">
                 {event.banner_url ? (
-                    <div className="relative aspect-[16/9] w-full">
+                    <div className="relative aspect-video w-full">
                         <Image
                             src={event.banner_url}
                             alt={event.title ?? "Event banner"}
