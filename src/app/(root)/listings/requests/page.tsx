@@ -5,12 +5,13 @@ import { toast } from "sonner";
 
 import { authStorage, extractErrorDetail } from "@/api/auth";
 import { listPlaceCategories } from "@/api/places";
-import { listListingSubmissions } from "@/api/listings/submissions";
+import { listListingSubmissions, updateListingSubmissionStatus } from "@/api/listings/submissions";
 import type { ListingSubmissionListItem, PlaceCategory } from "@/api/types";
 import { getApiBaseUrl } from "@/config/api";
 import ListingPagination from "@/components/shared/listings/ListingPagination";
 import {
     ListingRequestsHeader,
+    ListingRequestRejectDialog,
     ListingRequestsTable,
     defaultListingRequestFilters,
     type ListingRequestFiltersState,
@@ -23,6 +24,9 @@ const ListingRequests = () => {
     const [count, setCount] = useState(0);
     const [categories, setCategories] = useState<PlaceCategory[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [selected, setSelected] = useState<ListingSubmissionListItem | null>(null);
+    const [rejectOpen, setRejectOpen] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
 
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
     const [debouncedSearch, setDebouncedSearch] = useState(filters.search);
@@ -106,6 +110,98 @@ const ListingRequests = () => {
         setPage(1);
     };
 
+    const handleApprove = async (request: ListingSubmissionListItem) => {
+        if (!request.id) return;
+        const tokens = authStorage.getTokens();
+        if (!tokens?.access) {
+            toast.error("Session missing", {
+                description: "Sign in again to update listing requests.",
+            });
+            return;
+        }
+
+        setIsUpdating(true);
+        try {
+            const res = await updateListingSubmissionStatus({
+                apiBaseUrl,
+                accessToken: tokens.access,
+                submissionId: request.id,
+                status: "APPROVED",
+            });
+
+            if (!res.ok || !res.body) {
+                toast.error("Unable to approve listing", {
+                    description: extractErrorDetail(res.body) || "Please try again.",
+                });
+                return;
+            }
+
+            toast.success(res.body.message ?? "Listing approved.");
+            if (res.body.submission) {
+                setResults((prev) =>
+                    prev.map((item) => (item.id === request.id ? res.body.submission! : item))
+                );
+            }
+        } catch (error) {
+            toast.error("Unable to approve listing", {
+                description:
+                    error instanceof Error ? error.message : "Check API connectivity and try again.",
+            });
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
+    const handleRejectClick = (request: ListingSubmissionListItem) => {
+        setSelected(request);
+        setRejectOpen(true);
+    };
+
+    const handleReject = async (reason: string) => {
+        if (!selected?.id) return;
+        const tokens = authStorage.getTokens();
+        if (!tokens?.access) {
+            toast.error("Session missing", {
+                description: "Sign in again to update listing requests.",
+            });
+            return;
+        }
+
+        setIsUpdating(true);
+        try {
+            const res = await updateListingSubmissionStatus({
+                apiBaseUrl,
+                accessToken: tokens.access,
+                submissionId: selected.id,
+                status: "REJECTED",
+                rejection_reason: reason,
+            });
+
+            if (!res.ok || !res.body) {
+                toast.error("Unable to reject listing", {
+                    description: extractErrorDetail(res.body) || "Please try again.",
+                });
+                return;
+            }
+
+            toast.success(res.body.message ?? "Listing rejected.");
+            if (res.body.submission) {
+                setResults((prev) =>
+                    prev.map((item) => (item.id === selected.id ? res.body.submission! : item))
+                );
+            }
+            setRejectOpen(false);
+            setSelected(null);
+        } catch (error) {
+            toast.error("Unable to reject listing", {
+                description:
+                    error instanceof Error ? error.message : "Check API connectivity and try again.",
+            });
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
     return (
         <div className="space-y-6">
             <ListingRequestsHeader
@@ -116,13 +212,25 @@ const ListingRequests = () => {
                 onReset={resetFilters}
             />
 
-            <ListingRequestsTable requests={results} isLoading={isLoading} />
+            <ListingRequestsTable
+                requests={results}
+                isLoading={isLoading || isUpdating}
+                onApprove={handleApprove}
+                onReject={handleRejectClick}
+            />
 
             <ListingPagination
                 page={page}
                 totalPages={totalPages}
                 isLoading={isLoading}
                 onPageChange={setPage}
+            />
+
+            <ListingRequestRejectDialog
+                open={rejectOpen}
+                isLoading={isUpdating}
+                onOpenChange={setRejectOpen}
+                onConfirm={handleReject}
             />
         </div>
     );
