@@ -5,6 +5,8 @@ export type EventTicket = {
     id: string;
     category: "FREE" | "REGULAR" | "VIP" | "VVIP" | "TABLE";
     price?: string | number | null;
+    consumable?: boolean | null;
+    consumable_description?: string | null;
     created_at?: string | null;
 };
 
