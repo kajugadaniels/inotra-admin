@@ -14,6 +14,8 @@ import EventFormTickets from "./EventFormTickets";
 export type EventTicketState = {
     category: "FREE" | "REGULAR" | "VIP" | "VVIP" | "TABLE";
     price: string;
+    consumable: boolean;
+    consumable_description: string;
 };
 
 export type EventFormState = {
