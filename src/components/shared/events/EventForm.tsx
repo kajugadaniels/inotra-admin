@@ -12,7 +12,7 @@ import EventFormMedia from "./EventFormMedia";
 import EventFormTickets from "./EventFormTickets";
 
 export type EventTicketState = {
-    category: "FREE" | "REGULAR" | "VIP" | "VVIP" | "TABLE";
+    category: string;
     price: string;
     consumable: boolean;
     consumable_description: string;
