@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { CheckCircle2, XCircle } from "lucide-react";
 
 import type { ListingSubmissionListItem } from "@/api/types";
 import { Badge } from "@/components/ui/badge";
@@ -41,9 +41,16 @@ const statusVariant = (status?: string | null) => {
 type ListingRequestsTableProps = {
     requests: ListingSubmissionListItem[];
     isLoading: boolean;
+    onApprove: (request: ListingSubmissionListItem) => void;
+    onReject: (request: ListingSubmissionListItem) => void;
 };
 
-const ListingRequestsTable = ({ requests, isLoading }: ListingRequestsTableProps) => {
+const ListingRequestsTable = ({
+    requests,
+    isLoading,
+    onApprove,
+    onReject,
+}: ListingRequestsTableProps) => {
     return (
         <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-2xl shadow-black/5 backdrop-blur-xl">
             <Table>
@@ -124,19 +131,28 @@ const ListingRequestsTable = ({ requests, isLoading }: ListingRequestsTableProps
                                         {createdAt}
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        {request.approved_place_id ? (
+                                        <div className="flex items-center justify-end gap-2">
                                             <Button
-                                                asChild
+                                                type="button"
                                                 variant="outline"
                                                 className="h-9 rounded-full text-xs"
+                                                onClick={() => onApprove(request)}
+                                                disabled={request.status === "APPROVED"}
                                             >
-                                                <Link href={`/listings/${request.approved_place_id}`}>
-                                                    View listing
-                                                </Link>
+                                                <CheckCircle2 className="mr-2 h-4 w-4 text-emerald-600" />
+                                                Approve
                                             </Button>
-                                        ) : (
-                                            <span className="text-xs text-muted-foreground">Pending</span>
-                                        )}
+                                            <Button
+                                                type="button"
+                                                variant="destructive"
+                                                className="h-9 rounded-full text-xs"
+                                                onClick={() => onReject(request)}
+                                                disabled={request.status === "REJECTED"}
+                                            >
+                                                <XCircle className="mr-2 h-4 w-4" />
+                                                Reject
+                                            </Button>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             );
