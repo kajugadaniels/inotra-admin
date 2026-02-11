@@ -2,6 +2,9 @@
 
 import { Plus, Trash2 } from "lucide-react";
 
+import { useMemo, useState } from "react";
+
+import { EVENT_CATEGORIES } from "@/constants/event-categories";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -19,15 +22,20 @@ type Props = {
     setForm: (next: EventFormState) => void;
 };
 
-const CATEGORY_OPTIONS: { value: EventTicketState["category"]; label: string }[] = [
-    { value: "FREE", label: "Free" },
-    { value: "REGULAR", label: "Regular" },
-    { value: "VIP", label: "VIP" },
-    { value: "VVIP", label: "VVIP" },
-    { value: "TABLE", label: "Table" },
-];
-
 const EventFormTickets = ({ form, setForm }: Props) => {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [categorySearch, setCategorySearch] = useState("");
+
+    const filteredCategories = useMemo(() => {
+        const query = categorySearch.trim().toLowerCase();
+        if (!query) return EVENT_CATEGORIES;
+        return EVENT_CATEGORIES.filter((opt) => {
+            const value = opt.value.toLowerCase();
+            const label = opt.label.toLowerCase();
+            return value.includes(query) || label.includes(query);
+        });
+    }, [categorySearch]);
+
     const addTicket = () => {
         setForm({
             ...form,
@@ -49,11 +57,14 @@ const EventFormTickets = ({ form, setForm }: Props) => {
         if (!current) return;
 
         const merged: EventTicketState = { ...current, ...next };
-        if (merged.category === "FREE") {
+        if (merged.category.trim().toUpperCase() === "FREE") {
             merged.price = "";
         }
         if (!merged.consumable) {
             merged.consumable_description = "";
+        }
+        if (!merged.category.trim()) {
+            merged.category = "REGULAR";
         }
 
         tickets[index] = merged;
@@ -105,25 +116,50 @@ const EventFormTickets = ({ form, setForm }: Props) => {
                                 <label className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                                     Category (required)
                                 </label>
-                                <Select
-                                    value={ticket.category}
-                                    onValueChange={(value) =>
-                                        updateTicket(index, {
-                                            category: value as EventTicketState["category"],
-                                        })
-                                    }
-                                >
-                                    <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
-                                        <SelectValue placeholder="Select category" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {CATEGORY_OPTIONS.map((opt) => (
-                                            <SelectItem key={opt.value} value={opt.value}>
-                                                {opt.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                    <Select
+                                        value={ticket.category}
+                                        onValueChange={(value) =>
+                                            updateTicket(index, {
+                                                category: value as EventTicketState["category"],
+                                            })
+                                        }
+                                        open={openIndex === index}
+                                        onOpenChange={(open) => {
+                                            setOpenIndex(open ? index : null);
+                                            if (open) setCategorySearch("");
+                                        }}
+                                    >
+                                        <SelectTrigger className="admin-field mt-2 w-full rounded-2xl border-border/60 bg-background/60">
+                                            <SelectValue placeholder="Select category" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {openIndex === index ? (
+                                                <div className="px-2 pt-2">
+                                                    <Input
+                                                        value={categorySearch}
+                                                        onChange={(e) => setCategorySearch(e.target.value)}
+                                                        onKeyDown={(e) => e.stopPropagation()}
+                                                        onClick={(e) => e.stopPropagation()}
+                                                        placeholder="Search categories"
+                                                        className="admin-field h-9 rounded-xl border-border/60 bg-background/60"
+                                                    />
+                                                </div>
+                                            ) : null}
+                                            <div className="mt-2">
+                                                {filteredCategories.length ? (
+                                                    filteredCategories.map((opt) => (
+                                                        <SelectItem key={opt.value} value={opt.value}>
+                                                            {opt.label}
+                                                        </SelectItem>
+                                                    ))
+                                                ) : (
+                                                    <div className="px-2 py-2 text-xs text-muted-foreground">
+                                                        No matching categories.
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </SelectContent>
+                                    </Select>
                             </div>
 
                             <div>
@@ -137,7 +173,7 @@ const EventFormTickets = ({ form, setForm }: Props) => {
                                     onChange={(e) => updateTicket(index, { price: e.target.value })}
                                     placeholder="20000"
                                     className="admin-field mt-2 rounded-2xl border-border/60 bg-background/60"
-                                    disabled={ticket.category === "FREE"}
+                                    disabled={ticket.category.trim().toUpperCase() === "FREE"}
                                 />
                             </div>
 
