@@ -147,7 +147,7 @@ const ListingRequestsTable = ({
                                                 variant="destructive"
                                                 className="h-9 rounded-full text-xs"
                                                 onClick={() => onReject(request)}
-                                                disabled={request.status === "REJECTED"}
+                                                disabled={request.status === "REJECTED" || request.status === "APPROVED"}
                                             >
                                                 <XCircle className="mr-2 h-4 w-4" />
                                                 Reject
