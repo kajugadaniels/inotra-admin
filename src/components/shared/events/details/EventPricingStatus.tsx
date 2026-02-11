@@ -46,68 +46,68 @@ const EventPricingStatus = ({ event, isLoading }: Props) => {
 
     return (
         <>
-            <div className="grid gap-4 lg:grid-cols-2 w-100">
-            <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Tickets
-                </p>
-                {event.tickets && event.tickets.length > 0 ? (
-                    <div className="mt-4 space-y-2 text-sm">
-                        {event.tickets.map((ticket) => (
-                            <div key={ticket.id} className="flex items-center justify-between gap-3">
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <span className="text-muted-foreground">{ticket.category}</span>
-                                    {ticket.consumable ? (
-                                        <Badge
-                                            asChild
-                                            variant="outline"
-                                            className="border-primary/40 text-primary"
-                                        >
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    setActiveConsumable({
-                                                        category: ticket.category,
-                                                        description:
-                                                            ticket.consumable_description?.trim() ||
-                                                            "No description provided.",
-                                                    })
-                                                }
-                                                className="cursor-pointer"
+            <div className="grid w-full grid-cols-2 gap-4">
+                <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                        Tickets
+                    </p>
+                    {event.tickets && event.tickets.length > 0 ? (
+                        <div className="mt-4 space-y-2 text-sm">
+                            {event.tickets.map((ticket) => (
+                                <div key={ticket.id} className="flex items-center justify-between gap-3">
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <span className="text-muted-foreground">{ticket.category}</span>
+                                        {ticket.consumable ? (
+                                            <Badge
+                                                asChild
+                                                variant="outline"
+                                                className="border-primary/40 text-primary"
                                             >
-                                                Consumable
-                                            </button>
-                                        </Badge>
-                                    ) : null}
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        setActiveConsumable({
+                                                            category: ticket.category,
+                                                            description:
+                                                                ticket.consumable_description?.trim() ||
+                                                                "No description provided.",
+                                                        })
+                                                    }
+                                                    className="cursor-pointer"
+                                                >
+                                                    Consumable
+                                                </button>
+                                            </Badge>
+                                        ) : null}
+                                    </div>
+                                    <span className="font-semibold text-foreground">
+                                        {formatTicketPrice(ticket.price ?? null)}
+                                    </span>
                                 </div>
-                                <span className="font-semibold text-foreground">
-                                    {formatTicketPrice(ticket.price ?? null)}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p className="mt-4 text-sm text-muted-foreground">No tickets configured.</p>
-                )}
-            </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="mt-4 text-sm text-muted-foreground">No tickets configured.</p>
+                    )}
+                </div>
 
-            <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Visibility
-                </p>
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                    <Badge variant={event.is_active ? "default" : "secondary"} className="rounded-full">
-                        {event.is_active ? "Active" : "Inactive"}
-                    </Badge>
-                    <Badge
-                        variant={event.is_verified ? "default" : "outline"}
-                        className="rounded-full border-primary/40"
-                    >
-                        {event.is_verified ? "Verified" : "Unverified"}
-                    </Badge>
+                <div className="rounded-3xl border border-border/60 bg-background/60 p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                        Visibility
+                    </p>
+                    <div className="mt-4 flex flex-wrap items-center gap-2">
+                        <Badge variant={event.is_active ? "default" : "secondary"} className="rounded-full">
+                            {event.is_active ? "Active" : "Inactive"}
+                        </Badge>
+                        <Badge
+                            variant={event.is_verified ? "default" : "outline"}
+                            className="rounded-full border-primary/40"
+                        >
+                            {event.is_verified ? "Verified" : "Unverified"}
+                        </Badge>
+                    </div>
                 </div>
             </div>
-        </div>
 
             <Dialog
                 open={!!activeConsumable}
