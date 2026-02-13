@@ -121,6 +121,11 @@ export const adminSidebarLinks: SidebarLink[] = [
                 icon: PartyPopper,
             },
             {
+                label: "Event Requests",
+                href: "/events/requests",
+                icon: FileText,
+            },
+            {
                 label: "Tickets",
                 href: "/tickets",
                 icon: TicketCheck,
