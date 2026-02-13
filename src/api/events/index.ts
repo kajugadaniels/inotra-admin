@@ -5,3 +5,9 @@ export type { EventDetail } from "./getEvent";
 export { createEvent } from "./createEvent";
 export { updateEvent } from "./updateEvent";
 export { deleteEvent } from "./deleteEvent";
+
+export {
+    listEventSubmissions,
+    getEventSubmission,
+    updateEventSubmissionStatus,
+} from "./submissions";
