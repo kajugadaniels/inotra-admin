@@ -143,10 +143,20 @@ export type ListingSubmissionListItem = {
     name?: string | null;
     category_id?: string | null;
     category_name?: string | null;
+    category_icon?: string | null;
     description?: string | null;
+    address?: string | null;
     city?: string | null;
     country?: string | null;
+    latitude?: string | number | null;
+    longitude?: string | number | null;
+    phone?: string | null;
+    whatsapp?: string | null;
+    email?: string | null;
+    website?: string | null;
+    opening_hours?: unknown;
     status?: string | null;
+    reviewer_notes?: string | null;
     submitted_by_id?: string | null;
     submitted_by_name?: string | null;
     submitted_by_email?: string | null;
@@ -154,11 +164,94 @@ export type ListingSubmissionListItem = {
     reviewer_id?: string | null;
     reviewer_name?: string | null;
     approved_place_id?: string | null;
+    approved_place_name?: string | null;
     images_count?: number | null;
     services_count?: number | null;
     first_image_url?: string | null;
     created_at?: string | null;
     updated_at?: string | null;
+};
+
+export type ListingSubmissionImage = {
+    id: string;
+    image_url: string | null;
+    caption?: string | null;
+    sort_order?: number | null;
+    created_at?: string | null;
+};
+
+export type ListingSubmissionService = {
+    id: string;
+    name?: string | null;
+    is_available?: boolean | null;
+    sort_order?: number | null;
+    created_at?: string | null;
+};
+
+export type ListingSubmissionRejection = {
+    id: string;
+    reason?: string | null;
+    rejected_by_id?: string | null;
+    rejected_by_name?: string | null;
+    created_at?: string | null;
+};
+
+export type ListingSubmissionDetail = ListingSubmissionListItem & {
+    images?: ListingSubmissionImage[];
+    services?: ListingSubmissionService[];
+    rejections?: ListingSubmissionRejection[];
+};
+
+export type EventSubmissionListItem = {
+    id?: string;
+    title?: string | null;
+    description?: string | null;
+    banner_url?: string | null;
+    start_at?: string | null;
+    end_at?: string | null;
+    venue_name?: string | null;
+    address?: string | null;
+    city?: string | null;
+    country?: string | null;
+    latitude?: string | number | null;
+    longitude?: string | number | null;
+    organizer_name?: string | null;
+    organizer_contact?: string | null;
+    status?: string | null;
+    reviewer_notes?: string | null;
+    submitted_by_id?: string | null;
+    submitted_by_name?: string | null;
+    submitted_by_email?: string | null;
+    submitted_by_phone?: string | null;
+    reviewer_id?: string | null;
+    reviewer_name?: string | null;
+    approved_event_id?: string | null;
+    approved_event_title?: string | null;
+    tickets_count?: number | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+};
+
+export type EventSubmissionTicket = {
+    id: string;
+    category?: string | null;
+    price?: string | number | null;
+    consumable?: boolean | null;
+    consumable_description?: string | null;
+    created_at?: string | null;
+};
+
+export type EventSubmissionRejection = {
+    id: string;
+    reason?: string | null;
+    rejected_by_id?: string | null;
+    rejected_by_name?: string | null;
+    created_at?: string | null;
+};
+
+export type EventSubmissionDetail = EventSubmissionListItem & {
+    tickets?: EventSubmissionTicket[];
+    rejections?: EventSubmissionRejection[];
 };
 
 export type Review = {
