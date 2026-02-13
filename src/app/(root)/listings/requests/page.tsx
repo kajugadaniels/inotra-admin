@@ -137,9 +137,10 @@ const ListingRequests = () => {
             }
 
             toast.success(res.body.message ?? "Listing approved.");
-            if (res.body.submission) {
+            const submission = res.body.submission;
+            if (submission) {
                 setResults((prev) =>
-                    prev.map((item) => (item.id === request.id ? res.body.submission! : item))
+                    prev.map((item) => (item.id === request.id ? submission : item))
                 );
             }
         } catch (error) {
@@ -185,9 +186,10 @@ const ListingRequests = () => {
             }
 
             toast.success(res.body.message ?? "Listing rejected.");
-            if (res.body.submission) {
+            const submission = res.body.submission;
+            if (submission) {
                 setResults((prev) =>
-                    prev.map((item) => (item.id === selected.id ? res.body.submission! : item))
+                    prev.map((item) => (item.id === selected.id ? submission : item))
                 );
             }
             setRejectOpen(false);
