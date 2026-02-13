@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { CheckCircle2, XCircle } from "lucide-react";
+import Link from "next/link";
+import { CheckCircle2, ExternalLink, XCircle } from "lucide-react";
 
 import type { ListingSubmissionListItem } from "@/api/types";
 import { Badge } from "@/components/ui/badge";
@@ -132,6 +133,21 @@ const ListingRequestsTable = ({
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <div className="flex items-center justify-end gap-2">
+                                            {request.id ? (
+                                                <Button
+                                                    asChild
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-9 w-9 rounded-full"
+                                                >
+                                                    <Link
+                                                        href={`/listings/requests/${request.id}`}
+                                                        aria-label="View submission details"
+                                                    >
+                                                        <ExternalLink className="h-4 w-4" />
+                                                    </Link>
+                                                </Button>
+                                            ) : null}
                                             <Button
                                                 type="button"
                                                 variant="outline"
