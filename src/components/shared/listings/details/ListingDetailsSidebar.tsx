@@ -8,13 +8,14 @@ type ListingDetailsTab = {
 
 type ListingDetailsSidebarProps = {
     tabs: ListingDetailsTab[];
+    title?: string;
 };
 
-const ListingDetailsSidebar = ({ tabs }: ListingDetailsSidebarProps) => {
+const ListingDetailsSidebar = ({ tabs, title = "Listing details" }: ListingDetailsSidebarProps) => {
     return (
         <aside className="hidden h-full rounded-3xl border border-border/60 bg-background/60 p-5 lg:block">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                Listing details
+                {title}
             </p>
             <TabsList className="mt-6 w-full flex-col gap-2 bg-transparent p-0">
                 {tabs.map((tab, index) => (
