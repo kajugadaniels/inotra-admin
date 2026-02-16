@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
@@ -18,7 +18,7 @@ import { Mail } from "lucide-react";
 const ADMIN_ROLE = "ADMIN";
 const OTP_LENGTH = 6;
 
-const ActivateAdminPage = () => {
+const ActivateAdminPageContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
@@ -223,6 +223,23 @@ const ActivateAdminPage = () => {
                 </p>
             </form>
         </AdminAuthShell>
+    );
+};
+
+const ActivateAdminPage = () => {
+    return (
+        <Suspense
+            fallback={
+                <AdminAuthShell>
+                    <AdminLoginHeader badgeText="Activate admin" />
+                    <div className="rounded-3xl border border-border/60 bg-background/60 p-6 text-sm text-muted-foreground">
+                        Loading activation...
+                    </div>
+                </AdminAuthShell>
+            }
+        >
+            <ActivateAdminPageContent />
+        </Suspense>
     );
 };
 
