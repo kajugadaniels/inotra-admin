@@ -11,8 +11,9 @@ import { getApiBaseUrl } from "@/config/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import { AdminAuthShell, AdminLoginHeader } from "@/components/shared/auth";
+import { Mail } from "lucide-react";
 
 const ADMIN_ROLE = "ADMIN";
 const OTP_LENGTH = 6;
@@ -27,6 +28,8 @@ const ActivateAdminPage = () => {
     const [isBusy, setIsBusy] = useState(false);
     const [statusLabel, setStatusLabel] = useState("");
 
+    const otpComplete = otp.trim().length === OTP_LENGTH;
+
     useEffect(() => {
         const stored = authStorage.hydrate();
         if (stored?.tokens?.access && stored?.user?.role === ADMIN_ROLE) {
@@ -39,6 +42,15 @@ const ActivateAdminPage = () => {
         if (pref) setEmail(pref);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handlePasteOtp = (event: React.ClipboardEvent<HTMLDivElement>) => {
+        const raw = event.clipboardData.getData("text") ?? "";
+        const digits = raw.replace(/\D/g, "").slice(0, OTP_LENGTH);
+        if (!digits) return;
+        event.preventDefault();
+        setOtp(digits);
+        if (statusLabel) setStatusLabel("");
+    };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -114,38 +126,82 @@ const ActivateAdminPage = () => {
                     <Label htmlFor="email" className="text-xs font-semibold text-muted-foreground">
                         Email
                     </Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        inputMode="email"
-                        autoComplete="email"
-                        placeholder="you@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        disabled={isBusy}
-                    />
+                    <div className="relative">
+                        <Mail className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                            id="email"
+                            type="email"
+                            inputMode="email"
+                            autoComplete="email"
+                            placeholder="you@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            disabled={isBusy}
+                            className="h-11 rounded-full border-border/60 bg-background/60 pl-10 pr-4 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
+                        />
+                    </div>
                 </div>
 
                 <div className="space-y-2">
                     <Label htmlFor="otp" className="text-xs font-semibold text-muted-foreground">
                         One-time code (OTP)
                     </Label>
-                    <div className="rounded-2xl border border-border/60 bg-background/50 p-4">
-                        <InputOTP
-                            value={otp}
-                            onChange={(value) => setOtp(value)}
-                            maxLength={OTP_LENGTH}
-                            disabled={isBusy}
-                        >
-                            <InputOTPGroup>
-                                {Array.from({ length: OTP_LENGTH }).map((_, index) => (
-                                    <InputOTPSlot key={index} index={index} />
-                                ))}
-                            </InputOTPGroup>
-                        </InputOTP>
-                        <p className="mt-3 text-xs text-muted-foreground">
-                            Tip: you can paste the full code.
-                        </p>
+
+                    <div
+                        className="rounded-3xl border border-border/60 bg-background/50 p-4 shadow-sm backdrop-blur"
+                        onPaste={handlePasteOtp}
+                    >
+                        <div className="space-y-1">
+                            <p className="text-sm font-medium">Enter your 6-digit code</p>
+                            <p className="text-xs text-muted-foreground">
+                                Tip: paste the full code — we’ll fill it automatically.
+                            </p>
+                        </div>
+
+                        <div className="mt-4 flex justify-center">
+                            <InputOTP
+                                value={otp}
+                                onChange={(value) => {
+                                    // keep digits only for extra robustness
+                                    const digits = (value ?? "").replace(/\D/g, "").slice(0, OTP_LENGTH);
+                                    setOtp(digits);
+                                    if (statusLabel) setStatusLabel("");
+                                }}
+                                maxLength={OTP_LENGTH}
+                                disabled={isBusy}
+                                aria-label="One-time code"
+                            >
+                                <InputOTPGroup className="gap-2">
+                                    {Array.from({ length: 3 }).map((_, index) => (
+                                        <InputOTPSlot
+                                            key={index}
+                                            index={index}
+                                            className="h-12 w-12 rounded-lg border-border/60 bg-background/60 text-base shadow-sm"
+                                        />
+                                    ))}
+                                </InputOTPGroup>
+
+                                <InputOTPSeparator className="mx-2 opacity-60" />
+
+                                <InputOTPGroup className="gap-2">
+                                    {Array.from({ length: 3 }).map((_, offset) => {
+                                        const index = offset + 3;
+                                        return (
+                                            <InputOTPSlot
+                                                key={index}
+                                                index={index}
+                                                className="h-12 w-12 rounded-lg border-border/60 bg-background/60 text-base shadow-sm"
+                                            />
+                                        );
+                                    })}
+                                </InputOTPGroup>
+                            </InputOTP>
+                        </div>
+
+                        <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                            <span>{otpComplete ? "Code complete" : "Enter all 6 digits"}</span>
+                            <span className="tabular-nums">{otp.length}/{OTP_LENGTH}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -155,7 +211,7 @@ const ActivateAdminPage = () => {
                     </div>
                 ) : null}
 
-                <Button type="submit" className="w-full rounded-full" disabled={isBusy}>
+                <Button type="submit" className="w-full rounded-full h-11" disabled={isBusy}>
                     {isBusy ? "Activating..." : "Activate account"}
                 </Button>
 
