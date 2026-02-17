@@ -75,11 +75,20 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
 
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 ring-1 ring-primary/50">
                     <Image
+                        src="/logo-black.png"
+                        alt="Inotra Logo"
+                        width={40}
+                        height={40}
+                        className="h-10 w-10 dark:hidden"
+                        priority
+                    />
+                    <Image
                         src="/logo-color.png"
                         alt="Inotra Logo"
-                        width={100}
-                        height={100}
-                        className="absolute h-10 w-10 text-white/90"
+                        width={40}
+                        height={40}
+                        className="hidden h-10 w-10 dark:block"
+                        priority
                     />
                 </div>
             </div>
