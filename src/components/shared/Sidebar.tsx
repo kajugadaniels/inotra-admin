@@ -56,11 +56,20 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                             {/* <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_30%,hsl(var(--primary))_0%,transparent_55%)] opacity-25" />
                             <div className="h-6 w-6 rounded-full bg-primary/25 ring-1 ring-primary/30" /> */}
                             <Image
+                                src="/logo-black.png"
+                                alt="Inotra Logo"
+                                width={40}
+                                height={40}
+                                className="h-10 w-10 dark:hidden"
+                                priority
+                            />
+                            <Image
                                 src="/logo-color.png"
                                 alt="Inotra Logo"
-                                width={100}
-                                height={100}
-                                className="absolute h-full w-full text-white/90"
+                                width={40}
+                                height={40}
+                                className="hidden h-10 w-10 dark:block"
+                                priority
                             />
                         </div>
 
