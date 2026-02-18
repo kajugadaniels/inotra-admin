@@ -1,12 +1,14 @@
-import UnderConstruction from '@/components/shared/UnderConstruction'
-import React from 'react'
+"use client";
 
-const Chats = () => {
-    return (
-        <div>
-            <UnderConstruction />
-        </div>
-    )
-}
+import { useMemo } from "react";
 
-export default Chats
+import { getApiBaseUrl } from "@/config/api";
+import AdminChatsPageClient from "@/components/shared/chats/AdminChatsPageClient";
+
+const ChatsPage = () => {
+    const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
+    return <AdminChatsPageClient apiBaseUrl={apiBaseUrl} />;
+};
+
+export default ChatsPage;
+
