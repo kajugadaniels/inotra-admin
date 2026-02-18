@@ -103,3 +103,4 @@ export {
 } from "./packages";
 
 export { listChatThreads, listChatMessages } from "./chats";
+export { getMetrics } from "./metrics";
